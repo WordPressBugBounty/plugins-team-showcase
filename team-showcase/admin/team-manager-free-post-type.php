@@ -2,7 +2,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	Themepoints
-	* Version : 2.3
+	* Version : 2.4
 	*/
 
 	if ( ! defined( 'ABSPATH' ) ) {
@@ -30,7 +30,7 @@
 			'not_found'             => __( 'Not found', 'team-manager-free' ),
 			'not_found_in_trash'    => __( 'Not found in Trash', 'team-manager-free' ),
 			'featured_image'        => __( 'Team Member Image', 'team-manager-free' ),
-			'set_featured_image'    => __( 'Set Team Member image', 'team-manager-free' ),
+			'set_featured_image'    => __( 'Upload Team Member image', 'team-manager-free' ),
 			'remove_featured_image' => __( 'Remove Team Member image', 'team-manager-free' ),
 			'use_featured_image'    => __( 'Use as Team Member image', 'team-manager-free' ),
 			'items_list'            => __( 'Items list', 'team-manager-free' ),
@@ -41,7 +41,7 @@
 			'label'                 => __( 'Post Type', 'team-manager-free' ),
 			'description'           => __( 'Post Type Description', 'team-manager-free' ),
 			'labels'                => $labels,
-			'supports'              =>  array( 'title', 'editor', 'thumbnail',),
+			'supports'              =>  array( 'title', 'editor', 'thumbnail', 'page-attributes'),
 			'hierarchical'          => false,
 			'public'                => true,
 			'menu_icon' 			=> 'dashicons-admin-users',
@@ -50,7 +50,7 @@
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => true,
 			'can_export'            => true,
-			'has_archive'           => true,		
+			'has_archive'           => true,
 			'exclude_from_search'   => false,
 			'publicly_queryable'    => true,
 			'capability_type'       => 'page',
@@ -69,7 +69,7 @@
 			'parent_item'       => __( 'Parent Group' ),
 			'parent_item_colon' => __( 'Parent Group:' ),
 			'edit_item'         => __( 'Edit Team Group' ), 
-			'update_item'       => __( 'Update Group' ),
+			'update_item'       => __( 'Update Team Group' ),
 			'add_new_item'      => __( 'Add New Team Group' ),
 			'new_item_name'     => __( 'New Team Group' ),
 			'menu_name'         => __( 'Team Groups' ),
@@ -91,6 +91,18 @@
 	}
 	add_filter( 'enter_title_here', 'team_manager_free_admin_enter_title' );
 
+	# Team Manager Free Help Text
+	function team_manager_free_custom_post_help($content){
+		global $post_type,$post;
+		if ($post_type == 'team_mf') {
+			if(!has_post_thumbnail( $post->ID )){
+			   $content .= '<p>'.__('For better performance, we recommend resizing your images before uploading them to keep the website fast and responsive.','team-manager-free').'</p>';
+			}
+		}
+		return $content;
+	}
+	add_filter('admin_post_thumbnail_html','team_manager_free_custom_post_help');
+
 	# Team Update Notice
 	function team_manager_free_custom_post_updated_messages( $messages ) {
 		global $post, $post_id;
@@ -108,14 +120,7 @@
 		);
 		return $messages;
 	}
-	add_filter( 'post_updated_messages', 'team_manager_free_custom_post_updated_messages' );	
-
-	# Team Add Options page
-	function team_manager_free_custom_post_add_submenu_items(){
-		add_submenu_page('edit.php?post_type=team_mf', __('Generate Shortcode', 'team-manager-free'), __('Generate Shortcode', 'team-manager-free'), 'manage_options', 'post-new.php?post_type=team_mf_team');
-	}
-	add_action('admin_menu', 'team_manager_free_custom_post_add_submenu_items');
-
+	add_filter( 'post_updated_messages', 'team_manager_free_custom_post_updated_messages' );
 
 	# Team Shortcode post register
 	function team_manager_free_custom_post_create_team_type() {
@@ -125,10 +130,10 @@
 			'singular_name'       => _x( 'Shortcode', 'Post Type Singular Name', 'team-manager-free' ),
 			'menu_name'           => __( 'Shortcodes', 'team-manager-free' ),
 			'parent_item_colon'   => __( 'Parent Shortcode', 'team-manager-free' ),
-			'all_items'           => __( 'All Shortcodes', 'team-manager-free' ),
+			'all_items'           => __( 'Manage Shortcodes', 'team-manager-free' ),
 			'view_item'           => __( 'View Shortcode', 'team-manager-free' ),
-			'add_new_item'        => __( 'Create New Team Shortcode', 'team-manager-free' ),
-			'add_new'             => __( 'Add New Team Shortcode', 'team-manager-free' ),
+			'add_new_item'        => __( 'Generate New Shortcode', 'team-manager-free' ),
+			'add_new'             => __( 'Generate New Shortcode', 'team-manager-free' ),
 			'edit_item'           => __( 'Edit Team Shortcode', 'team-manager-free' ),
 			'update_item'         => __( 'Update Team Shortcode', 'team-manager-free' ),
 			'search_items'        => __( 'Search Team Shortcode', 'team-manager-free' ),
@@ -159,8 +164,7 @@
 		// Registering your Custom Post Type
 		register_post_type( 'team_mf_team', $args );
 	}
-
-	add_action( 'init', 'team_manager_free_custom_post_create_team_type');	
+	add_action( 'init', 'team_manager_free_custom_post_create_team_type');
 
 	# Modify shortcode page title
 	function team_manager_free_team_mf_team_admin_enter_title( $input ) {
@@ -209,7 +213,7 @@
 		return $team_manager_free_columns;
 	}
 
-	# testimonial Value Function
+	# Team Value Function
 	function team_manager_free_columns_display($team_manager_free_columns, $post_id){
 
 		global $post;
@@ -230,7 +234,8 @@
 			echo esc_attr( get_post_meta($post_id, 'client_designation', true) );
 		}
 		if ( 'client_shortdescription' == $team_manager_free_columns ) {
-			echo esc_attr( get_post_meta($post_id, 'client_shortdescription', true) );
+		    $client_shortdescription = get_post_meta( $post_id, 'client_shortdescription', true );
+		    echo esc_html( wp_trim_words( $client_shortdescription, 22, '...' ) );
 		}
 		if ( 'ktstcategories' == $team_manager_free_columns ) {
 			$terms = get_the_terms( $post_id , 'team_mfcategory');
@@ -285,6 +290,184 @@
 
 	add_action('add_meta_boxes', 'team_manager_free_add_metabox');
 
+
+	function team_mf_team_sidebar_metabox_callback($post) {
+	    // Get saved data
+		$sort_array	= get_post_meta( $post->ID, 'sort_array', true);
+	    ?>
+
+		<div class="wrap">
+			<p><?php _e( 'To organize member information, simply drag and drop the items into your desired order.','team-manager-free' ); ?><a href="https://themepoints.com/product/team-showcase-pro/" target="_blank"><?php _e('Upgrade To Pro!', 'team-manager-free');?></a></p>
+			<table class="team tup-form-table">
+				<tbody class="tup_class2">
+				<?php if(!empty($sort_array)){
+					foreach ($sort_array as $value) {
+						if($value =="designation"){ ?>
+							<tr valign="top" class="ui-state-default tup-drag">
+								<th scope="row">
+									<label for="sort_dg"><span class="dashicons dashicons-move"></span><?php _e( 'Designation', 'team-manager-free' ); ?></label>
+								</th>
+								<td style="vertical-align: middle;">
+									<div style="float:left;width:100%;margin-bottom: 10px;">
+										<input type="hidden" name="sort_array[]" value="designation">
+									</div>
+								</td>
+							</tr>
+							<?php
+						} if($value =="email"){ ?>
+							<tr valign="top" class="ui-state-default tup-drag">
+								<th scope="row">
+									<label for="sort_email"><span class="dashicons dashicons-move"></span><?php _e( 'Email', 'team-manager-free' ); ?></label>
+								</th>
+								<td style="vertical-align: middle;">
+									<div style="float:left;width:100%;margin-bottom: 10px;">
+										<input type="hidden" name="sort_array[]" value="email" >
+									</div>
+								</td>
+							</tr>
+							<?php
+						} if($value =="contact"){ ?>
+							<tr valign="top" class="ui-state-default tup-drag">
+								<th scope="row">
+									<label for="sort_contact"><span class="dashicons dashicons-move"></span><?php _e( 'Contact Number', 'team-manager-free' ); ?></label>
+								</th>
+								<td style="vertical-align: middle;">
+									<div style="float:left;width:100%;margin-bottom: 10px;">
+										<input type="hidden" name="sort_array[]" value="contact">
+									</div>
+								</td>
+							</tr>
+							<?php
+						} if($value =="address"){ ?>
+							<tr valign="top" class="ui-state-default tup-drag">
+								<th scope="row">
+									<label for="sort_address"><span class="dashicons dashicons-move"></span><?php _e( 'Address', 'team-manager-free' ); ?></label>
+								</th>
+								<td style="vertical-align: middle;">
+									<div style="float:left;width:100%;margin-bottom: 10px;">
+										<input type="hidden" name="sort_array[]" value="address">
+									</div>
+								</td>
+							</tr>
+							<?php
+						} if($value =="website"){ ?>
+							<tr valign="top" class="ui-state-default tup-drag">
+								<th scope="row">
+									<label for="sort_website"><span class="dashicons dashicons-move"></span><?php _e( 'Website', 'team-manager-free' ); ?></label>
+								</th>
+								<td style="vertical-align: middle;">
+									<div style="float:left;width:100%;margin-bottom: 10px;">
+										<input type="hidden" name="sort_array[]" value="website">
+									</div>
+								</td>
+							</tr>
+							<?php
+						}
+					}   // End foreach loop
+				} else { ?>
+					<tr valign="top" class="ui-state-default tup-drag">
+						<th scope="row">
+							<label for="sort_dg"><span class="dashicons dashicons-move"></span><?php _e( 'Designation', 'team-manager-free' ); ?></label>
+						</th>
+						<td style="vertical-align: middle;">
+							<div style="float:left;width:100%;margin-bottom: 10px;">
+								<input type="hidden" name="sort_array[]" value="designation">
+							</div>
+						</td>
+					</tr>
+					<tr valign="top" class="ui-state-default tup-drag">
+						<th scope="row">
+							<label for="sort_email"><span class="dashicons dashicons-move"></span><?php _e( 'Email', 'team-manager-free' ); ?></label>
+						</th>
+						<td style="vertical-align: middle;">
+							<div style="float:left;width:100%;margin-bottom: 10px;">
+								<input type="hidden" name="sort_array[]" value="email" >
+							</div>
+						</td>
+					</tr>
+					<tr valign="top" class="ui-state-default tup-drag">
+						<th scope="row">
+							<label for="sort_contact"><span class="dashicons dashicons-move"></span><?php _e( 'Contact Number', 'team-manager-free' ); ?></label>
+						</th>
+						<td style="vertical-align: middle;">
+							<div style="float:left;width:100%;margin-bottom: 10px;">
+								<input type="hidden" name="sort_array[]" value="contact">
+							</div>
+						</td>
+					</tr>
+					<tr valign="top" class="ui-state-default tup-drag">
+						<th scope="row">
+							<label for="sort_address"><span class="dashicons dashicons-move"></span><?php _e( 'Address', 'team-manager-free' ); ?></label>
+						</th>
+						<td style="vertical-align: middle;">
+							<div style="float:left;width:100%;margin-bottom: 10px;">
+								<input type="hidden" name="sort_array[]" value="address">
+							</div>
+						</td>
+					</tr>
+					<tr valign="top" class="ui-state-default tup-drag">
+						<th scope="row">
+							<label for="sort_website"><span class="dashicons dashicons-move"></span><?php _e( 'Website', 'team-manager-free' ); ?></label>
+						</th>
+						<td style="vertical-align: middle;">
+							<div style="float:left;width:100%;margin-bottom: 10px;">
+								<input type="hidden" name="sort_array[]" value="website">
+							</div>
+						</td>
+					</tr>
+				<?php } ?>
+				</tbody>
+			</table>
+		</div>
+	    <?php
+	}
+
+	function multicolor_add_meta2( $post, $args ) {
+		$team_manager_mbgcolor_color              		= get_post_meta($post->ID, 'team_manager_mbgcolor_color', true);
+		$team_manager_mborder_color              		= get_post_meta($post->ID, 'team_manager_mborder_color', true);
+		$team_manager_mbcontent_color              		= get_post_meta($post->ID, 'team_manager_mbcontent_color', true);
+		?>
+
+		<div class="wrap">
+			<table class="form-table">
+				<div class=""><?php echo __( 'Display different colors for each team member,', 'team-manager-free' ); ?><a href="https://themepoints.com/product/team-showcase-pro/" target="_blank"><?php _e('Upgrade To Pro!', 'team-manager-free');?></a></div>
+				<tr valign="top">
+					<th scope="row">
+						<label for="team_manager_mbgcolor_color"><?php echo __( 'Background Color', 'team-manager-free' ); ?></label>
+						<span class="team_manager_hint toss"><?php echo __( 'Set the background color of an individual team member item.', 'team-manager-free' ); ?></span>
+					</th>
+					<td style="vertical-align:middle;">
+						<input size='10' name='team_manager_mbgcolor_color' class='team_manager_mbgcolor_color' type='text' id="team_manager_mbgcolor_color" value="<?php if($team_manager_mbgcolor_color !=''){echo $team_manager_mbgcolor_color;} else{ echo "#f6f7f8";} ?>" /> <br />
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="team_manager_mborder_color"><?php echo __( 'Title Color', 'team-manager-free' ); ?></label>
+						<span class="team_manager_hint toss"><?php echo __('Set the title color of an individual team member item..', 'team-manager-free' ); ?></span>
+					</th>
+					<td style="vertical-align:middle;">
+						<input size='10' name='team_manager_mborder_color' class='team_manager_mborder_color' type='text' id="team_manager_mborder_color" value="<?php if($team_manager_mborder_color !=''){echo $team_manager_mborder_color;} else{ echo "#007acc";} ?>" /> <br />
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="team_manager_mbcontent_color"><?php echo __( 'Content Color', 'team-manager-free' ); ?></label>
+						<span class="team_manager_hint toss"><?php echo __( 'Set the content color of an individual team member item.', 'team-manager-free' ); ?></span>
+					</th>
+					<td style="vertical-align:middle;">
+						<input size='10' name='team_manager_mbcontent_color' class='team_manager_mbcontent_color' type='text' id="team_manager_mbcontent_color" value="<?php if($team_manager_mbcontent_color !=''){echo $team_manager_mbcontent_color;} else{ echo "#333333";} ?>" /> <br />
+					</td>
+				</tr>
+			</table>
+			<script type="text/javascript">
+				jQuery(document).ready(function($){
+					$('#team_manager_mbgcolor_color, #team_manager_mborder_color, #team_manager_mbcontent_color').wpColorPicker();
+				});
+			</script>
+		</div>
+		<?php
+	}
+
 	/*=====================================================================
 	 * Renders the nonce and the textarea for the notice.
 	 =======================================================================*/
@@ -301,17 +484,18 @@
 		$team_manager_free_limits                 = get_post_meta( $post->ID, 'team_manager_free_limits', true );
 		$teamf_orderby                            = get_post_meta( $post->ID, 'teamf_orderby', true );
 		$teamf_order                              = get_post_meta( $post->ID, 'teamf_order', true );
-		$team_manager_free_imagesize              = get_post_meta( $post->ID, 'team_manager_free_imagesize', true );
-		$team_manager_free_post_column            = get_post_meta( $post->ID, 'team_manager_free_post_column', true );
+		$team_manager_free_post_column            = get_post_meta( $post->ID, 'team_manager_free_post_column', true) ?: '4';
+		$team_manager_free_laptop_columns         = get_post_meta( $post->ID, 'team_manager_free_laptop_columns', true) ?: '3';
+		$team_manager_free_tablet_columns         = get_post_meta( $post->ID, 'team_manager_free_tablet_columns', true) ?: '2';
+		$team_manager_free_mobile_columns         = get_post_meta( $post->ID, 'team_manager_free_mobile_columns', true) ?: '1';
 		$team_manager_free_margin_bottom          = get_post_meta( $post->ID, 'team_manager_free_margin_bottom', true );
 		$team_manager_free_padding_left           = get_post_meta( $post->ID, 'team_manager_free_padding_left', true );
-		$team_manager_free_padding_right          = get_post_meta( $post->ID, 'team_manager_free_padding_right', true );
 		$team_manager_free_margin_lfr             = get_post_meta( $post->ID, 'team_manager_free_margin_lfr', true );
-		$team_manager_free_img_height             = get_post_meta( $post->ID, 'team_manager_free_img_height', true );
 		$team_manager_free_social_target          = get_post_meta( $post->ID, 'team_manager_free_social_target', true );
+		$team_manager_social_nofollow             = get_post_meta( $post->ID, 'team_manager_social_nofollow', true);
 		$team_manager_free_text_alignment         = get_post_meta( $post->ID, 'team_manager_free_text_alignment', true );
 		$team_manager_free_multicolor_hide        = get_post_meta( $post->ID, 'team_manager_free_multicolor_hide', true );
-		$team_manager_free_emails_hide            = get_post_meta( $post->ID, 'team_manager_free_emails_hide', true );	
+		$team_manager_free_emails_hide            = get_post_meta( $post->ID, 'team_manager_free_emails_hide', true ) ?: '0';	
 		$team_manager_free_emails_font_color      = get_post_meta( $post->ID, 'team_manager_free_emails_font_color', true );
 		$team_manager_free_emails_hover_color     = get_post_meta( $post->ID, 'team_manager_free_emails_hover_color', true );
 		$team_manager_free_emails_font_size       = get_post_meta( $post->ID, 'team_manager_free_emails_font_size', true );
@@ -319,7 +503,10 @@
 		$team_manager_free_header_font_size       = get_post_meta( $post->ID, 'team_manager_free_header_font_size', true );
 		$team_manager_name_font_weight            = get_post_meta( $post->ID, 'team_manager_name_font_weight', true );
 		$team_manager_name_font_style             = get_post_meta( $post->ID, 'team_manager_name_font_style', true );
-		$team_manager_free_designation_hide  	  = get_post_meta( $post->ID, 'team_manager_free_designation_hide', true );
+		$team_manager_free_image_hide             = get_post_meta( $post->ID, 'team_manager_free_image_hide', true );
+		$team_manager_free_image_zoom             = get_post_meta( $post->ID, 'team_manager_free_image_zoom', true ) ?: '2';
+		$team_manager_free_image_mode             = get_post_meta( $post->ID, 'team_manager_free_image_mode', true );
+		$team_manager_free_designation_hide       = get_post_meta( $post->ID, 'team_manager_free_designation_hide', true );
 		$team_manager_free_designation_font_size  = get_post_meta( $post->ID, 'team_manager_free_designation_font_size', true );
 		$team_manager_free_header_font_color      = get_post_meta( $post->ID, 'team_manager_free_header_font_color', true );
 		$team_manager_free_name_hover_font_color  = get_post_meta( $post->ID, 'team_manager_free_name_hover_font_color', true );
@@ -327,21 +514,26 @@
 		$team_manager_free_designation_font_color = get_post_meta( $post->ID, 'team_manager_free_designation_font_color', true );
 		$team_manager_desig_font_case             = get_post_meta( $post->ID, 'team_manager_desig_font_case', true );
 		$team_manager_desig_font_style            = get_post_meta( $post->ID, 'team_manager_desig_font_style', true );
-		$team_manager_free_numbers_hide           = get_post_meta( $post->ID, 'team_manager_free_numbers_hide', true );
+		$team_manager_free_numbers_hide           = get_post_meta( $post->ID, 'team_manager_free_numbers_hide', true ) ?: '0';
 		$team_manager_free_numbers_font_size      = get_post_meta( $post->ID, 'team_manager_free_numbers_font_size', true );
 		$team_manager_free_numbers_font_color     = get_post_meta( $post->ID, 'team_manager_free_numbers_font_color', true );
 		$team_manager_free_numbers_hover_color    = get_post_meta( $post->ID, 'team_manager_free_numbers_hover_color', true );
-		$team_manager_free_address_hide           = get_post_meta( $post->ID, 'team_manager_free_address_hide', true );
+		$team_manager_free_address_hide           = get_post_meta( $post->ID, 'team_manager_free_address_hide', true ) ?: '0';
 		$team_manager_free_addresss_font_color    = get_post_meta( $post->ID, 'team_manager_free_addresss_font_color', true );
 		$team_manager_free_addresss_font_size     = get_post_meta( $post->ID, 'team_manager_free_addresss_font_size', true );
-		$team_manager_free_website_hide           = get_post_meta( $post->ID, 'team_manager_free_website_hide', true );
+		$team_manager_free_website_hide           = get_post_meta( $post->ID, 'team_manager_free_website_hide', true ) ?: '0';
 		$team_manager_free_website_font_size      = get_post_meta( $post->ID, 'team_manager_free_website_font_size', true );
 		$team_manager_free_website_font_color     = get_post_meta( $post->ID, 'team_manager_free_website_font_color', true );
 		$team_manager_free_website_hover_color    = get_post_meta( $post->ID, 'team_manager_free_website_hover_color', true );
 		$team_manager_free_biography_font_size    = get_post_meta( $post->ID, 'team_manager_free_biography_font_size', true );
+		$team_mf_short_desc_char_limit            = get_post_meta( $post->ID, 'team_mf_short_desc_char_limit', true );
 		$team_manager_free_overlay_bg_color       = get_post_meta( $post->ID, 'team_manager_free_overlay_bg_color', true );
 		$team_manager_free_biography_font_color   = get_post_meta( $post->ID, 'team_manager_free_biography_font_color', true );
+		$team_infoicons_hide                      = get_post_meta( $post->ID, 'team_infoicons_hide', true ) ?: '0';
 		$filter_align                             = get_post_meta( $post->ID, 'filter_align', true );
+		$filter_free_all_text                     = get_post_meta( $post->ID, 'filter_free_all_text', true );
+		$filter_free_all_text                     = !empty( $filter_free_all_text ) ? $filter_free_all_text : __( "All", "team-manager-free" );
+		$team_manager_free_show_all               = get_post_meta( $post->ID, 'team_manager_free_show_all', true );
 		$filter_bg_color                          = get_post_meta( $post->ID, 'filter_bg_color', true );
 		$filter_border_color                      = get_post_meta( $post->ID, 'filter_border_color', true );
 		$filter_mfont_color                       = get_post_meta( $post->ID, 'filter_mfont_color', true );
@@ -350,39 +542,52 @@
 		$filter_hover_color                       = get_post_meta( $post->ID, 'filter_hover_color', true );
 		$filter_hover_tcolor                      = get_post_meta( $post->ID, 'filter_hover_tcolor', true );
 		$filter_border_radius                     = get_post_meta( $post->ID, 'filter_border_radius', true );
-
 		$team_fbackground_color                   = get_post_meta( $post->ID, 'team_fbackground_color', true );
 		$team_manager_free_socialicons_hide       = get_post_meta( $post->ID, 'team_manager_free_socialicons_hide', true );
+		$tmffree_social_style                     = get_post_meta( $post->ID, 'tmffree_social_style', true);
+		if (!$tmffree_social_style) {
+		$tmffree_social_style                     = 1; // Default style
+		}
+		$tmffree_social_color                     = get_post_meta( $post->ID, 'tmffree_social_color', true);
+		if (!$tmffree_social_color) {
+		$tmffree_social_color                     = 1; // Default style
+		}
 		$tmffree_social_font_size                 = get_post_meta( $post->ID, 'tmffree_social_font_size', true );
 		$tmffree_social_icon_color                = get_post_meta( $post->ID, 'tmffree_social_icon_color', true );
-		$tmffree_social_hover_color               = get_post_meta( $post->ID, 'tmffree_social_hover_color', true );
 		$tmffree_social_bg_color                  = get_post_meta( $post->ID, 'tmffree_social_bg_color', true );
+		$tmffree_social_hover_color               = get_post_meta( $post->ID, 'tmffree_social_hover_color', true );
+		$tmffree_social_hoverbg_color             = get_post_meta( $post->ID, 'tmffree_social_hoverbg_color', true );
 		$team_manager_free_popupbox_hide          = get_post_meta( $post->ID, 'team_manager_free_popupbox_hide', true);
 		$team_manager_free_popupbox_positions     = get_post_meta( $post->ID, 'team_manager_free_popupbox_positions', true);
-
-		$item_no                                  = get_post_meta( $post->ID, 'item_no', true );
+		$item_no                                  = get_post_meta( $post->ID, 'item_no', true) ?: '3';
+		$itemsdesktop                             = get_post_meta( $post->ID, 'itemsdesktop', true) ?: '3';
+		$itemsdesktopsmall                        = get_post_meta( $post->ID, 'itemsdesktopsmall', true) ?: '2';
+		$itemsmobile                              = get_post_meta( $post->ID, 'itemsmobile', true) ?: '1';
 		$loop                                     = get_post_meta( $post->ID, 'loop', true );
+		$lazyload                                 = get_post_meta( $post->ID, 'lazyload', true ) ?: '0';
+		$autoheight                               = get_post_meta( $post->ID, 'autoheight', true ) ?: '0';
 		$margin                                   = get_post_meta( $post->ID, 'margin', true );
 		$navigation                               = get_post_meta( $post->ID, 'navigation', true );
 		$pagination                               = get_post_meta( $post->ID, 'pagination', true );
 		$autoplay                                 = get_post_meta( $post->ID, 'autoplay', true );
 		$autoplay_speed                           = get_post_meta( $post->ID, 'autoplay_speed', true );
 		$stop_hover                               = get_post_meta( $post->ID, 'stop_hover', true );
-		$itemsdesktop                             = get_post_meta( $post->ID, 'itemsdesktop', true );
-		$itemsdesktopsmall                        = get_post_meta( $post->ID, 'itemsdesktopsmall', true );
-		$itemsmobile                              = get_post_meta( $post->ID, 'itemsmobile', true );
 		$autoplaytimeout                          = get_post_meta( $post->ID, 'autoplaytimeout', true );
-		$nav_text_color                           = get_post_meta( $post->ID, 'nav_text_color', true );	
-		$nav_hover_text_color                     = get_post_meta( $post->ID, 'nav_hover_text_color', true );	
-		$nav_hover_bg_color                       = get_post_meta( $post->ID, 'nav_hover_bg_color', true );	
+		$nav_text_color                           = get_post_meta( $post->ID, 'nav_text_color', true );
+		$nav_hover_text_color                     = get_post_meta( $post->ID, 'nav_hover_text_color', true );
+		$nav_hover_bg_color                       = get_post_meta( $post->ID, 'nav_hover_bg_color', true );
 		$nav_bg_color                             = get_post_meta( $post->ID, 'nav_bg_color', true );
 		$navigation_align                         = get_post_meta( $post->ID, 'navigation_align', true );
 		$navigation_btn_style                     = get_post_meta( $post->ID, 'navigation_btn_style', true );
 		$pagination_bg_color                      = get_post_meta( $post->ID, 'pagination_bg_color', true );
 		$pagination_active_color                  = get_post_meta( $post->ID, 'pagination_active_color', true );
 		$pagination_align                         = get_post_meta( $post->ID, 'pagination_align', true );
-
-		$team_popup_title_hide              	  = get_post_meta( $post->ID, 'team_popup_title_hide', true);
+		$tmffree_pagination_style                 = get_post_meta( $post->ID, 'tmffree_pagination_style', true );
+		if (!$tmffree_pagination_style) {
+		$tmffree_pagination_style                 = 1; // Default style
+		}
+		
+		$team_popup_title_hide                    = get_post_meta( $post->ID, 'team_popup_title_hide', true);
 		$team_popup_designatins_hide              = get_post_meta( $post->ID, 'team_popup_designatins_hide', true);
 		$team_popup_emails_hide                   = get_post_meta( $post->ID, 'team_popup_emails_hide', true);
 		$team_popup_contacts_hide                 = get_post_meta( $post->ID, 'team_popup_contacts_hide', true);
@@ -390,18 +595,35 @@
 		$team_popup_website_hide                  = get_post_meta( $post->ID, 'team_popup_website_hide', true);
 		$team_popup_infoicons_hide                = get_post_meta( $post->ID, 'team_popup_infoicons_hide', true);
 		$nav_value                                = get_post_meta( $post->ID, 'nav_value', true );
+		$selected_size                            = get_post_meta( $post->ID, '_tmf_selected_image_size', true ) ?: 'medium';
+		$custom_width                             = get_post_meta( $post->ID, '_tmf_custom_width', true );
+		$custom_height                            = get_post_meta( $post->ID, '_tmf_custom_height', true );
+
+	    global $_wp_additional_image_sizes;
+	    $image_sizes = get_intermediate_image_sizes();
+	    $options = [];
+
+	    foreach ( $image_sizes as $size_name ) {
+	        if ( in_array( $size_name, ['thumbnail', 'medium', 'medium_large', 'large'], true ) ) {
+	            $options[ $size_name ] = ucfirst( $size_name ) . ' - ' . ( get_option( "{$size_name}_crop" ) ? 'hard:' : 'soft:' ) . get_option( "{$size_name}_size_w" ) . 'x' . get_option( "{$size_name}_size_h" );
+	        } elseif ( isset( $_wp_additional_image_sizes[ $size_name ] ) ) {
+	            $options[ $size_name ] = ucfirst( $size_name ) . ' - ' . ( $_wp_additional_image_sizes[ $size_name ]['crop'] ? 'hard:' : 'soft:' ) . $_wp_additional_image_sizes[ $size_name ]['width'] . 'x' . $_wp_additional_image_sizes[ $size_name ]['height'];
+	        }
+	    }
+
+	    $options['original'] = __( 'Original uploaded image', 'team-manager-free' );
+	    $options['custom']   = __( 'Set custom size (Pro)', 'team-manager-free' );
 	?>
 
 	<div class="tupsetings post-grid-metabox">
 		<!-- <div class="wrap"> -->
 		<ul class="tab-nav">
-			<li nav="1" class="nav1 <?php if($nav_value == 1){echo "active";}?>"><?php _e('Shortcodes','team-manager-free'); ?></li>
-			<li nav="2" class="nav2 <?php if($nav_value == 2){echo "active";}?>"><?php _e('Team Query','team-manager-free'); ?></li>
-			<li nav="3" class="nav3 <?php if($nav_value == 3){echo "active";}?>"><?php _e('All Settings ','team-manager-free'); ?></li>
-			<li nav="4" class="nav4 <?php if($nav_value == 4){echo "active";}?>"><?php _e( 'Grid Settings','team-manager-free' ); ?></li>
-			<li nav="5" class="nav5 <?php if($nav_value == 5){echo "active";}?>"><?php _e('Popup box Settings','team-manager-free'); ?></li>
-			<li nav="6" class="nav6 <?php if($nav_value == 6){echo "active";}?>"><?php _e('Social Settings','team-manager-free'); ?></li>
-			<li nav="7" class="nav7 <?php if($nav_value == 7){echo "active";}?>"><?php _e( 'Slider Settings','team-manager-free' ); ?></li>
+			<li nav="1" class="nav1 <?php if($nav_value == 1){echo "active";}?>"><span class="dashicons dashicons-clipboard"></span><?php _e('Team Query','team-manager-free'); ?></li>
+			<li nav="2" class="nav2 <?php if($nav_value == 2){echo "active";}?>"><span class="dashicons dashicons-admin-settings"></span><?php _e('All Settings ','team-manager-free'); ?></li>
+			<li nav="3" class="nav3 <?php if($nav_value == 3){echo "active";}?>"><span class="dashicons dashicons-grid-view"></span><?php _e( 'Grid Settings','team-manager-free' ); ?></li>
+			<li nav="4" class="nav4 <?php if($nav_value == 4){echo "active";}?>"><span class="dashicons dashicons-slides"></span><?php _e( 'Slider Settings','team-manager-free' ); ?></li>
+			<li nav="5" class="nav5 <?php if($nav_value == 5){echo "active";}?>"><span class="dashicons dashicons-external"></span><?php _e('Popup Settings','team-manager-free'); ?></li>
+			<li nav="6" class="nav6 <?php if($nav_value == 6){echo "active";}?>"><span class="dashicons dashicons-share"></span><?php _e('Social Settings','team-manager-free'); ?></li>
 		</ul> <!-- tab-nav end -->
 		<?php 
 			$getNavValue = "";
@@ -412,19 +634,6 @@
 		<ul class="box">
 			<!-- Tab 1 -->
 			<li style="<?php if($nav_value == 1){echo "display: block;";} else{ echo "display: none;"; }?>" class="box1 tab-box <?php if($nav_value == 1){echo "active";}?>">
-				<div class="option-box">
-					<p class="option-title"><?php _e('Shortcode','team-manager-free'); ?></p>
-					<p class="option-info"><?php _e('Copy this shortcode and paste on post, page or text widgets where you want to display Team Showcase.','team-manager-free'); ?></p>
-					<textarea cols="50" rows="1" onClick="this.select();" >[tmfshortcode <?php echo 'id="'.$post->ID.'"';?>]</textarea>
-					<br /><br />
-					<p class="option-info"><?php _e('PHP Code:','team-manager-free'); ?></p>
-					<p class="option-info"><?php _e('Use PHP code to your themes file to display Team Showcase.','team-manager-free'); ?></p>
-					<textarea cols="50" rows="2" onClick="this.select();" ><?php echo '<?php echo do_shortcode("[tmfshortcode id='; echo "'".$post->ID."']"; echo '"); ?>'; ?></textarea>  
-				</div>
-			</li>
-			
-			<!-- Tab 2  -->
-			<li style="<?php if($nav_value == 2){echo "display: block;";} else{ echo "display: none;"; }?>" class="box2 tab-box <?php if($nav_value == 2){echo "active";}?>">
 				<div class="wrap">
 					<div class="option-box">
 						<p class="option-title"><?php _e('Team Query','team-manager-free'); ?></p>
@@ -435,7 +644,7 @@
 									<span class="team_manager_hint toss"><?php echo __('The category names will only be visible when members are published within any categories.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
-									<ul>			
+									<ul>
 										<?php
 											$args = array( 
 												'taxonomy'     => 'team_mfcategory',
@@ -501,7 +710,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_theme_style"><?php _e( 'Select Layout', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php _e( 'Select a layout to display the testimonials.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php _e( 'Select a layout to display the team.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<select name="team_manager_free_theme_style" id="team_manager_free_theme_style" class="timezone_string">
@@ -515,25 +724,76 @@
 							<!-- End Team Laout -->
 
 							<tr valign="top">
+							    <th scope="row">
+							        <label for="team_manager_free_post_column"><?php echo __('Team Column', 'team-manager-free'); ?></label>
+							        <span class="team_manager_hint toss"><?php echo __('Set number of columns in different responsive devices.', 'team-manager-free'); ?></span>
+							    </th>
+							    <td style="vertical-align:middle;">
+									<div class="pic-device-columns">
+									    <!-- Desktop Columns -->
+									    <label for="team_manager_free_post_column" class="tp-device-label">
+									        <div class="tp-device-header">
+									            <span class="dashicons dashicons-desktop"></span>
+									            <span>Desktop</span>
+									        </div>
+									        <input type="number" name="team_manager_free_post_column" id="team_manager_free_post_column" value="<?php echo esc_attr($team_manager_free_post_column); ?>" min="1" max="6">
+									    </label>
+
+									    <!-- Laptop Columns -->
+									    <label for="team_manager_free_laptop_columns" class="tp-device-label">
+									        <div class="tp-device-header">
+									            <span class="dashicons dashicons-laptop"></span>
+									            <span>Laptop</span>
+									        </div>
+									        <input type="number" min="1" max="6" name="team_manager_free_laptop_columns" id="team_manager_free_laptop_columns" value="<?php echo esc_attr($team_manager_free_laptop_columns); ?>">
+									    </label>
+
+									    <!-- Tablet Columns -->
+									    <label for="team_manager_free_tablet_columns" class="tp-device-label">
+									        <div class="tp-device-header">
+									            <span class="dashicons dashicons-tablet"></span>
+									            <span>Tablet</span>
+									        </div>
+									        <input type="number" name="team_manager_free_tablet_columns" id="team_manager_free_tablet_columns" value="<?php echo esc_attr($team_manager_free_tablet_columns); ?>" min="1" max="6">
+									    </label>
+
+									    <!-- Mobile Columns -->
+									    <label for="team_manager_free_mobile_columns" class="tp-device-label">
+									        <div class="tp-device-header">
+									            <span class="dashicons dashicons-smartphone"></span>
+									            <span>Mobile</span>
+									        </div>
+									        <input type="number" name="team_manager_free_mobile_columns" id="team_manager_free_mobile_columns" value="<?php echo esc_attr($team_manager_free_mobile_columns); ?>" min="1" max="6">
+									    </label>
+									</div>
+							    </td>
+							</tr>
+							<!-- End Choose Team Column -->
+
+							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_limits"><?php _e( 'Member Limit', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Limit number of teams to show.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Limit number of team members to show. For all leave it empty.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
-									<input type="number" name="team_manager_free_limits" id="team_manager_free_limits" class="timezone_string" value="<?php  if($team_manager_free_limits !=''){echo $team_manager_free_limits; }else{ echo '12';} ?>">
+									<input type="number" name="team_manager_free_limits" id="team_manager_free_limits" class="timezone_string" value="<?php echo esc_attr($team_manager_free_limits); ?>" placeholder="All">
 								</td>
 							</tr>
 							<!-- End column Margin Bottom -->
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="teamf_orderby"><?php echo __('Order Team Member', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Select an order option.', 'team-manager-free' ); ?></span>
+									<label for="teamf_orderby"><?php echo __('Order By', 'team-manager-free'); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Select an order by option.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<select name="teamf_orderby" id="teamf_orderby" class="timezone_string">
 										<option value="date" <?php if ( isset ( $teamf_orderby ) ) selected( $teamf_orderby, 'date' ); ?>><?php _e('Publish Date', 'team-manager-free'); ?></option>
-										<option value="menu_order" <?php if ( isset ( $teamf_orderby ) ) selected( $teamf_orderby, 'menu_order' ); ?>><?php _e('Menu Order', 'team-manager-free');?></option>
+										<option value="title" <?php if ( isset ( $teamf_orderby ) ) selected( $teamf_orderby, 'title' ); ?>><?php _e('Title', 'team-manager-free'); ?></option>
+										<option value="ID" <?php if ( isset ( $teamf_orderby ) ) selected( $teamf_orderby, 'ID' ); ?>><?php _e('ID', 'team-manager-free'); ?></option>
+										<option value="author" <?php if ( isset ( $teamf_orderby ) ) selected( $teamf_orderby, 'author' ); ?>><?php _e('Author', 'team-manager-free'); ?></option>
+										<option value="name" <?php if ( isset ( $teamf_orderby ) ) selected( $teamf_orderby, 'name' ); ?>><?php _e('Name', 'team-manager-free'); ?></option>
+										<option value="menu_order" <?php if ( isset ( $teamf_orderby ) ) selected( $teamf_orderby, 'menu_order' ); ?>><?php _e('Menu Order', 'team-manager-free'); ?></option>
 										<option value="rand" <?php if ( isset ( $teamf_orderby ) ) selected( $teamf_orderby, 'rand' ); ?>><?php _e('Random', 'team-manager-free'); ?></option>
 									</select>
 								</td>
@@ -542,13 +802,13 @@
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="teamf_order"><?php echo __( 'Order Member', 'team-manager-free' ); ?></label>
+									<label for="teamf_order"><?php echo __( 'Order', 'team-manager-free' ); ?></label>
 									<span class="team_manager_hint toss"><?php echo __( 'Select an order option.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<select name="teamf_order" id="teamf_order" class="timezone_string">
-										<option value="ASC" <?php if ( isset ( $teamf_order ) ) selected( $teamf_order, 'ASC' ); ?>><?php _e('Ascending Order', 'team-manager-free'); ?></option>
-										<option value="DESC" <?php if ( isset ( $teamf_order ) ) selected( $teamf_order, 'DESC' ); ?>><?php _e('Descending Order', 'team-manager-free'); ?></option>
+										<option value="ASC" <?php if ( isset ( $teamf_order ) ) selected( $teamf_order, 'ASC' ); ?>><?php _e('Ascending (A-Z)', 'team-manager-free'); ?></option>
+										<option value="DESC" <?php if ( isset ( $teamf_order ) ) selected( $teamf_order, 'DESC' ); ?>><?php _e('Descending (Z-A)', 'team-manager-free'); ?></option>
 									</select>
 								</td>
 							</tr>
@@ -556,62 +816,8 @@
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="team_manager_free_imagesize"><?php echo __('Team Image Size', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose Team Member Image Size.', 'team-manager-free'); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<select name="team_manager_free_imagesize" id="team_manager_free_imagesize" class="timezone_string">
-										<option value="1" <?php if ( isset ( $team_manager_free_imagesize ) ) selected( $team_manager_free_imagesize, '1' ); ?>><?php _e('Default Size', 'team-manager-free'); ?></option>
-										<option value="2" <?php if ( isset ( $team_manager_free_imagesize ) ) selected( $team_manager_free_imagesize, '2' ); ?>><?php _e('Custom Size', 'team-manager-free'); ?></option>
-									</select>
-								</td>
-							</tr>
-							<!-- End Team Image Size -->
-
-							<tr valign="top" id="hide1" style="<?php if($team_manager_free_imagesize == 1){	echo "display:none;"; }?>">
-								<th scope="row">
-									<label for="team_manager_free_img_height"><?php echo __('Insert Image Height', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Insert image height.', 'team-manager-free'); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<input type="number" name="team_manager_free_img_height" id="team_manager_free_img_height" maxlength="4" class="timezone_string" required value="<?php  if($team_manager_free_img_height !=''){echo $team_manager_free_img_height; }else{ echo '220';} ?>">px<br/>
-								</td>
-							</tr>
-							<!-- End Insert Image Height -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="team_manager_free_post_column"><?php echo __('Team Column', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose an option for posts column.', 'team-manager-free'); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<select name="team_manager_free_post_column" id="team_manager_free_post_column" class="timezone_string">
-										<option value="3" <?php if ( isset ( $team_manager_free_post_column ) ) selected( $team_manager_free_post_column, '3' ); ?>><?php _e('3 Column', 'team-manager-free');?></option>
-										<option value="2" <?php if ( isset ( $team_manager_free_post_column ) ) selected( $team_manager_free_post_column, '2' ); ?>><?php _e('2 Column', 'team-manager-free');?></option>
-										<option value="4" <?php if ( isset ( $team_manager_free_post_column ) ) selected( $team_manager_free_post_column, '4' ); ?>><?php _e('4 Column', 'team-manager-free');?></option>
-										<option value="5" <?php if ( isset ( $team_manager_free_post_column ) ) selected( $team_manager_free_post_column, '5' ); ?>><?php _e('5 Column', 'team-manager-free');?></option>
-										<option value="6" <?php if ( isset ( $team_manager_free_post_column ) ) selected( $team_manager_free_post_column, '6' ); ?>><?php _e('6 Column', 'team-manager-free');?></option>
-									</select>
-								</td>
-							</tr>
-							<!-- End Choose Team Column -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="team_manager_free_margin_bottom"><?php echo __('Margin Bottom', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Column Margin Bottom.', 'team-manager-free'); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<input type="number" name="team_manager_free_margin_bottom" id="team_manager_free_margin_bottom" maxlength="4" class="timezone_string" value="<?php  if($team_manager_free_margin_bottom !=''){echo $team_manager_free_margin_bottom; }else{ echo '30';} ?>">
-									<span class="team_manager_hint">To unlock all Column Margin, <a href="https://themepoints.com/product/team-showcase-pro/" target="_blank"><?php _e('Upgrade To Pro!', 'team-manager-free');?></a></span>
-								</td>
-							</tr>
-							<!-- End column Margin Bottom -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="team_manager_free_padding_left"><?php _e( 'Padding Left', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Column padding left.', 'team-manager-free'); ?></span>
+									<label for="team_manager_free_padding_left"><?php _e( 'Space Between Members', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __('Set the distance between team members.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<input type="number" name="team_manager_free_padding_left" id="team_manager_free_padding_left" min="0" max="100" class="timezone_string" required value="<?php  if($team_manager_free_padding_left !=''){echo $team_manager_free_padding_left; }else{ echo '15';} ?>">
@@ -621,14 +827,14 @@
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="team_manager_free_padding_right"><?php _e( 'Padding Right', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Column padding Right.', 'team-manager-free'); ?></span>
+									<label for="team_manager_free_margin_bottom"><?php echo __('Margin Between Members', 'team-manager-free'); ?></label>
+									<span class="team_manager_hint toss"><?php echo __('Set the distance between rows of team members.', 'team-manager-free'); ?></span>
 								</th>
-								<td style="vertical-align: middle;">
-									<input type="number" name="team_manager_free_padding_right" id="team_manager_free_padding_right" min="0" max="100" class="timezone_string" required value="<?php  if($team_manager_free_padding_right !=''){echo $team_manager_free_padding_right; }else{ echo '15';} ?>">
+								<td style="vertical-align:middle;">
+									<input type="number" name="team_manager_free_margin_bottom" id="team_manager_free_margin_bottom" min="0" maxlength="4" class="timezone_string" required value="<?php  if($team_manager_free_margin_bottom !=''){echo $team_manager_free_margin_bottom; }else{ echo '30';} ?>">
 								</td>
 							</tr>
-							<!-- End column Padding Left -->
+							<!-- End column Margin Bottom -->
 
 							<tr valign="top">
 								<th scope="row">
@@ -646,8 +852,8 @@
 				</div>
 			</li>
 
-			<!-- Tab Three -->
-			<li style="<?php if($nav_value == 3){echo "display: block;";} else{ echo "display: none;"; }?>" class="box3 tab-box <?php if($nav_value == 3){echo "active";}?>">
+			<!-- Tab 2 -->
+			<li style="<?php if($nav_value == 2){echo "display: block;";} else{ echo "display: none;"; }?>" class="box2 tab-box <?php if($nav_value == 2){echo "active";}?>">
 				<div class="wrap">
 					<div class="option-box">
 						<p class="option-title"><?php _e('All Settings','team-manager-free'); ?></p>
@@ -656,7 +862,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_header_font_size"><?php echo __('Name Font Size', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose name font size. default font size 18px.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set name font size.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input type="number" name="team_manager_free_header_font_size" id="team_manager_free_header_font_size" maxlength="4" class="timezone_string" value="<?php  if($team_manager_free_header_font_size !=''){echo $team_manager_free_header_font_size; }else{ echo '20';} ?>">
@@ -667,7 +873,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_name_font_case"><?php echo __('Name Text Transform', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Select Your Text Transform.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set Text Transform.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<select name="team_manager_name_font_case" id="team_manager_name_font_case" class="timezone_string">
@@ -683,7 +889,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_name_font_style"><?php _e('Name Text Style', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Select Your Text Style.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set Text Style.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<select name="team_manager_name_font_style" id="team_manager_name_font_style" class="timezone_string">
@@ -697,7 +903,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_name_font_weight"><?php _e('Name Font Weight', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Select Your Font Weight.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set Font Weight.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<select name="team_manager_name_font_weight" id="team_manager_name_font_weight" class="timezone_string">
@@ -714,7 +920,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_header_font_color"><?php echo __('Name Font Color', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose name font color.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set name font color.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input type="text" name="team_manager_free_header_font_color" id="team_manager_free_header_font_color" class="timezone_string" value="<?php  if($team_manager_free_header_font_color !=''){echo $team_manager_free_header_font_color; }else{ echo '#007acc';} ?>">
@@ -725,7 +931,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_name_hover_font_color"><?php echo __('Name Hover Font Color', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose name hover font color.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set name hover font color.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input type="text" name="team_manager_free_name_hover_font_color" id="team_manager_free_name_hover_font_color" class="timezone_string" value="<?php  if($team_manager_free_name_hover_font_color !=''){echo $team_manager_free_name_hover_font_color; }else{ echo '#333333';} ?>">
@@ -735,8 +941,94 @@
 
 							<tr valign="top">
 								<th scope="row">
+									<label style="color:red" for="team_manager_free_image_hide"><?php _e( 'Member Image', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide member image.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="image_true" name="team_manager_free_image_hide" value="1" <?php if ( $team_manager_free_image_hide == '1' || $team_manager_free_image_hide == '') echo 'checked'; ?>/>
+										<label for="image_true"><?php _e( 'Show', 'team-manager-free' ); ?></label>
+
+										<input type="radio" id="image_false" name="team_manager_free_image_hide" value="0" <?php if ( $team_manager_free_image_hide == '0' ) echo 'checked'; ?>/>
+										<label for="image_false" class="image_false"><?php _e( 'Hide', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Show/Hide Member Image -->
+
+							<tr valign="top">
+							    <th scope="row">
+							        <label for="tmf_image_size"><?php _e( 'Image Dimensions', 'team-manager-free' ); ?></label>
+							        <span class="team_manager_hint toss"><?php echo __( 'Choose an image size to display perfectly', 'team-manager-free' ); ?></span>
+							    </th>
+							    <td style="vertical-align: middle;">
+							        <select id="tmf_image_size" name="tmf_selected_image_size">
+							            <?php
+								            foreach ( $options as $key => $label ) {
+								                echo '<option value="' . esc_attr( $key ) . '" ' . selected( $selected_size, $key, false ) . '>' . esc_html( $label ) . '</option>';
+								            }
+							            ?>
+							        </select>
+
+							        <!-- Custom size input fields -->
+							        <div id="custom_size_fields" style="display: <?php echo ( $selected_size === 'custom' ? 'block' : 'none' ); ?>; margin-top: 10px;">
+							            <label><?php _e( 'Width:', 'team-manager-free' ); ?></label>
+							            <input type="number" disabled name="tmf_custom_width" id="tmf_custom_width" value="<?php echo esc_attr( $custom_width ); ?>" placeholder="Width in px" /><?php _e( 'px', 'team-manager-free' ); ?><br/><br/>
+							            <label><?php _e( 'Height:', 'team-manager-free' ); ?></label>
+							            <input type="number" disabled name="tmf_custom_height" id="tmf_custom_height" value="<?php echo esc_attr( $custom_height ); ?>" placeholder="Height in px" /><?php _e( 'px', 'team-manager-free' ); ?>
+							        </div>
+							    </td>
+							</tr>
+
+							<script>
+							    document.addEventListener("DOMContentLoaded", function() {
+							        var sizeSelect = document.getElementById("tmf_image_size");
+							        var customFields = document.getElementById("custom_size_fields");
+
+							        sizeSelect.addEventListener("change", function() {
+							            if (this.value === "custom") {
+							                customFields.style.display = "block";
+							            } else {
+							                customFields.style.display = "none";
+							            }
+							        });
+							    });
+							</script>
+							<!-- End Image Size -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="team_manager_free_image_zoom"><?php _e( 'Zoom', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Select a zoom effect for image on hover.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<select name="team_manager_free_image_zoom" id="team_manager_free_image_zoom" class="timezone_string">
+										<option value="1" <?php if ( isset ( $team_manager_free_image_zoom ) ) selected( $team_manager_free_image_zoom, '1' ); ?>><?php _e('Default', 'team-manager-free');?></option>
+										<option value="2" <?php if ( isset ( $team_manager_free_image_zoom ) ) selected( $team_manager_free_image_zoom, '2' ); ?>><?php _e('Zoom In', 'team-manager-free');?></option>
+									</select><br>
+								</td>
+							</tr>
+							<!-- End Image Zoom -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="team_manager_free_image_mode"><?php _e( 'Image Mode', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set a mode for the image.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<select name="team_manager_free_image_mode" id="team_manager_free_image_mode" class="timezone_string">
+										<option value="0" <?php if ( isset ( $team_manager_free_image_mode ) ) selected( $team_manager_free_image_mode, '0' ); ?>><?php _e('Normal', 'team-manager-free');?></option>
+										<option disabled value="1" <?php if ( isset ( $team_manager_free_image_mode ) ) selected( $team_manager_free_image_mode, '1' ); ?>><?php _e('Grayscale (Pro)', 'team-manager-free');?></option>
+										<option disabled value="2" <?php if ( isset ( $team_manager_free_image_mode ) ) selected( $team_manager_free_image_mode, '2' ); ?>><?php _e('Grayscale on Hover (Pro)', 'team-manager-free');?></option>
+									</select><br>
+								</td>
+							</tr>
+							<!-- End Image Mode -->
+
+							<tr valign="top">
+								<th scope="row">
 									<label style="color:red" for="team_manager_free_designation_hide"><?php _e( 'Designation', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Designation on front page.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Designation.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
@@ -753,7 +1045,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_designation_font_size"><?php echo __('Designation Font Size', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Select Team member Designation Font Size. default font size (15px)', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set Designation Font Size.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input type="number" name="team_manager_free_designation_font_size" id="team_manager_free_designation_font_size" maxlength="4" class="timezone_string" value="<?php  if($team_manager_free_designation_font_size !=''){echo $team_manager_free_designation_font_size; }else{ echo '15';} ?>">
@@ -764,7 +1056,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_designation_font_color"><?php echo __('Designation Font Color', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose designation font color.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set designation font color.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input type="text" name="team_manager_free_designation_font_color" id="team_manager_free_designation_font_color" class="timezone_string" value="<?php  if($team_manager_free_designation_font_color !=''){echo $team_manager_free_designation_font_color; }else{ echo '#333333';} ?>">
@@ -775,7 +1067,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_desig_font_case"><?php echo __('Designation Text Transform', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose designation Text Transform.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set designation Text Transform.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<select name="team_manager_desig_font_case" id="team_manager_desig_font_case" class="timezone_string">
@@ -791,7 +1083,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_desig_font_style"><?php _e( 'Designation Text Style', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose designation text style', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set designation text style.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<select name="team_manager_desig_font_style" id="team_manager_desig_font_style" class="timezone_string">
@@ -805,12 +1097,12 @@
 							<tr valign="top">
 								<th scope="row">
 									<label style="color:red" for="team_manager_free_emails_hide"><?php _e( 'Email', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Email on front page.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Email.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
-										<input type="radio" id="emails_true" name="team_manager_free_emails_hide" value="1" <?php if ( $team_manager_free_emails_hide == '1' || $team_manager_free_emails_hide == '') echo 'checked'; ?>/>
-										<label for="emails_true"><?php _e( 'Show', 'team-manager-free' ); ?></label>
+										<input type="radio" id="emails_true" name="team_manager_free_emails_hide" disabled value="1" <?php if ( $team_manager_free_emails_hide == '1' || $team_manager_free_emails_hide == '') echo 'checked'; ?>/>
+										<label for="emails_true"><?php _e( 'Show', 'team-manager-free' ); ?><span class="mark"><?php _e( 'Pro', 'team-manager-free' ); ?></span></label>
 
 										<input type="radio" id="emails_false" name="team_manager_free_emails_hide" value="0" <?php if ( $team_manager_free_emails_hide == '0' ) echo 'checked'; ?>/>
 										<label for="emails_false" class="emails_false"><?php _e( 'Hide', 'team-manager-free' ); ?></label>
@@ -822,7 +1114,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_emails_font_size"><?php _e( 'Email Font Size', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose email font size. default font size 14px', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set email font size.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<input type="number" name="team_manager_free_emails_font_size" id="team_manager_free_emails_font_size" min="10" max="45" class="timezone_string" required value="<?php  if($team_manager_free_emails_font_size !=''){echo $team_manager_free_emails_font_size; }else{ echo '14';} ?>"> <br />
@@ -833,7 +1125,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_emails_font_color"><?php echo __( 'Email Font Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose email font color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set email font color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='team_manager_free_emails_font_color' class='team-manager-free-emails-font-color' type='text' id="team_manager_free_emails_font_color" value="<?php if($team_manager_free_emails_font_color !=''){echo $team_manager_free_emails_font_color;} else{ echo "#666666";} ?>" /> <br />
@@ -844,7 +1136,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_emails_hover_color"><?php echo __( 'Email Hover Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose email hover font color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set email hover font color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='team_manager_free_emails_hover_color' class='team-manager-free-emails-font-color' type='text' id="team_manager_free_emails_hover_color" value="<?php if($team_manager_free_emails_hover_color !=''){echo $team_manager_free_emails_hover_color;} else{ echo "#666666";} ?>" /> <br />
@@ -855,12 +1147,12 @@
 							<tr valign="top">
 								<th scope="row">
 									<label style="color:red" for="team_manager_free_numbers_hide"><?php _e( 'Number', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Number on front page.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Number.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
-										<input type="radio" id="numbers_true" name="team_manager_free_numbers_hide" value="1" <?php if ( $team_manager_free_numbers_hide == '1' || $team_manager_free_numbers_hide == '') echo 'checked'; ?>/>
-										<label for="numbers_true"><?php _e( 'Show', 'team-manager-free' ); ?></label>
+										<input type="radio" id="numbers_true" name="team_manager_free_numbers_hide" disabled value="1" <?php if ( $team_manager_free_numbers_hide == '1' || $team_manager_free_numbers_hide == '') echo 'checked'; ?>/>
+										<label for="numbers_true"><?php _e( 'Show', 'team-manager-free' ); ?><span class="mark"><?php _e( 'Pro', 'team-manager-free' ); ?></span></label>
 
 										<input type="radio" id="numbers_false" name="team_manager_free_numbers_hide" value="0" <?php if ( $team_manager_free_numbers_hide == '0' ) echo 'checked'; ?>/>
 										<label for="numbers_false" class="numbers_false"><?php _e( 'Hide', 'team-manager-free' ); ?></label>
@@ -872,7 +1164,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_numbers_font_size"><?php _e( 'Number Font Size', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose number font size. default font size 14px', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set number font size.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<input type="number" name="team_manager_free_numbers_font_size" id="team_manager_free_numbers_font_size" min="10" max="45" class="timezone_string" required value="<?php  if($team_manager_free_numbers_font_size !=''){echo $team_manager_free_numbers_font_size; }else{ echo '14';} ?>"> <br />
@@ -883,7 +1175,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_numbers_font_color"><?php echo __( 'Number Font Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose number font color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set number font color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='team_manager_free_numbers_font_color' class='team-manager-free-numbers-font-color' type='text' id="team_manager_free_numbers_font_color" value="<?php if($team_manager_free_numbers_font_color !=''){echo $team_manager_free_numbers_font_color;} else{ echo "#666666";} ?>" /> <br />
@@ -894,7 +1186,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_numbers_hover_color"><?php echo __( 'Number Hover Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose numer hover font color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set numer hover font color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='team_manager_free_numbers_hover_color' class='team-manager-free-emails-font-color' type='text' id="team_manager_free_numbers_hover_color" value="<?php if($team_manager_free_numbers_hover_color !=''){echo $team_manager_free_numbers_hover_color;} else{ echo "#666666";} ?>" /> <br />
@@ -905,12 +1197,12 @@
 							<tr valign="top">
 								<th scope="row">
 									<label style="color:red" for="team_manager_free_address_hide"><?php _e( 'Address', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Address on front page.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Address.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
-										<input type="radio" id="address_true" name="team_manager_free_address_hide" value="1" <?php if ( $team_manager_free_address_hide == '1' || $team_manager_free_address_hide == '') echo 'checked'; ?>/>
-										<label for="address_true"><?php _e( 'Show', 'team-manager-free' ); ?></label>
+										<input type="radio" id="address_true" name="team_manager_free_address_hide" disabled value="1" <?php if ( $team_manager_free_address_hide == '1' || $team_manager_free_address_hide == '') echo 'checked'; ?>/>
+										<label for="address_true"><?php _e( 'Show', 'team-manager-free' ); ?><span class="mark"><?php _e( 'Pro', 'team-manager-free' ); ?></span></label>
 
 										<input type="radio" id="address_false" name="team_manager_free_address_hide" value="0" <?php if ( $team_manager_free_address_hide == '0' ) echo 'checked'; ?>/>
 										<label for="address_false" class="address_false"><?php _e( 'Hide', 'team-manager-free' ); ?></label>
@@ -922,7 +1214,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_addresss_font_size"><?php _e( 'Address Font Size', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose address font size. default font size 14px', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set address font size.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<input type="number" name="team_manager_free_addresss_font_size" id="team_manager_free_addresss_font_size" min="10" max="45" class="timezone_string" required value="<?php  if($team_manager_free_addresss_font_size !=''){echo $team_manager_free_addresss_font_size; }else{ echo '14';} ?>"> <br />
@@ -933,7 +1225,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_addresss_font_color"><?php echo __( 'Address Font Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose address font color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set address font color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='team_manager_free_addresss_font_color' class='team-manager-free-address-font-color' type='text' id="team_manager_free_addresss_font_color" value="<?php if($team_manager_free_addresss_font_color !=''){echo $team_manager_free_addresss_font_color;} else{ echo "#666666";} ?>" /> <br />
@@ -944,12 +1236,12 @@
 							<tr valign="top">
 								<th scope="row">
 									<label style="color:red" for="team_manager_free_website_hide"><?php _e( 'Website', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Website on front page.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Website.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
-										<input type="radio" id="website_true" name="team_manager_free_website_hide" value="1" <?php if ( $team_manager_free_website_hide == '1' || $team_manager_free_website_hide == '') echo 'checked'; ?>/>
-										<label for="website_true"><?php _e( 'Show', 'team-manager-free' ); ?></label>
+										<input type="radio" id="website_true" name="team_manager_free_website_hide" disabled value="1" <?php if ( $team_manager_free_website_hide == '1' || $team_manager_free_website_hide == '') echo 'checked'; ?>/>
+										<label for="website_true"><?php _e( 'Show', 'team-manager-free' ); ?><span class="mark"><?php _e( 'Pro', 'team-manager-free' ); ?></span></label>
 										<input type="radio" id="website_false" name="team_manager_free_website_hide" value="0" <?php if ( $team_manager_free_website_hide == '0' ) echo 'checked'; ?>/>
 										<label for="website_false" class="website_false"><?php _e( 'Hide', 'team-manager-free' ); ?></label>
 									</div>
@@ -960,7 +1252,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_website_font_size"><?php _e( 'Website Font Size', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose website font size. default font size 14px', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set website font size.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<input type="number" name="team_manager_free_website_font_size" id="team_manager_free_website_font_size" min="10" max="45" class="timezone_string" required value="<?php  if($team_manager_free_website_font_size !=''){echo $team_manager_free_website_font_size; }else{ echo '14';} ?>"> <br />
@@ -971,7 +1263,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_website_font_color"><?php echo __( 'Website Link Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose Website font color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set Website font color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='team_manager_free_website_font_color' class='team-manager-free-website-font-color' type='text' id="team_manager_free_website_font_color" value="<?php if($team_manager_free_website_font_color !=''){echo $team_manager_free_website_font_color;} else{ echo "#666666";} ?>" /> <br />
@@ -982,7 +1274,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_website_hover_color"><?php echo __( 'Website Link Hover Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose Website link hover font color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set Website link hover font color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='team_manager_free_website_hover_color' class='team-manager-free-website-font-color' type='text' id="team_manager_free_website_hover_color" value="<?php if($team_manager_free_website_hover_color !=''){echo $team_manager_free_website_hover_color;} else{ echo "#666666";} ?>" /> <br />
@@ -993,7 +1285,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label style="color:red" for="team_manager_free_biography_option"><?php _e( 'Biography', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Team Member Short Biography.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Member Short Biography.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
@@ -1008,8 +1300,20 @@
 
 							<tr valign="top">
 								<th scope="row">
+									<label for="team_mf_short_desc_char_limit"><?php _e( 'Character Limit', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set short description character limit.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<span class="prohints"><span class="mark"><?php _e( 'Pro', 'team-manager-free' ); ?></span>
+									<input type="number" name="team_mf_short_desc_char_limit" disabled id="team_mf_short_desc_char_limit" class="timezone_string" value="<?php  if($team_mf_short_desc_char_limit !=''){echo $team_mf_short_desc_char_limit; }else{ echo '140';} ?>"> <br /></span>
+								</td>
+							</tr>
+							<!-- End Biography Font Size -->
+
+							<tr valign="top">
+								<th scope="row">
 									<label for="team_manager_free_biography_font_size"><?php echo __('Biography Font Size', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Select Team member Biography Font Size. default font size (15px)', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set short description font size.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input type="number" name="team_manager_free_biography_font_size" id="team_manager_free_biography_font_size" maxlength="4" class="timezone_string" value="<?php  if($team_manager_free_biography_font_size !=''){echo $team_manager_free_biography_font_size; }else{ echo '15';} ?>">
@@ -1020,7 +1324,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_biography_font_color"><?php echo __('Biography Font Color', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose Team member biography font color.default font color:#000000', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set short description font color.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input type="text" name="team_manager_free_biography_font_color" id="team_manager_free_biography_font_color" class="timezone_string" value="<?php  if($team_manager_free_biography_font_color !=''){echo $team_manager_free_biography_font_color; }else{ echo '#000000';} ?>">
@@ -1031,7 +1335,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_text_alignment"><?php _e( 'All Text Alignment', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Select all content position left, right or center.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Select all Team content position.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
@@ -1054,12 +1358,12 @@
 							<tr valign="top">
 								<th scope="row">
 									<label style="color:red" for="team_manager_free_multicolor_hide"><?php _e( 'Team Multi-Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Show Team Multicolor Option.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Team Multicolor Option.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
-										<input type="radio" id="multicolor_true" name="team_manager_free_multicolor_hide" value="1" <?php if ( $team_manager_free_multicolor_hide == '1' ) echo 'checked'; ?>/>
-										<label for="multicolor_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
+										<input type="radio" id="multicolor_true" name="team_manager_free_multicolor_hide" disabled value="1" <?php if ( $team_manager_free_multicolor_hide == '1' ) echo 'checked'; ?>/>
+										<label for="multicolor_true"><?php _e( 'Yes', 'team-manager-free' ); ?><span class="mark"><?php _e( 'Pro', 'team-manager-free' ); ?></span></label>
 
 										<input type="radio" id="multicolor_false" name="team_manager_free_multicolor_hide" value="0" <?php if ( $team_manager_free_multicolor_hide == '0' || $team_manager_free_multicolor_hide == '' ) echo 'checked'; ?>/>
 										<label for="multicolor_false" class="multicolor_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
@@ -1071,7 +1375,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_fbackground_color"><?php echo __('Member Background Color', 'team-manager-free'); ?></label>
-									<span class="team_manager_hint toss"><?php echo __('Choose all team item background color.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Set all team item background color.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input type="text" name="team_fbackground_color" id="team_fbackground_color" class="timezone_string" value="<?php  if($team_fbackground_color !=''){echo $team_fbackground_color; }else{ echo '#f8f8f8';} ?>">
@@ -1079,13 +1383,30 @@
 							</tr>
 							<!-- End Member Background Color -->
 
+							<tr valign="top">
+								<th scope="row">
+									<label style="color:red" for="team_infoicons_hide"><?php _e( 'Show/Hide Icon', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide the info icon.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="info_icons_true" name="team_infoicons_hide" disabled value="1" <?php if ( $team_infoicons_hide == '1' || $team_infoicons_hide == '') echo 'checked'; ?>/>
+										<label for="info_icons_true"><?php _e( 'Show', 'team-manager-free' ); ?><span class="mark"><?php _e( 'Pro', 'team-manager-free' ); ?></span></label>
+
+										<input type="radio" id="info_icons_false" name="team_infoicons_hide" value="0" <?php if ( $team_infoicons_hide == '0' ) echo 'checked'; ?>/>
+										<label for="info_icons_false" class="info_icons_false"><?php _e( 'Hide', 'team-manager-free' ); ?></label>
+									</div><br>
+								</td>
+							</tr>
+							<!-- End hide Icon popup page -->
+
 						</table>
 					</div>
 				</div>
 			</li>
-
-
-			<li style="<?php if($nav_value == 4){echo "display: block;";} else{ echo "display: none;"; }?>" class="box4 tab-box <?php if($nav_value == 4){echo "active";}?>">
+			
+			<!-- Tab 3 -->
+			<li style="<?php if($nav_value == 3){echo "display: block;";} else{ echo "display: none;"; }?>" class="box3 tab-box <?php if($nav_value == 3){echo "active";}?>">
 				<div class="wrap">
 					<div class="option-box">
 						<p class="option-title"><?php _e( 'Grid Settings','team-manager-free' ); ?></p>
@@ -1103,15 +1424,43 @@
 										<label for="filter_align_center"><?php _e( 'Center', 'team-manager-free' ); ?></label>
 										<input type="radio" id="filter_align_right" name="filter_align" value="right" <?php if ( $filter_align == 'right' ) echo 'checked'; ?>/>
 										<label for="filter_align_right"><?php _e( 'Right', 'team-manager-free' ); ?></label>
-									</div>	
+									</div>
 								</td>
 							</tr>
 							<!-- End Filter Menu Align -->
 
 							<tr valign="top">
 								<th scope="row">
+									<label for="team_manager_free_show_all"><?php _e( 'Show/Hide All', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide All Button.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="show_all_true" name="team_manager_free_show_all" value="1" <?php if ( $team_manager_free_show_all == '1' || $team_manager_free_show_all == '') echo 'checked'; ?>/>
+										<label for="show_all_true"><?php _e( 'Show', 'team-manager-free' ); ?></label>
+
+										<input type="radio" id="show_all_false" name="team_manager_free_show_all" value="0" <?php if ( $team_manager_free_show_all == '0' ) echo 'checked'; ?>/>
+										<label for="show_all_false" class="show_all_false"><?php _e( 'Hide', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Show/Hide Designation -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="filter_free_all_text"><?php esc_html_e( 'All Button Text:', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set All button text.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align:middle;">
+    								<input type="text" id="filter_free_all_text" name="filter_free_all_text" value="<?php echo esc_attr( $filter_free_all_text ); ?>" />
+								</td>
+							</tr>
+							<!-- End Filter Menu Text -->
+
+							<tr valign="top">
+								<th scope="row">
 									<label for="filter_bg_color"><?php echo __( 'Menu Background', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for filter menu', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set color for filter menu.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='filter_bg_color' class='team-manager-free-header-font-color' type='text' id="filter_bg_color" value="<?php if($filter_bg_color !=''){echo $filter_bg_color;} else{ echo "#efefef";} ?>" />
@@ -1122,7 +1471,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="filter_mfont_color"><?php echo __( 'Menu Font Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for filter menu text', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set color for filter menu text.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='filter_mfont_color' class='team-manager-free-header-font-color' type='text' id="filter_mfont_color" value="<?php if($filter_mfont_color !=''){echo $filter_mfont_color;} else{ echo "#000000";} ?>" />
@@ -1133,7 +1482,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="filter_border_color"><?php echo __( 'Menu Border', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for filter Menu border.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set color for filter Menu border.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='filter_border_color' class='team-manager-free-header-font-color' type='text' id="filter_border_color" value="<?php if($filter_border_color !=''){echo $filter_border_color;} else{ echo "#dddddd";} ?>" />
@@ -1144,7 +1493,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="filter_active_color"><?php echo __( 'Menu Active', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for filter Menu active background Color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set color for filter Menu active background Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='filter_active_color' class='team-manager-free-header-font-color' type='text' id="filter_active_color" value="<?php if($filter_active_color !=''){echo $filter_active_color;} else{ echo "#222f3d";} ?>" /><br>
@@ -1155,7 +1504,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="filter_active_font"><?php echo __( 'Menu Active Font', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for filter Menu active font Color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set color for filter Menu active font Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='filter_active_font' class='team-manager-free-header-font-color' type='text' id="filter_active_font" value="<?php if($filter_active_font !=''){echo $filter_active_font;} else{ echo "#ffffff";} ?>" /><br>
@@ -1166,7 +1515,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="filter_hover_color"><?php echo __( 'Menu Hover', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for filter Menu hover background Color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set color for filter Menu hover background Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='filter_hover_color' class='team-manager-free-header-font-color' type='text' id="filter_hover_color" value="<?php if($filter_hover_color !=''){echo $filter_hover_color;} else{ echo "#222f3d";} ?>" /><br>
@@ -1177,7 +1526,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="filter_hover_tcolor"><?php echo __( 'Menu Hover Font', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for filter Menu hover text Color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set color for filter Menu hover text Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align:middle;">
 									<input size='10' name='filter_hover_tcolor' class='team-manager-free-header-font-color' type='text' id="filter_hover_tcolor" value="<?php if($filter_hover_tcolor !=''){echo $filter_hover_tcolor;} else{ echo "#ffffff";} ?>" /><br>
@@ -1188,7 +1537,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="filter_border_radius"><?php _e( 'Border Radius', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Set Buttom Border Radius. Ex: 50', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set Buttom Border Radius.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<input type="number" name="filter_border_radius" id="filter_border_radius" min="0" max="100" class="timezone_string" required value="<?php  if($filter_border_radius !=''){echo $filter_border_radius; }else{ echo '5';} ?>"> <br />
@@ -1201,7 +1550,379 @@
 				</div>
 			</li>
 
-			<!-- Tab Four -->
+			<!-- Tab 4 -->
+			<li style="<?php if($nav_value == 4){echo "display: block;";} else{ echo "display: none;"; }?>" class="box4 tab-box <?php if($nav_value == 4){echo "active";}?>">
+				<div class="wrap">
+					<div class="option-box">
+						<p class="option-title"><?php _e('Slider Settings','team-manager-free'); ?> <a href="https://themepoints.com/product/team-showcase-pro/" target="_blank"><?php _e('Upgrade To Pro!', 'team-manager-free');?></a></p>
+						<table class="form-table">
+							<tr valign="top">
+								<th scope="row">
+									<label for="autoplay"><?php _e( 'Autoplay', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Enable/Disable auto play.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="autoplay_true" name="autoplay" value="true" <?php if ( $autoplay == 'true' || $autoplay == '' ) echo 'checked'; ?>/>
+										<label for="autoplay_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
+										<input type="radio" id="autoplay_false" name="autoplay" value="false" <?php if ( $autoplay == 'false' ) echo 'checked'; ?>/>
+										<label for="autoplay_false" class="autoplay_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Autoplay -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="autoplay_speed"><?php _e( 'Slide Delay', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Select a value for sliding speed.', 'team-manager-free' ); ?></span>							
+								</th>
+								<td style="vertical-align: middle;" class="auto_play">
+									<input type="range" step="100" min="100" max="5000" value="<?php  if ( $autoplay_speed !='' ) { echo $autoplay_speed; } else{ echo '700'; } ?>" class="slider" id="myRange"><br>
+									<input size="5" type="text" name="autoplay_speed" id="autoplay_speed" maxlength="4" class="timezone_string" readonly  value="<?php  if ( $autoplay_speed !='' ) {echo $autoplay_speed; }else{ echo '700'; } ?>">
+								</td>
+							</tr>
+							<!-- End Slide Delay -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="stop_hover"><?php _e( 'Stop Hover', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Enable/Disable slider pause on hover.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="stop_hover_true" name="stop_hover" value="true" <?php if ( $stop_hover == 'true' || $stop_hover == '' ) echo 'checked'; ?>/>
+										<label for="stop_hover_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
+										<input type="radio" id="stop_hover_false" name="stop_hover" value="false" <?php if ( $stop_hover == 'false' ) echo 'checked'; ?>/>
+										<label for="stop_hover_false" class="stop_hover_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
+									</div>	
+								</td>
+							</tr>
+							<!-- End Stop Hover -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="autoplaytimeout"><?php _e( 'Autoplay Time Out (Sec)', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Select an option for autoplay time out.', 'team-manager-free' ); ?></span></th>
+								<td style="vertical-align: middle;">
+									<select name="autoplaytimeout" id="autoplaytimeout" class="timezone_string">
+										<option value="1000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '1000' ); ?>><?php _e( '1', 'team-manager-free' );?></option>
+										<option value="2000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '2000' ); ?>><?php _e( '2', 'team-manager-free' );?></option>
+										<option value="3000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '3000' ); ?>><?php _e( '3', 'team-manager-free' );?></option>
+										<option value="4000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '4000' ); ?>><?php _e( '4', 'team-manager-free' );?></option>
+										<option value="5000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '5000' ); ?>><?php _e( '5', 'team-manager-free' );?></option>
+										<option value="6000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '6000' ); ?>><?php _e( '6', 'team-manager-free' );?></option>
+										<option value="7000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '7000' ); ?>><?php _e( '7', 'team-manager-free' );?></option>
+										<option value="8000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '8000' ); ?>><?php _e( '8', 'team-manager-free' );?></option>
+										<option value="9000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '9000' ); ?>><?php _e( '9', 'team-manager-free' );?></option>
+										<option value="10000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '10000' ); ?>><?php _e( '10', 'team-manager-free' );?></option>
+									</select>
+								</td>
+							</tr>
+							<!-- End Autoplay Time Out -->
+
+							<tr valign="top">
+							    <th scope="row">
+							        <label for="item_no"><?php echo __('Member Per Slide', 'team-manager-free'); ?></label>
+							        <span class="team_manager_hint toss"><?php echo __('Set members per slide at a time.', 'team-manager-free'); ?></span>
+							    </th>
+							    <td style="vertical-align:middle;">
+									<div class="pic-device-columns">
+									    <!-- Desktop Columns -->
+									    <label for="item_no" class="tp-device-label">
+									        <div class="tp-device-header">
+									            <span class="dashicons dashicons-desktop"></span>
+									            <span>Desktop</span>
+									        </div>
+									        <input type="number" name="item_no" id="item_no" value="<?php echo esc_attr($item_no); ?>" min="1" max="10">
+									    </label>
+
+									    <!-- Laptop Columns -->
+									    <label for="itemsdesktop" class="tp-device-label">
+									        <div class="tp-device-header">
+									            <span class="dashicons dashicons-laptop"></span>
+									            <span>Laptop</span>
+									        </div>
+									        <input type="number" name="itemsdesktop" id="itemsdesktop" value="<?php echo esc_attr($itemsdesktop); ?>" min="1" max="10">
+									    </label>
+
+									    <!-- Tablet Columns -->
+									    <label for="itemsdesktopsmall" class="tp-device-label">
+									        <div class="tp-device-header">
+									            <span class="dashicons dashicons-tablet"></span>
+									            <span>Tablet</span>
+									        </div>
+									        <input type="number" name="itemsdesktopsmall" id="itemsdesktopsmall" value="<?php echo esc_attr($itemsdesktopsmall); ?>" min="1" max="10">
+									    </label>
+
+									    <!-- Mobile Columns -->
+									    <label for="itemsmobile" class="tp-device-label">
+									        <div class="tp-device-header">
+									            <span class="dashicons dashicons-smartphone"></span>
+									            <span>Mobile</span>
+									        </div>
+									        <input type="number" name="itemsmobile" id="itemsmobile" value="<?php echo esc_attr($itemsmobile); ?>" min="1" max="10">
+									    </label>
+									</div>
+							    </td>
+							</tr>
+							<!-- End Choose Team Column -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="loop"><?php _e( 'Loop', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Enable/Disable infinite loop mode.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="loop_true" name="loop" value="true" <?php if ( $loop == 'true' || $loop == '' ) echo 'checked'; ?>/>
+										<label for="loop_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
+										<input type="radio" id="loop_false" name="loop" value="false" <?php if ( $loop == 'false' ) echo 'checked'; ?>/>
+										<label for="loop_false" class="loop_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Loop -->
+
+							<tr valign="top">
+							    <th scope="row">
+							        <label for="autoheight"><?php _e( 'autoHeight', 'team-manager-free' ); ?></label>
+							        <span class="team_manager_hint toss"><?php echo __( 'Enable/Disable autoheight mode.', 'team-manager-free' ); ?></span>
+							    </th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="autoheight_true" name="autoheight" value="1" <?php if ( $autoheight == '1' || $autoheight == '') echo 'checked'; ?>/>
+										<label for="autoheight_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
+
+										<input type="radio" id="autoheight_false" name="autoheight" value="0" <?php if ( $autoheight == '0' ) echo 'checked'; ?>/>
+										<label for="autoheight_false" class="autoheight_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
+									</div><br>
+								</td>
+							</tr>
+							<!-- End autoHeight -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="lazyload"><?php _e( 'LazyLoad', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Enable/Disable lazyload mode.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="lazyload_true" name="lazyload" value="1" <?php if ( $lazyload == '1' || $lazyload == '') echo 'checked'; ?>/>
+										<label for="lazyload_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
+
+										<input type="radio" id="lazyload_false" name="lazyload" value="0" <?php if ( $lazyload == '0' ) echo 'checked'; ?>/>
+										<label for="lazyload_false" class="lazyload_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
+									</div><br>
+								</td>
+							</tr>
+							<!-- End LazyLoad -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="margin"><?php _e( 'Margin', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Select margin for a slider item.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<input size="5" type="number" name="margin" id="margin_top" maxlength="3" class="timezone_string" value="<?php if ( $margin != '' ) { echo $margin; } else { echo '0'; } ?>">
+								</td>
+							</tr>
+							<!-- End Margin -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="navigation"><?php _e( 'Navigation', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Choose an option whether you want navigation option or not.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="navigation_true" name="navigation" value="true" <?php if ( $navigation == 'true' || $navigation == '' ) echo 'checked'; ?>/>
+										<label for="navigation_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
+										<input type="radio" id="navigation_false" name="navigation" value="false" <?php if ( $navigation == 'false' ) echo 'checked'; ?>/>
+										<label for="navigation_false" class="navigation_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Navigation -->
+							
+							<tr valign="top">
+								<th scope="row">
+									<label for="navigation_align"><?php _e( 'Navigation Align', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set the alignment of navigation arrows.', 'team-manager-free' ); ?></span>		
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="navigation_align_left" name="navigation_align" value="left" <?php if ( $navigation_align == 'left' ) echo 'checked'; ?>/>
+										<label for="navigation_align_left"><?php _e( 'Top Left', 'team-manager-free' ); ?></label>
+										<input type="radio" id="navigation_align_center" name="navigation_align" value="center" <?php if ( $navigation_align == 'center' || $navigation_align == '' ) echo 'checked'; ?>/>
+										<label for="navigation_align_center"><?php _e( 'Center', 'team-manager-free' ); ?></label>
+										<input type="radio" id="navigation_align_right" name="navigation_align" value="right" <?php if ( $navigation_align == 'right' ) echo 'checked'; ?>/>
+										<label for="navigation_align_right"><?php _e( 'Top Right', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Navigation Align -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="navigation_btn_style"><?php _e( 'Navigation Style', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set style for navigation arrows.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="navigation_btn_1" name="navigation_btn_style" value="0" <?php if ( $navigation_btn_style == '0' ) echo 'checked'; ?>/>
+										<label for="navigation_btn_1"><?php _e( 'Square', 'team-manager-free' ); ?></label>
+										<input type="radio" id="navigation_btn_2" name="navigation_btn_style" value="50" <?php if ( $navigation_btn_style == '50' || $navigation_btn_style == '' ) echo 'checked'; ?>/>
+										<label for="navigation_btn_2"><?php _e( 'Round', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Navigation Button Style -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="nav_text_color"><?php echo __( 'Navigation Color', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set color for the navigation arrows.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align:middle;">
+									<input size='10' name='nav_text_color' class='team-manager-free-header-font-color' type='text' id="nav_text_color" value="<?php if($nav_text_color !=''){echo $nav_text_color;} else{ echo "#000000";} ?>" /><br>
+								</td>
+							</tr>
+							<!-- End Navigation Color -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="nav_bg_color"><?php echo __( 'Navigation Background', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set Background color for the navigation arrows.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align:middle;">
+									<input size='10' name='nav_bg_color' class='team-manager-free-header-font-color' type='text' id="nav_bg_color" value="<?php if($nav_bg_color !=''){echo $nav_bg_color;} else{ echo "#dddddd";} ?>" /><br>
+								</td>
+							</tr>
+							<!-- End Navigation Background Color -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="nav_hover_text_color"><?php echo __( 'Navigation Hover Color', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set hover color for the navigation arrows.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align:middle;">
+									<input size='10' name='nav_hover_text_color' class='team-manager-free-header-font-color' type='text' id="nav_hover_text_color" value="<?php if($nav_hover_text_color !=''){echo $nav_hover_text_color;} else{ echo "#000000";} ?>" /><br>
+								</td>
+							</tr>
+							<!-- End Navigation Hover Text Color -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="nav_hover_bg_color"><?php echo __( 'Navigation Hover Background', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set background hover color for the navigation arrows.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align:middle;">
+									<input size='10' name='nav_hover_bg_color' class='team-manager-free-header-font-color' type='text' id="nav_hover_bg_color" value="<?php if($nav_hover_bg_color !=''){echo $nav_hover_bg_color;} else{ echo "#dddddd";} ?>" /><br>
+								</td>
+							</tr>
+							<!-- End Navigation Hover Background -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="pagination"><?php _e( 'Pagination', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Show/Hide Pagination.', 'team-manager-free' ); ?></span>	
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="pagination_true" name="pagination" value="true" <?php if ( $pagination == 'true' || $pagination == '' ) echo 'checked'; ?>/>
+										<label for="pagination_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
+										<input type="radio" id="pagination_false" name="pagination" value="false" <?php if ( $pagination == 'false' ) echo 'checked'; ?>/>
+										<label for="pagination_false" class="pagination_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Pagination -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="pagination_align"><?php _e( 'Pagination Align', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set the alignment of pagination dots.' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<div class="switch-field">
+										<input type="radio" id="pagination_align_left" name="pagination_align" value="left" <?php if ( $pagination_align == 'left' ) echo 'checked'; ?>/>
+										<label for="pagination_align_left"><?php _e( 'Left', 'team-manager-free' ); ?></label>
+										<input type="radio" id="pagination_align_center" name="pagination_align" value="center" <?php if ( $pagination_align == 'center' || $pagination_align == '' ) echo 'checked'; ?>/>
+										<label for="pagination_align_center"><?php _e( 'Center', 'team-manager-free' ); ?></label>
+										<input type="radio" id="pagination_align_right" name="pagination_align" value="right" <?php if ( $pagination_align == 'right' ) echo 'checked'; ?>/>
+										<label for="pagination_align_right"><?php _e( 'Right', 'team-manager-free' ); ?></label>
+									</div>
+								</td>
+							</tr>
+							<!-- End Pagination Align -->
+
+							<tr valign="top">
+							    <th scope="row">
+							        <label for="tmffree_pagination_style"><?php _e( 'Pagination Style', 'team-manager-free' ); ?></label>
+							        <span class="team_manager_hint toss"><?php esc_html_e( 'Set style for pagination.', 'team-manager-free' ); ?></span>
+							    </th>
+							    <td style="vertical-align: middle;">
+							        <div class="tmffree-pagination-options">
+							            <label class="tmffree-pagination-option">
+							                <input type="radio" name="tmffree_pagination_style" value="1" data-value="1" <?php checked($tmffree_pagination_style, '1'); ?>>
+							                <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/pagination-style-one.png'); ?>" class="tmffree-pagination-image">
+							            </label>
+							            <label class="tmffree-pagination-option">
+							                <input type="radio" name="tmffree_pagination_style" value="2" data-value="2" <?php checked($tmffree_pagination_style, '2'); ?>>
+							                <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/pagination-style-two.png'); ?>" class="tmffree-pagination-image">
+							            </label>
+							            <label class="tmffree-pagination-option">
+							                <input type="radio" name="tmffree_pagination_style" value="3" data-value="3" <?php checked($tmffree_pagination_style, '3'); ?>>
+							                <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/pagination-style-three.png'); ?>" class="tmffree-pagination-image">
+							            </label>
+							            <label class="tmffree-pagination-option">
+							                <input type="radio" name="tmffree_pagination_style" value="4" data-value="4" <?php checked($tmffree_pagination_style, '4'); ?>>
+							                <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/pagination-style-four.png'); ?>" class="tmffree-pagination-image">
+							            </label>
+							        </div>
+							    </td>
+							</tr>
+
+							<script>
+							jQuery(document).ready(function($) {
+							    $('.tmffree-pagination-option input').on('change', function() {
+							        $('.tmffree-pagination-image').css('border-color', 'transparent'); // Reset border
+							        $(this).siblings('.tmffree-pagination-image').css('border-color', '#0073aa'); // Add border to selected
+							    });
+
+							    // Set the initial selected border on page load
+							    $('.tmffree-pagination-option input:checked').siblings('.tmffree-pagination-image').css('border-color', '#0073aa');
+							});
+							</script>
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="pagination_bg_color"><?php echo __('Pagination Background', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set background color for the pagination dots.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align:middle;">
+									<input size='10' name='pagination_bg_color' class='team-manager-free-header-font-color' type='text' id="pagination_bg_color" value="<?php if($pagination_bg_color !=''){echo $pagination_bg_color;} else{ echo "#ddd";} ?>" /><br>
+								</td>
+							</tr>
+							<!-- End Pagination Background Color -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="pagination_active_color"><?php echo __( 'Pagination Active Color', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set active color for the pagination dots.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align:middle;">
+									<input size='10' name='pagination_active_color' class='team-manager-free-header-font-color' type='text' id="pagination_active_color" value="<?php if($pagination_active_color !=''){echo $pagination_active_color;} else{ echo "#998f8f";} ?>" /><br>
+								</td>
+							</tr>
+							<!-- End Pagination Active Background Color -->
+						</table>
+					</div>
+				</div>
+			</li>
+
+			<!-- Tab 5 -->
 			<li style="<?php if($nav_value == 5){echo "display: block;";} else{ echo "display: none;"; }?>" class="box5 tab-box <?php if($nav_value == 5){echo "active";}?>">
 				<div class="wrap">
 					<div class="option-box">
@@ -1376,7 +2097,7 @@
 				</div>
 			</li>
 
-			<!-- Tab Four -->
+			<!-- Tab 6 -->
 			<li style="<?php if($nav_value == 6){echo "display: block;";} else{ echo "display: none;"; }?>" class="box6 tab-box <?php if($nav_value == 6){echo "active";}?>">
 				<div class="wrap">
 					<div class="option-box">
@@ -1386,7 +2107,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_manager_free_socialicons_hide"><?php _e('Show/Hide Social', 'team-manager-free');?></label>
-									<span class="team_manager_hint toss"><?php echo __('Show/Hide Social Icons on front page.', 'team-manager-free'); ?></span>
+									<span class="team_manager_hint toss"><?php echo __('Show/Hide Social Icons.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
 									<div class="switch-field">
@@ -1399,6 +2120,46 @@
 								</td>
 							</tr>
 							<!-- End Show/Hide Social Icons -->
+
+                            <tr valign="top">
+                                <th scope="row">
+                                    <label for="tmffree_social_style"><?php _e( 'Icon Style', 'team-manager-free' ); ?></label>
+                                    <span class="team_manager_hint toss"><?php esc_html_e( 'Set social icon style.', 'team-manager-free' ); ?></span>
+                                </th>
+                                <td style="vertical-align: middle;">
+							        <div class="tmffree-pagination-options">
+							            <label class="tmffree-pagination-option">
+							                <input type="radio" name="tmffree_social_style" value="1" data-value="1" <?php checked($tmffree_social_style, '1'); ?>>
+							                <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/social-square.png'); ?>" class="tmffree-pagination-image">
+							            </label>
+							            <label class="tmffree-pagination-option">
+							                <input type="radio" name="tmffree_social_style" value="2" data-value="2" <?php checked($tmffree_social_style, '2'); ?>>
+							                <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/social-round.png'); ?>" class="tmffree-pagination-image">
+							            </label>
+							        </div>
+                                </td>
+                            </tr>
+                            <!-- End Icon Style -->
+
+                            <tr valign="top">
+                                <th scope="row">
+                                    <label for="tmffree_social_color"><?php _e( 'Icon Color Style', 'team-manager-free' ); ?></label>
+                                    <span class="team_manager_hint toss"><?php esc_html_e( 'Set social icon style.', 'team-manager-free' ); ?></span>
+                                </th>
+                                <td style="vertical-align: middle;">
+							        <div class="tmffree-social-color-options">
+							            <label class="tmffree-social-color-option">
+							                <input type="radio" name="tmffree_social_color" value="1" data-value="1" <?php checked($tmffree_social_color, '1'); ?>>
+							                <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/default-color.png'); ?>" class="tmffree-social-color-image">
+							            </label>
+							            <label class="tmffree-social-color-option">
+							                <input type="radio" name="tmffree_social_color" value="2" data-value="2" <?php checked($tmffree_social_color, '2'); ?>>
+							                <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/custom-color.png'); ?>" class="tmffree-social-color-image">
+							            </label>
+							        </div>
+                                </td>
+                            </tr>
+                            <!-- End Icon Style -->
 
 							<tr valign="top">
 								<th scope="row">
@@ -1414,32 +2175,43 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="tmffree_social_icon_color"><?php _e('Icon Color', 'team-manager-free');?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Social Icon Color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set Social Icon Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
-									<input type="text" class="jscolor" id="tmffree_social_icon_color" name="tmffree_social_icon_color" value="<?php if($tmffree_social_icon_color !=''){echo $tmffree_social_icon_color;} else{ echo "#000";} ?>">
+									<input size='10' name='tmffree_social_icon_color' class='team-manager-free-header-font-color' type='text' id="tmffree_social_icon_color" value="<?php if($tmffree_social_icon_color !=''){echo $tmffree_social_icon_color;} else{ echo "#000000";} ?>" />
+								</td>
+							</tr> <!-- End Social Icon Color -->
+
+							<tr valign="top">
+								<th scope="row">
+									<label for="tmffree_social_bg_color"><?php _e('Icon Background Color', 'team-manager-free');?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set Social Icon Background Color.', 'team-manager-free' ); ?></span>
+								</th>
+								<td style="vertical-align: middle;">
+									<input size='10' name='tmffree_social_bg_color' class='team-manager-free-header-font-color' type='text' id="tmffree_social_bg_color" value="<?php if($tmffree_social_bg_color !=''){echo $tmffree_social_bg_color;} else{ echo "#ffffff";} ?>" />
 								</td>
 							</tr> <!-- End Social Icon Color -->
 
 							<tr valign="top">
 								<th scope="row">
 									<label for="tmffree_social_hover_color"><?php _e('Icon Hover Color', 'team-manager-free');?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Social Icon Hover Color.', 'team-manager-free' ); ?></span>
+									<span class="team_manager_hint toss"><?php echo __( 'Set Social Icon Hover Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
-									<input type="text" class="jscolor" id="tmffree_social_hover_color" name="tmffree_social_hover_color" value="<?php if($tmffree_social_hover_color !=''){echo $tmffree_social_hover_color;} else{ echo "#dd3333";} ?>">
+									<input size='10' name='tmffree_social_hover_color' class='team-manager-free-header-font-color' type='text' id="tmffree_social_hover_color" value="<?php if($tmffree_social_hover_color !=''){echo $tmffree_social_hover_color;} else{ echo "#dd3333";} ?>" />
 								</td>
 							</tr> <!-- End Social Icon Hover Color -->
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="tmffree_social_bg_color"><?php _e('Icon Bg Color', 'team-manager-free');?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Social Icon Background Color.', 'team-manager-free' ); ?></span>
+									<label for="tmffree_social_hoverbg_color"><?php _e( 'Icon Hover Background Color', 'team-manager-free' ); ?></label>
+									<span class="team_manager_hint toss"><?php echo __( 'Set Social Icon Hover Background Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
-									<input type="text" class="jscolor" id="tmffree_social_bg_color" name="tmffree_social_bg_color" value="<?php if($tmffree_social_bg_color !=''){echo $tmffree_social_bg_color;} else{ echo "#fff";} ?>">
+									<input size='10' name='tmffree_social_hoverbg_color' class='team-manager-free-header-font-color' type='text' id="tmffree_social_hoverbg_color" value="<?php if($tmffree_social_hoverbg_color !=''){echo $tmffree_social_hoverbg_color;} else{ echo "#ffffff";} ?>" />
 								</td>
-							</tr> <!-- End Social Icon Color -->
+							</tr>
+							<!-- End Social Icon Hover Color -->
 
 							<tr valign="top">
 								<th scope="row">
@@ -1458,361 +2230,30 @@
 							</tr>
 							<!-- End Social Profile Link -->
 
+							<tr valign="top">
+								<th scope="row">
+									<label for="team_manager_social_nofollow"><?php _e( 'Add rel="nofollow" to social links', 'team-manager-free' ); ?></label>
+								</th>
+								<td style="vertical-align: middle;">
+									<input type="checkbox" name="team_manager_social_nofollow" id="team_manager_social_nofollow" value="1" <?php checked($team_manager_social_nofollow, '1'); ?>>
+								</td>
+							</tr>
+							<!-- End Open Social Link -->
+
 						</table>
 					</div>
 				</div>
 			</li>
 
-			<li style="<?php if($nav_value == 7){echo "display: block;";} else{ echo "display: none;"; }?>" class="box7 tab-box <?php if($nav_value == 7){echo "active";}?>">
-				<div class="wrap">
-					<div class="option-box">
-						<p class="option-title"><?php _e('Slider Settings','team-manager-free'); ?> <a href="https://themepoints.com/product/team-showcase-pro/" target="_blank"><?php _e('Upgrade To Pro!', 'team-manager-free');?></a></p>
-						<table class="form-table">
-							<tr valign="top">
-								<th scope="row">
-									<label for="autoplay"><?php _e( 'Autoplay', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose an option whether you want the slider autoplay or not.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align: middle;">
-									<div class="switch-field">
-										<input type="radio" id="autoplay_true" name="autoplay" value="true" <?php if ( $autoplay == 'true' || $autoplay == '' ) echo 'checked'; ?>/>
-										<label for="autoplay_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
-										<input type="radio" id="autoplay_false" name="autoplay" value="false" <?php if ( $autoplay == 'false' ) echo 'checked'; ?>/>
-										<label for="autoplay_false" class="autoplay_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
-									</div>
-								</td>
-							</tr>
-							<!-- End Autoplay -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="autoplay_speed"><?php _e( 'Slide Delay', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Select a value for sliding speed.', 'team-manager-free' ); ?></span>							
-								</th>
-								<td style="vertical-align: middle;" class="auto_play">
-									<input type="range" step="100" min="100" max="5000" value="<?php  if ( $autoplay_speed !='' ) { echo $autoplay_speed; } else{ echo '700'; } ?>" class="slider" id="myRange"><br>
-									<input size="5" type="text" name="autoplay_speed" id="autoplay_speed" maxlength="4" class="timezone_string" readonly  value="<?php  if ( $autoplay_speed !='' ) {echo $autoplay_speed; }else{ echo '700'; } ?>">
-								</td>
-							</tr>
-							<!-- End Slide Delay -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="stop_hover"><?php _e( 'Stop Hover', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Select an option whether you want to pause sliding on mouse hover.', 'team-manager-free' ); ?></span>						
-								</th>
-								<td style="vertical-align: middle;">
-									<div class="switch-field">
-										<input type="radio" id="stop_hover_true" name="stop_hover" value="true" <?php if ( $stop_hover == 'true' || $stop_hover == '' ) echo 'checked'; ?>/>
-										<label for="stop_hover_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
-										<input type="radio" id="stop_hover_false" name="stop_hover" value="false" <?php if ( $stop_hover == 'false' ) echo 'checked'; ?>/>
-										<label for="stop_hover_false" class="stop_hover_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
-									</div>	
-								</td>
-							</tr>
-							<!-- End Stop Hover -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="autoplaytimeout"><?php _e( 'Autoplay Time Out (Sec)', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Select an option for autoplay time out.', 'team-manager-free' ); ?></span>							
-								</th>
-								<td style="vertical-align: middle;">
-									<select name="autoplaytimeout" id="autoplaytimeout" class="timezone_string">
-										<option value="1000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '1000' ); ?>><?php _e( '1', 'team-manager-free' );?></option>
-										<option value="2000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '2000' ); ?>><?php _e( '2', 'team-manager-free' );?></option>
-										<option value="3000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '3000' ); ?>><?php _e( '3', 'team-manager-free' );?></option>
-										<option value="4000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '4000' ); ?>><?php _e( '4', 'team-manager-free' );?></option>
-										<option value="5000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '5000' ); ?>><?php _e( '5', 'team-manager-free' );?></option>
-										<option value="6000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '6000' ); ?>><?php _e( '6', 'team-manager-free' );?></option>
-										<option value="7000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '7000' ); ?>><?php _e( '7', 'team-manager-free' );?></option>
-										<option value="8000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '8000' ); ?>><?php _e( '8', 'team-manager-free' );?></option>
-										<option value="9000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '9000' ); ?>><?php _e( '9', 'team-manager-free' );?></option>
-										<option value="10000" <?php if ( isset ( $autoplaytimeout ) ) selected( $autoplaytimeout, '10000' ); ?>><?php _e( '10', 'team-manager-free' );?></option>
-									</select>
-								</td>
-							</tr>
-							<!-- End Autoplay Time Out -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="item_no"><?php _e( 'Items No', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Select number of items you want to show.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align: middle;">
-									<select name="item_no" id="item_no" class="timezone_string">
-										<option value="3" <?php if ( isset ( $item_no ) )  selected( $item_no, '3' ); ?>><?php _e( '3', 'team-manager-free' );?></option>
-										<option value="1" <?php if ( isset ( $item_no ) )  selected( $item_no, '1' ); ?>><?php _e( '1', 'team-manager-free' );?></option>
-										<option value="2" <?php if ( isset ( $item_no ) )  selected( $item_no, '2' ); ?>><?php _e( '2', 'team-manager-free' );?></option>
-										<option value="4" <?php if ( isset ( $item_no ) )  selected( $item_no, '4' ); ?>><?php _e( '4', 'team-manager-free' );?></option>
-										<option value="5" <?php if ( isset ( $item_no ) )  selected( $item_no, '5' ); ?>><?php _e( '5', 'team-manager-free' );?></option>
-										<option value="6" <?php if ( isset ( $item_no ) )  selected( $item_no, '6' ); ?>><?php _e( '6', 'team-manager-free' );?></option>
-										<option value="7" <?php if ( isset ( $item_no ) )  selected( $item_no, '7' ); ?>><?php _e( '7', 'team-manager-free' );?></option>
-										<option value="8" <?php if ( isset ( $item_no ) )  selected( $item_no, '8' ); ?>><?php _e( '8', 'team-manager-free' );?></option>
-										<option value="9" <?php if ( isset ( $item_no ) )  selected( $item_no, '9' ); ?>><?php _e( '9', 'team-manager-free' );?></option>
-										<option value="10" <?php if ( isset ( $item_no ) ) selected( $item_no, '10' ); ?>><?php _e( '10', 'team-manager-free' );?></option>
-									</select>
-								</td> 
-							</tr>
-							<!-- End Items No -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="itemsdesktop"><?php _e( 'Items Desktop', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Number of items you want to show for large desktop monitor.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align: middle;">
-									<select name="itemsdesktop" id="itemsdesktop" class="timezone_string">
-										<option value="3" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '3' ); ?>><?php _e( '3', 'team-manager-free' );?></option>
-										<option value="1" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '1' ); ?>><?php _e( '1', 'team-manager-free' );?></option>
-										<option value="2" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '2' ); ?>><?php _e( '2', 'team-manager-free' );?></option>
-										<option value="4" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '4' ); ?>><?php _e( '4', 'team-manager-free' );?></option>
-										<option value="5" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '5' ); ?>><?php _e( '5', 'team-manager-free' );?></option>
-										<option value="6" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '6' ); ?>><?php _e( '6', 'team-manager-free' );?></option>
-										<option value="7" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '7' ); ?>><?php _e( '7', 'team-manager-free' );?></option>
-										<option value="8" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '8' ); ?>><?php _e( '8', 'team-manager-free' );?></option>
-										<option value="9" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '9' ); ?>><?php _e( '9', 'team-manager-free' );?></option>
-										<option value="10" <?php if ( isset ( $itemsdesktop ) ) selected( $itemsdesktop, '10' ); ?>><?php _e( '10', 'team-manager-free' );?></option>
-									</select>
-								</td>
-							</tr>
-							<!-- End Items Desktop -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="itemsdesktopsmall"><?php _e( 'Items Desktop Small', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Number of items you want to show for small desktop monitor.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align: middle;">
-									<select name="itemsdesktopsmall" id="itemsdesktopsmall" class="timezone_string">
-										<option value="1" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '1' ); ?>><?php _e( '1', 'team-manager-free' );?></option>
-										<option value="2" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '2' ); ?>><?php _e( '2', 'team-manager-free' );?></option>
-										<option value="3" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '3' ); ?>><?php _e( '3', 'team-manager-free' );?></option>
-										<option value="4" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '4' ); ?>><?php _e( '4', 'team-manager-free' );?></option>
-										<option value="5" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '5' ); ?>><?php _e( '5', 'team-manager-free' );?></option>
-										<option value="6" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '6' ); ?>><?php _e( '6', 'team-manager-free' );?></option>
-										<option value="7" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '7' ); ?>><?php _e( '7', 'team-manager-free' );?></option>
-										<option value="8" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '8' ); ?>><?php _e( '8', 'team-manager-free' );?></option>
-										<option value="9" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '9' ); ?>><?php _e( '9', 'team-manager-free' );?></option>
-										<option value="10" <?php if ( isset ( $itemsdesktopsmall ) ) selected( $itemsdesktopsmall, '10' ); ?>><?php _e( '10', 'team-manager-free' );?></option>
-									</select>
-
-								</td>
-							</tr>
-							<!-- End Items Desktop Small -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="itemsmobile"><?php _e( 'Items Mobile', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Number of items you want to show for mobile device.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align: middle;">
-									<select name="itemsmobile" id="itemsmobile" class="timezone_string">
-										<option value="1" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '1' ); ?>><?php _e( '1', 'team-manager-free' );?></option>
-										<option value="2" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '2' ); ?>><?php _e( '2', 'team-manager-free' );?></option>
-										<option value="3" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '3' ); ?>><?php _e( '3', 'team-manager-free' );?></option>
-										<option value="4" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '4' ); ?>><?php _e( '4', 'team-manager-free' );?></option>
-										<option value="5" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '5' ); ?>><?php _e( '5', 'team-manager-free' );?></option>
-										<option value="6" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '6' ); ?>><?php _e( '6', 'team-manager-free' );?></option>
-										<option value="7" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '7' ); ?>><?php _e( '7', 'team-manager-free' );?></option>
-										<option value="8" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '8' ); ?>><?php _e( '8', 'team-manager-free' );?></option>
-										<option value="9" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '9' ); ?>><?php _e( '9', 'team-manager-free' );?></option>
-										<option value="10" <?php if ( isset ( $itemsmobile ) ) selected( $itemsmobile, '10' ); ?>><?php _e( '10', 'team-manager-free' );?></option>
-									</select>
-								</td>
-							</tr>
-							<!-- End Items Mobile -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="item_no"><?php _e( 'Loop', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose an option whether you want to loop the sliders.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align: middle;">
-									<div class="switch-field">
-										<input type="radio" id="loop_true" name="loop" value="true" <?php if ( $loop == 'true' || $loop == '' ) echo 'checked'; ?>/>
-										<label for="loop_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
-										<input type="radio" id="loop_false" name="loop" value="false" <?php if ( $loop == 'false' ) echo 'checked'; ?>/>
-										<label for="loop_false" class="loop_true"><?php _e( 'No', 'team-manager-free' ); ?></label>
-									</div>
-								</td>
-							</tr>
-							<!-- End Loop -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="margin"><?php _e( 'Margin', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Select margin for a slider item.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align: middle;">
-									<input size="5" type="number" name="margin" id="margin_top" maxlength="3" class="timezone_string" value="<?php if ( $margin != '' ) { echo $margin; } else { echo '0'; } ?>">
-								</td>
-							</tr>
-							<!-- End Margin -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="navigation"><?php _e( 'Navigation', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose an option whether you want navigation option or not.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align: middle;">
-									<div class="switch-field">
-										<input type="radio" id="navigation_true" name="navigation" value="true" <?php if ( $navigation == 'true' || $navigation == '' ) echo 'checked'; ?>/>
-										<label for="navigation_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
-										<input type="radio" id="navigation_false" name="navigation" value="false" <?php if ( $navigation == 'false' ) echo 'checked'; ?>/>
-										<label for="navigation_false" class="navigation_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
-									</div>
-								</td>
-							</tr>
-							<!-- End Navigation -->
-							
-							<tr valign="top">
-								<th scope="row">
-									<label for="navigation_align"><?php _e( 'Navigation Align', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Set the alignment of the navigation tool.', 'team-manager-free' ); ?></span>		
-								</th>
-								<td style="vertical-align: middle;">
-									<div class="switch-field">
-										<input type="radio" id="navigation_align_left" name="navigation_align" value="left" <?php if ( $navigation_align == 'left' ) echo 'checked'; ?>/>
-										<label for="navigation_align_left"><?php _e( 'Top Left', 'team-manager-free' ); ?></label>
-										<input type="radio" id="navigation_align_center" name="navigation_align" value="center" <?php if ( $navigation_align == 'center' || $navigation_align == '' ) echo 'checked'; ?>/>
-										<label for="navigation_align_center"><?php _e( 'Center', 'team-manager-free' ); ?></label>
-										<input type="radio" id="navigation_align_right" name="navigation_align" value="right" <?php if ( $navigation_align == 'right' ) echo 'checked'; ?>/>
-										<label for="navigation_align_right"><?php _e( 'Top Right', 'team-manager-free' ); ?></label>
-									</div>	
-								</td>
-							</tr>
-							<!-- End Navigation Align -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="navigation_btn_style"><?php _e( 'Navigation Style', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose style of the navigation tool.', 'team-manager-free' ); ?></span>						
-								</th>
-								<td style="vertical-align: middle;">
-									<div class="switch-field">
-										<input type="radio" id="navigation_btn_1" name="navigation_btn_style" value="0" <?php if ( $navigation_btn_style == '0' ) echo 'checked'; ?>/>
-										<label for="navigation_btn_1"><?php _e( 'Default', 'team-manager-free' ); ?></label>
-										<input type="radio" id="navigation_btn_2" name="navigation_btn_style" value="50" <?php if ( $navigation_btn_style == '50' || $navigation_btn_style == '' ) echo 'checked'; ?>/>
-										<label for="navigation_btn_2"><?php _e( 'Round', 'team-manager-free' ); ?></label>
-									</div>	
-								</td>
-							</tr>
-							<!-- End Navigation Button Style -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="nav_text_color"><?php echo __( 'Navigation Text Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for navigation tool.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<input size='10' name='nav_text_color' class='team-manager-free-header-font-color' type='text' id="nav_text_color" value="<?php if($nav_text_color !=''){echo $nav_text_color;} else{ echo "#000000";} ?>" /><br>
-								</td>
-							</tr>
-							<!-- End Navigation Color -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="nav_bg_color"><?php echo __( 'Navigation Background Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for background of navigation tool.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<input size='10' name='nav_bg_color' class='team-manager-free-header-font-color' type='text' id="nav_bg_color" value="<?php if($nav_bg_color !=''){echo $nav_bg_color;} else{ echo "#dddddd";} ?>" /><br>
-								</td>
-							</tr>
-							<!-- End Navigation Background Color -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="nav_hover_text_color"><?php echo __( 'Navigation Hover Text', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for navigation hover tool.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<input size='10' name='nav_hover_text_color' class='team-manager-free-header-font-color' type='text' id="nav_hover_text_color" value="<?php if($nav_hover_text_color !=''){echo $nav_hover_text_color;} else{ echo "#000000";} ?>" /><br>
-								</td>
-							</tr>
-							<!-- End Navigation Hover Text Color -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="nav_hover_bg_color"><?php echo __( 'Navigation Hover Background', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for background of navigation hover tool.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<input size='10' name='nav_hover_bg_color' class='team-manager-free-header-font-color' type='text' id="nav_hover_bg_color" value="<?php if($nav_hover_bg_color !=''){echo $nav_hover_bg_color;} else{ echo "#dddddd";} ?>" /><br>
-								</td>
-							</tr>
-							<!-- End Navigation Hover Background -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="pagination"><?php _e( 'Pagination', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Choose an option whether you want pagination option or not.', 'team-manager-free' ); ?></span>	
-								</th>
-								<td style="vertical-align: middle;">
-									<div class="switch-field">
-										<input type="radio" id="pagination_true" name="pagination" value="true" <?php if ( $pagination == 'true' || $pagination == '' ) echo 'checked'; ?>/>
-										<label for="pagination_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
-										<input type="radio" id="pagination_false" name="pagination" value="false" <?php if ( $pagination == 'false' ) echo 'checked'; ?>/>
-										<label for="pagination_false" class="pagination_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
-									</div>	
-								</td>
-							</tr>
-							<!-- End Pagination -->
-							
-							<tr valign="top">
-								<th scope="row">
-									<label for="pagination_align"><?php _e( 'Pagination Align', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Set the alignment of pagination.' ); ?></span>						
-								</th>
-								<td style="vertical-align: middle;">
-									<div class="switch-field">
-										<input type="radio" id="pagination_align_left" name="pagination_align" value="left" <?php if ( $pagination_align == 'left' ) echo 'checked'; ?>/>
-										<label for="pagination_align_left"><?php _e( 'Left', 'team-manager-free' ); ?></label>
-										<input type="radio" id="pagination_align_center" name="pagination_align" value="center" <?php if ( $pagination_align == 'center' || $pagination_align == '' ) echo 'checked'; ?>/>
-										<label for="pagination_align_center"><?php _e( 'Center', 'team-manager-free' ); ?></label>
-										<input type="radio" id="pagination_align_right" name="pagination_align" value="right" <?php if ( $pagination_align == 'right' ) echo 'checked'; ?>/>
-										<label for="pagination_align_right"><?php _e( 'Right', 'team-manager-free' ); ?></label>
-									</div>	
-								</td>
-							</tr>
-							<!-- End Pagination Align -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="pagination_bg_color"><?php echo __('Pagination Background', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for pagination', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<input size='10' name='pagination_bg_color' class='team-manager-free-header-font-color' type='text' id="pagination_bg_color" value="<?php if($pagination_bg_color !=''){echo $pagination_bg_color;} else{ echo "#ddd";} ?>" /><br>
-								</td>
-							</tr>
-							<!-- End Pagination Background Color -->
-
-							<tr valign="top">
-								<th scope="row">
-									<label for="pagination_active_color"><?php echo __( 'Pagination Active Color', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Pick a color for pagination active icon.', 'team-manager-free' ); ?></span>
-								</th>
-								<td style="vertical-align:middle;">
-									<input size='10' name='pagination_active_color' class='team-manager-free-header-font-color' type='text' id="pagination_active_color" value="<?php if($pagination_active_color !=''){echo $pagination_active_color;} else{ echo "#998f8f";} ?>" /><br>
-								</td>
-							</tr>
-							<!-- End Pagination Active Background Color -->
-						</table>
-					</div>
-				</div>
-			</li>
 		</ul>
 	</div>
 	<script type="text/javascript">
 		jQuery(document).ready(function(jQuery){
-			jQuery('#team_manager_free_header_font_color,#team_manager_free_biography_font_color,#team_manager_free_name_hover_font_color,#team_manager_free_designation_font_color,#team_manager_free_overlay_bg_color, #team_fbackground_color, #team_manager_free_emails_font_color, #team_manager_free_emails_hover_color, #team_manager_free_numbers_font_color, #team_manager_free_numbers_hover_color, #team_manager_free_addresss_font_color, #team_manager_free_website_hover_color, #team_manager_free_website_font_color, #filter_bg_color, #filter_border_color, #filter_mfont_color, #filter_active_color, #filter_hover_tcolor, #filter_hover_color, #filter_active_font, #pagination_bg_color, #pagination_active_color, #nav_text_color, #nav_bg_color, #nav_hover_bg_color, #nav_hover_text_color').wpColorPicker();
+			jQuery('#team_manager_free_header_font_color,#team_manager_free_biography_font_color,#team_manager_free_name_hover_font_color,#team_manager_free_designation_font_color,#team_manager_free_overlay_bg_color, #team_fbackground_color, #team_manager_free_emails_font_color, #team_manager_free_emails_hover_color, #team_manager_free_numbers_font_color, #team_manager_free_numbers_hover_color, #team_manager_free_addresss_font_color, #team_manager_free_website_hover_color, #team_manager_free_website_font_color, #filter_bg_color, #filter_border_color, #filter_mfont_color, #filter_active_color, #filter_hover_tcolor, #filter_hover_color, #filter_active_font, #pagination_bg_color, #pagination_active_color, #nav_text_color, #nav_bg_color, #nav_hover_bg_color, #nav_hover_text_color, #tmffree_social_bg_color, #tmffree_social_hover_color, #tmffree_social_icon_color, #tmffree_social_hoverbg_color').wpColorPicker();
 		});
 	</script>
 	<?php
-	}		
-
+	}
 		
 	/**
 	 * Saves the notice for the given post.
@@ -1838,39 +2279,58 @@
             update_post_meta( $post_id, 'team_manager_free_category_select', 'unchecked');
         }
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_post_themes' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_post_themes', $_POST[ 'team_manager_free_post_themes' ] );
+		// Sanitize and save 'team_manager_free_post_themes' field
+		if ( isset( $_POST[ 'team_manager_free_post_themes' ] ) ) {
+			$team_manager_free_post_themes = sanitize_text_field( $_POST['team_manager_free_post_themes'] );
+			update_post_meta( $post_id, 'team_manager_free_post_themes', $team_manager_free_post_themes );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_theme_style'])) {
-			update_post_meta($post_id, 'team_manager_free_theme_style', $_POST['team_manager_free_theme_style']);
+		// Sanitize and save 'team_manager_free_theme_style' field
+		if ( isset( $_POST[ 'team_manager_free_theme_style' ] ) ) {
+			$team_manager_free_theme_style = sanitize_text_field( $_POST['team_manager_free_theme_style'] );
+			update_post_meta( $post_id, 'team_manager_free_theme_style', $team_manager_free_theme_style );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_limits' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_limits', $_POST[ 'team_manager_free_limits' ] );
+		// Sanitize and save 'team_manager_free_limits' field (assuming it's an integer)
+		if ( isset( $_POST[ 'team_manager_free_limits' ] ) ) {
+			$team_manager_free_limits = intval( $_POST['team_manager_free_limits'] );
+			update_post_meta( $post_id, 'team_manager_free_limits', $team_manager_free_limits );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'teamf_orderby' ] ) ) {
-			update_post_meta( $post_id, 'teamf_orderby', $_POST[ 'teamf_orderby' ] );
+		// Sanitize and save 'teamf_orderby' field
+		if ( isset( $_POST[ 'teamf_orderby' ] ) ) {
+			$teamf_orderby = sanitize_text_field( $_POST['teamf_orderby'] );
+			update_post_meta( $post_id, 'teamf_orderby', $teamf_orderby );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'teamf_order' ] ) ) {
-			update_post_meta( $post_id, 'teamf_order', $_POST[ 'teamf_order' ] );
+		// Sanitize and save 'teamf_order' field
+		if ( isset( $_POST[ 'teamf_order' ] ) ) {
+			$teamf_order = sanitize_text_field( $_POST['teamf_order'] );
+			update_post_meta( $post_id, 'teamf_order', $teamf_order );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_imagesize' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_imagesize', $_POST[ 'team_manager_free_imagesize' ] );
+		// Sanitize and save 'team_manager_free_post_column' field
+		if ( isset( $_POST[ 'team_manager_free_post_column' ] ) ) {
+			$team_manager_free_post_column = sanitize_text_field( $_POST['team_manager_free_post_column'] );
+			update_post_meta( $post_id, 'team_manager_free_post_column', $team_manager_free_post_column );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_post_column' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_post_column', $_POST[ 'team_manager_free_post_column' ] );
+		// Sanitize and save 'team_manager_free_laptop_columns' field
+		if ( isset( $_POST[ 'team_manager_free_laptop_columns' ] ) ) {
+			$team_manager_free_laptop_columns = sanitize_text_field( $_POST['team_manager_free_laptop_columns'] );
+			update_post_meta( $post_id, 'team_manager_free_laptop_columns', $team_manager_free_laptop_columns );
+		}
+
+		// Sanitize and save 'team_manager_free_tablet_columns' field
+		if ( isset( $_POST[ 'team_manager_free_tablet_columns' ] ) ) {
+			$team_manager_free_tablet_columns = sanitize_text_field( $_POST['team_manager_free_tablet_columns'] );
+			update_post_meta( $post_id, 'team_manager_free_tablet_columns', $team_manager_free_tablet_columns );
+		}
+
+		// Sanitize and save 'team_manager_free_mobile_columns' field
+		if ( isset( $_POST[ 'team_manager_free_mobile_columns' ] ) ) {
+			$team_manager_free_mobile_columns = sanitize_text_field( $_POST['team_manager_free_mobile_columns'] );
+			update_post_meta( $post_id, 'team_manager_free_mobile_columns', $team_manager_free_mobile_columns );
 		}
 
 		#Checks for input and saves if needed
@@ -1884,18 +2344,8 @@
 		}
 
 		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_padding_right'])) {
-			update_post_meta($post_id, 'team_manager_free_padding_right', $_POST['team_manager_free_padding_right']);
-		}
-
-		#Checks for input and saves if needed
 		if( isset( $_POST[ 'team_manager_free_margin_lfr' ] ) ) {
 			update_post_meta( $post_id, 'team_manager_free_margin_lfr', $_POST[ 'team_manager_free_margin_lfr' ] );
-		}
-
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_img_height' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_img_height', $_POST['team_manager_free_img_height'] );
 		}
 
 		#Checks for input and saves if needed
@@ -1926,6 +2376,35 @@
 		#Checks for input and saves if needed
 		if(isset($_POST['team_manager_name_font_style'])) {
 			update_post_meta($post_id, 'team_manager_name_font_style', $_POST['team_manager_name_font_style']);
+		}
+
+		// Sanitize and save 'team_manager_free_image_hide' field
+		if ( isset( $_POST[ 'team_manager_free_image_hide' ] ) ) {
+			$team_manager_free_image_hide = sanitize_text_field( $_POST['team_manager_free_image_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_image_hide', $team_manager_free_image_hide );
+		}
+
+		// Sanitize and save 'tmf_selected_image_size' field
+	    if ( isset( $_POST['tmf_selected_image_size'] ) ) {
+	        update_post_meta( $post_id, '_tmf_selected_image_size', sanitize_text_field( $_POST['tmf_selected_image_size'] ) );
+	    }
+
+		// Sanitize and save 'tmf_custom_width' field
+	    if ( isset( $_POST['tmf_custom_width'] ) && isset( $_POST['tmf_custom_height'] ) ) {
+	        update_post_meta( $post_id, '_tmf_custom_width', intval( $_POST['tmf_custom_width'] ) );
+	        update_post_meta( $post_id, '_tmf_custom_height', intval( $_POST['tmf_custom_height'] ) );
+	    }
+
+		// Sanitize and save 'team_manager_free_image_zoom' field
+		if ( isset( $_POST[ 'team_manager_free_image_zoom' ] ) ) {
+			$team_manager_free_image_zoom = sanitize_text_field( $_POST['team_manager_free_image_zoom'] );
+			update_post_meta( $post_id, 'team_manager_free_image_zoom', $team_manager_free_image_zoom );
+		}
+
+		// Sanitize and save 'team_manager_free_image_mode' field
+		if ( isset( $_POST[ 'team_manager_free_image_mode' ] ) ) {
+			$team_manager_free_image_mode = sanitize_text_field( $_POST['team_manager_free_image_mode'] );
+			update_post_meta( $post_id, 'team_manager_free_image_mode', $team_manager_free_image_mode );
 		}
 
 		#Checks for input and saves if needed
@@ -2043,16 +2522,16 @@
 			update_post_meta($post_id, 'team_manager_free_website_hover_color', $_POST['team_manager_free_website_hover_color']);
 		}
 
+		// Sanitize and save 'team_mf_short_desc_char_limit' field
+		if ( isset( $_POST[ 'team_mf_short_desc_char_limit' ] ) ) {
+			$team_mf_short_desc_char_limit = sanitize_text_field( $_POST['team_mf_short_desc_char_limit'] );
+			update_post_meta( $post_id, 'team_mf_short_desc_char_limit', $team_mf_short_desc_char_limit );
+		}
+
 		#Checks for input and saves if needed
 		if( isset( $_POST[ 'team_manager_free_biography_font_size' ] ) ) {
 			update_post_meta( $post_id, 'team_manager_free_biography_font_size', $_POST[ 'team_manager_free_biography_font_size' ] );
 		}
-
-
-
-
-
- 
 	    
 	 	#Checks for input and sanitizes/saves if needed    
 	    if ( isset( $_POST['autoplay'] ) && ( $_POST['autoplay'] != '' ) ) {
@@ -2079,30 +2558,52 @@
 	        update_post_meta( $post_id, 'stop_hover', esc_html( $_POST['stop_hover'] ) );
 	    }
 
-		#Checks for input and sanitizes/saves if needed
-	    if ( isset( $_POST['item_no'] ) && ( $_POST['item_no'] != '' ) ) {
-	        update_post_meta( $post_id, 'item_no', esc_html( $_POST['item_no'] ) );
-	    }
+		// Sanitize and save 'item_no' field
+		if ( isset( $_POST[ 'item_no' ] ) ) {
+			$item_no = sanitize_text_field( $_POST['item_no'] );
+			update_post_meta( $post_id, 'item_no', $item_no );
+		}
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['itemsdesktop'] ) && ( $_POST['itemsdesktop'] != '' ) ) {
-	        update_post_meta( $post_id, 'itemsdesktop', esc_html( $_POST['itemsdesktop'] ) );
-	    }
+		// Sanitize and save 'itemsdesktop' field
+		if ( isset( $_POST[ 'itemsdesktop' ] ) ) {
+			$itemsdesktop = sanitize_text_field( $_POST['itemsdesktop'] );
+			update_post_meta( $post_id, 'itemsdesktop', $itemsdesktop );
+		}
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['itemsdesktopsmall'] ) && ( $_POST['itemsdesktopsmall'] != '' ) ) {
-	        update_post_meta( $post_id, 'itemsdesktopsmall', esc_html( $_POST['itemsdesktopsmall'] ) );
-	    }
+		// Sanitize and save 'itemsdesktopsmall' field
+		if ( isset( $_POST[ 'itemsdesktopsmall' ] ) ) {
+			$itemsdesktopsmall = sanitize_text_field( $_POST['itemsdesktopsmall'] );
+			update_post_meta( $post_id, 'itemsdesktopsmall', $itemsdesktopsmall );
+		}
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['itemsmobile'] ) && ( $_POST['itemsmobile'] != '' ) ) {
-	        update_post_meta( $post_id, 'itemsmobile', esc_html( $_POST['itemsmobile'] ) );
-	    }
+		// Sanitize and save 'itemsmobile' field
+		if ( isset( $_POST[ 'itemsmobile' ] ) ) {
+			$itemsmobile = sanitize_text_field( $_POST['itemsmobile'] );
+			update_post_meta( $post_id, 'itemsmobile', $itemsmobile );
+		}
 
 	 	#Checks for input and sanitizes/saves if needed    
 	    if ( isset( $_POST['autoplaytimeout'] ) && ( $_POST['autoplaytimeout'] != '' ) ) {
 	        update_post_meta( $post_id, 'autoplaytimeout', esc_html( $_POST['autoplaytimeout'] ) );
 	    }
+
+		#Checks for input and sanitizes/saves if needed    
+		if ( isset( $_POST['loop'] ) && !empty( $_POST['loop'] ) ) {
+		    $loop = sanitize_text_field( $_POST['loop'] );
+		    update_post_meta( $post_id, 'loop', $loop );
+		}
+
+		// Sanitize and save 'lazyload' field
+		if ( isset( $_POST[ 'lazyload' ] ) ) {
+			$lazyload = sanitize_text_field( $_POST['lazyload'] );
+			update_post_meta( $post_id, 'lazyload', $lazyload );
+		}
+
+		// Sanitize and save 'autoheight' field
+		if ( isset( $_POST[ 'autoheight' ] ) ) {
+			$autoheight = sanitize_text_field( $_POST['autoheight'] );
+			update_post_meta( $post_id, 'autoheight', $autoheight );
+		}
 
 	 	#Checks for input and sanitizes/saves if needed    
 	    if ( isset( $_POST['nav_text_color'] ) && ( $_POST['nav_text_color'] != '' ) ) {
@@ -2122,13 +2623,36 @@
 	    #Checks for input and sanitizes/saves if needed    
 	    if ( isset( $_POST['pagination_bg_color'] ) && ( $_POST['pagination_bg_color'] != '' ) ) {
 	        update_post_meta( $post_id, 'pagination_bg_color', esc_html( $_POST['pagination_bg_color'] ) );
-	    }  
+	    }
+
+		#Checks for input and sanitizes/saves if needed    
+		if ( isset( $_POST['tmffree_pagination_style'] ) && !empty( $_POST['tmffree_pagination_style'] ) ) {
+		    $tmffree_pagination_style = sanitize_text_field( $_POST['tmffree_pagination_style'] );
+		    update_post_meta( $post_id, 'tmffree_pagination_style', $tmffree_pagination_style );
+		}
 
 	    #Checks for input and sanitizes/saves if needed    
 	    if ( isset( $_POST['pagination_active_color'] ) && ( $_POST['pagination_active_color'] != '' ) ) {
 	        update_post_meta( $post_id, 'pagination_active_color', esc_html( $_POST['pagination_active_color'] ) );
-	    }   
+	    }
 
+		#Checks for input and sanitizes/saves if needed    
+		if ( isset( $_POST['filter_align'] ) && !empty( $_POST['filter_align'] ) ) {
+		    $filter_align = sanitize_text_field( $_POST['filter_align'] );
+		    update_post_meta( $post_id, 'filter_align', $filter_align );
+		}
+
+		#Checks for input and sanitizes/saves if needed    
+		if ( isset( $_POST['filter_free_all_text'] ) && !empty( $_POST['filter_free_all_text'] ) ) {
+		    $filter_free_all_text = sanitize_text_field( $_POST['filter_free_all_text'] );
+		    update_post_meta( $post_id, 'filter_free_all_text', $filter_free_all_text );
+		}
+
+		// Sanitize and save 'team_manager_free_show_all' field
+		if ( isset( $_POST[ 'team_manager_free_show_all' ] ) ) {
+			$team_manager_free_show_all = sanitize_text_field( $_POST['team_manager_free_show_all'] );
+			update_post_meta( $post_id, 'team_manager_free_show_all', $team_manager_free_show_all );
+		}
 
 	 	#Checks for input and sanitizes/saves if needed    
 	    if ( isset( $_POST['filter_bg_color'] ) && ( $_POST['filter_bg_color'] != '' ) ) {
@@ -2183,7 +2707,13 @@
 		#Checks for input and saves if needed
 		if( isset( $_POST[ 'team_manager_free_biography_font_color' ] ) ) {
 			update_post_meta( $post_id, 'team_manager_free_biography_font_color', $_POST[ 'team_manager_free_biography_font_color' ] );
-		}	
+		}
+
+		// Sanitize and save 'team_infoicons_hide' field
+		if ( isset( $_POST[ 'team_infoicons_hide' ] ) ) {
+			$team_infoicons_hide = sanitize_text_field( $_POST['team_infoicons_hide'] );
+			update_post_meta( $post_id, 'team_infoicons_hide', $team_infoicons_hide );
+		}
 
 		#Checks for input and saves if needed
 		if( isset( $_POST[ 'team_fbackground_color' ] ) ) {
@@ -2224,10 +2754,21 @@
 		if(isset($_POST['team_popup_address_hide'])) {
 			update_post_meta($post_id, 'team_popup_address_hide', $_POST['team_popup_address_hide']);
 		}
-		
+
 		#Checks for input and saves if needed
 		if( isset( $_POST[ 'team_manager_free_socialicons_hide' ] ) ) {
 			update_post_meta( $post_id, 'team_manager_free_socialicons_hide', $_POST[ 'team_manager_free_socialicons_hide' ] );
+		}
+
+		#Checks for input and saves if needed
+		if(isset($_POST['tmffree_social_style'])) {
+			update_post_meta($post_id, 'tmffree_social_style', $_POST['tmffree_social_style']);
+		}
+
+		// Sanitize and save 'tmffree_social_color' field
+		if ( isset( $_POST[ 'tmffree_social_color' ] ) ) {
+			$tmffree_social_color = sanitize_text_field( $_POST['tmffree_social_color'] );
+			update_post_meta( $post_id, 'tmffree_social_color', $tmffree_social_color );
 		}
 
 		#Checks for input and saves if needed
@@ -2246,6 +2787,11 @@
 		}
 
 		#Checks for input and saves if needed
+		if( isset( $_POST[ 'tmffree_social_hoverbg_color' ] ) ) {
+			update_post_meta( $post_id, 'tmffree_social_hoverbg_color', $_POST[ 'tmffree_social_hoverbg_color' ] );
+		}
+
+		#Checks for input and saves if needed
 		if( isset( $_POST[ 'tmffree_social_bg_color' ] ) ) {
 			update_post_meta( $post_id, 'tmffree_social_bg_color', $_POST[ 'tmffree_social_bg_color' ] );
 		}
@@ -2254,6 +2800,9 @@
 		if( isset( $_POST[ 'team_manager_free_social_target' ] ) ) {
 			update_post_meta( $post_id, 'team_manager_free_social_target', $_POST[ 'team_manager_free_social_target' ] );
 		}
+
+	    $team_manager_social_nofollow = isset($_POST['team_manager_social_nofollow']) ? '1' : '0';
+	    update_post_meta($post_id, 'team_manager_social_nofollow', $team_manager_social_nofollow);
 
 		#Checks for input and saves if needed
 		if(isset($_POST['team_popup_website_hide'])) {
@@ -2265,11 +2814,36 @@
 			update_post_meta($post_id, 'team_popup_infoicons_hide', $_POST['team_popup_infoicons_hide']);
 		}
 
+		# Multicolor Meta Box
+
+		// Sanitize and save 'team_manager_mbgcolor_color' field
+		if ( isset( $_POST[ 'team_manager_mbgcolor_color' ] ) ) {
+			$team_manager_mbgcolor_color = sanitize_hex_color( $_POST['team_manager_mbgcolor_color'] );
+			update_post_meta( $post_id, 'team_manager_mbgcolor_color', $team_manager_mbgcolor_color );
+		}
+
+		// Sanitize and save 'team_manager_mborder_color' field
+		if ( isset( $_POST[ 'team_manager_mborder_color' ] ) ) {
+			$team_manager_mborder_color = sanitize_hex_color( $_POST['team_manager_mborder_color'] );
+			update_post_meta( $post_id, 'team_manager_mborder_color', $team_manager_mborder_color );
+		}
+
+		// Sanitize and save 'team_manager_mbcontent_color' field
+		if ( isset( $_POST[ 'team_manager_mbcontent_color' ] ) ) {
+			$team_manager_mbcontent_color = sanitize_hex_color( $_POST['team_manager_mbcontent_color'] );
+			update_post_meta( $post_id, 'team_manager_mbcontent_color', $team_manager_mbcontent_color );
+		}
+
+		if( isset( $_POST[ 'sort_array' ] ) ) {
+			update_post_meta( $post_id, 'sort_array', array_map( 'sanitize_text_field', $_POST[ 'sort_array' ] ) );
+		}
+
 		#Value check and saves if needed
-		if( isset( $_POST[ 'nav_value' ] ) ) {
-			update_post_meta( $post_id, 'nav_value', $_POST['nav_value'] );
+		if ( isset( $_POST[ 'nav_value' ] ) ) {
+		    $nav_value = sanitize_text_field( $_POST['nav_value'] ); // Sanitize nav_value input
+		    update_post_meta( $post_id, 'nav_value', $nav_value );
 		} else {
-			update_post_meta( $post_id, 'nav_value', 1 );
+		    update_post_meta( $post_id, 'nav_value', 1 ); // Default value
 		}
 
 	} // end save_notice

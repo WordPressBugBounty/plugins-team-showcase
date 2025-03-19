@@ -181,3 +181,9 @@ ul.tp-tmffree-popup-info li a:hover {
         margin-top: 50px;
     }
 }
+
+.left-box-social-items .fa.fa-twitter::before,
+.team-manager-free-items-social .fa.fa-twitter::before {
+    content: "𝕏";
+    font-size: 1.2em;
+}

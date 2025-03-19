@@ -48,37 +48,30 @@
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-profiles {
 		    padding: 15px;
 		}
-
-		<?php if( $team_manager_free_imagesize == 1 ){ ?>
-			.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-pic img{
-				width:100%;
-				height: auto;
-				transition: .5s linear;
-				transform: scale(1);
-			}
-		<?php }elseif( $team_manager_free_imagesize == 2 ){ ?>
-			.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-pic img{
-				width:100%;
-				height: <?php echo esc_attr( $team_manager_free_img_height ); ?>px;
-				transition: .5s linear;
-				transform: scale(1);
-			}
-		<?php } ?>
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-pic img{
+			width:100%;
+			height: auto;
+			transition: all 0.3s ease-in-out;
+		}
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items .team-manager-free-items-over-laye p {
 		    margin: 0;
 		    padding: 0;
 			font-size: <?php echo esc_attr( $team_manager_free_biography_font_size); ?>px;
 			color:<?php echo esc_attr( $team_manager_free_biography_font_color); ?>;
+			line-height: 24px;
 		}
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items .team-manager-free-items-pic {
 			position: relative;
 			overflow: hidden;
+			line-height: 0;
 		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items:hover .team-manager-free-items-pic img {
-		    -webkit-transform: scale(1.10);
-		    -moz-transform: scale(1.10);
-		    transform: scale(1.10);
-		}
+	    /* Zoom In */
+	    <?php if ($team_manager_free_image_zoom == '2') : ?>
+	        .team-manager-free-main-area-<?php echo esc_attr($post_id); ?> .team-manager-free-items:hover .team-manager-free-items-pic img {
+	            transform: scale(1.10);
+	        }
+	    <?php endif; ?>
+
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items:hover .team-manager-free-items-over-laye {
 			height: 100%; /* Expand the height of the overlay on hover */
 			transform: translateY(0); /* Move the overlay into view */
@@ -114,28 +107,65 @@
 		  opacity: 1; /* Show the social icons */
 		}
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li {
-			background: #<?php echo esc_attr( $tmffree_social_bg_color); ?>;
+			display: inline-block;
+			margin:5px 0px 0px 0px;
+		}
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li a{
+		    display: flex;
+		    -webkit-box-align: center;
+		    -ms-flex-align: center;
+		    align-items: center;
+		    justify-content: center;
+			background: <?php echo esc_attr( $tmffree_social_bg_color); ?>;
+		    color: <?php echo esc_attr( $tmffree_social_icon_color); ?>;
+		    border-radius: <?php echo esc_attr( $social_radius ); ?>;
 			height: 30px;
 		    width: 30px;
-		    display: inline-block;
-		    line-height: 30px;
-		    color: #<?php echo esc_attr( $tmffree_social_icon_color); ?>;
-		    margin: 0 1px;
 			transition: all 0.3s;
-		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li a {
-		    color: #<?php echo esc_attr( $tmffree_social_icon_color); ?>;
 		    text-decoration: none;
 		    outline: none;
 		    box-shadow: none;
 		}
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li:hover {
-		    border-radius: 50px;
 		    transition: all 0.3s;
 		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li:hover a {
-			color:#<?php echo esc_attr( $tmffree_social_hover_color); ?>;
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li a:hover {
+			color: <?php echo esc_attr( $tmffree_social_hover_color); ?>;
+			background: <?php echo esc_attr( $tmffree_social_hoverbg_color); ?>;
 		}
+
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-1,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-2,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-3,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-4,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-5,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-6,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-1,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-2,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-3,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-4,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-5,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-6,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-1,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-2,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-3,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-4,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-5,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-6,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-1,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-2,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-3,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-4,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-5,
+		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-6 {
+			float: left;
+			margin-bottom: <?php echo $team_manager_free_margin_bottom;?>px !important;
+			min-height: 1px;
+			padding-left: <?php echo $team_manager_free_padding_left;?>px !important;
+			padding-right: <?php echo $team_manager_free_padding_left;?>px !important;
+			position: relative;
+		}
+
 		<?php
 	    // Get the buffered content
 	    $styles = ob_get_clean();
@@ -152,35 +182,30 @@
 			// Creating a new side loop
 			while ( $tmf_query->have_posts() ) : $tmf_query->the_post(); global $post;
 
-				$team_manager_free_client_designation 		= get_post_meta(get_the_ID(), 'client_designation', true);
-				$team_manager_free_client_shortdescription 	= get_post_meta(get_the_ID(), 'client_shortdescription', true);
-				$team_manager_free_client_email 			= get_post_meta(get_the_ID(), 'contact_email', true);
-				$team_manager_free_client_number 			= get_post_meta(get_the_ID(), 'contact_number', true);
-				$team_manager_free_client_address 			= get_post_meta(get_the_ID(), 'company_address', true);
-				$team_manager_free_client_website 			= get_post_meta(get_the_ID(), 'client_website', true);
-				$team_manager_free_social_facebook 			= get_post_meta(get_the_ID(), 'social_facebook', true);
-				$team_manager_free_social_twitter 			= get_post_meta(get_the_ID(), 'social_twitter', true);
-				$team_manager_free_social_googleplus 		= get_post_meta(get_the_ID(), 'social_googleplus', true);
-				$team_manager_free_social_instagram 		= get_post_meta(get_the_ID(), 'social_instagram', true);
-				$team_manager_free_social_pinterest 		= get_post_meta(get_the_ID(), 'social_pinterest', true);
-				$team_manager_free_social_linkedin 			= get_post_meta(get_the_ID(), 'social_linkedin', true);
-				$team_manager_free_social_dribbble 			= get_post_meta(get_the_ID(), 'social_dribbble', true);
-				$team_manager_free_social_youtube 			= get_post_meta(get_the_ID(), 'social_youtube', true);
-				$team_manager_free_social_skype 			= get_post_meta(get_the_ID(), 'social_skype', true);
-
-				$tpteamfree_social_iconbox_repeat = get_post_meta( get_the_ID(), 'tpteamfree_social_iconbox_repeat', true);
-
-				$thumb_id 		= get_post_thumbnail_id();
-				$thumb_url 		= wp_get_attachment_image_src($thumb_id,'thumbnail-size', true);
-				$random_team_id = rand();
+				$team_manager_free_client_designation      = get_post_meta(get_the_ID(), 'client_designation', true);
+				$team_manager_free_client_shortdescription = get_post_meta(get_the_ID(), 'client_shortdescription', true);
+				$team_manager_free_client_email            = get_post_meta(get_the_ID(), 'contact_email', true);
+				$team_manager_free_client_number           = get_post_meta(get_the_ID(), 'contact_number', true);
+				$team_manager_free_client_address          = get_post_meta(get_the_ID(), 'company_address', true);
+				$team_manager_free_client_website          = get_post_meta(get_the_ID(), 'client_website', true);
+				
+				$tpteamfree_social_iconbox_repeat          = get_post_meta( get_the_ID(), 'tpteamfree_social_iconbox_repeat', true);
+				$random_team_id                            = rand();
 				?>
 
-				<div class="teamshowcasefree-col-lg-<?php echo esc_attr( $team_manager_free_post_column ); ?> teamshowcasefree-col-md-2 teamshowcasefree-col-sm-2 teamshowcasefree-col-xs-1">
+				<div class="teamshowcasefree-col-lg-<?php echo esc_attr( $team_manager_free_post_column ); ?> teamshowcasefree-col-md-<?php echo esc_attr( $team_manager_free_laptop_columns ); ?> teamshowcasefree-col-sm-<?php echo esc_attr( $team_manager_free_tablet_columns ); ?> teamshowcasefree-col-xs-<?php echo esc_attr( $team_manager_free_mobile_columns ); ?>">
 			        <div class="team-manager-free-items">
 				        <div class="team-manager-free-items-pic">
 				            <a href="#team-popup-area-<?php echo esc_attr( $random_team_id ); ?>" class="open-popup-link" data-effect="mfp-zoom-in">
-				              <?php the_post_thumbnail(); ?>
+				             	<?php
+									if ($selected_size === 'custom' && !empty($custom_width) && !empty($custom_height)) {
+									    the_post_thumbnail($selected_size);
+									} else {
+									    the_post_thumbnail($selected_size);
+									}
+				              	?>
 				            </a>
+				            <?php if ( !empty( $team_manager_free_client_shortdescription ) || !empty( $tpteamfree_social_iconbox_repeat ) ) { ?>
 			            	<div class="team-manager-free-items-over-laye">
 			            		<?php if( !empty( $team_manager_free_client_shortdescription ) ){ ?>
 			              			<p><?php echo esc_html( $team_manager_free_client_shortdescription ); ?></p>
@@ -189,6 +214,7 @@
 									<?php include __DIR__ . '/social-info-short.php'; ?>
 				              	</ul>
 			            	</div>
+			            	<?php } ?>
 			          	</div>
 				        <div class="team-manager-free-items-profiles">
 

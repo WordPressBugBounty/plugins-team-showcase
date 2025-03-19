@@ -1,5 +1,7 @@
 (function( $ ) {
 	'use strict';
+	
+	$( ".tup_class2" ).sortable();
 
 	$(document).on('click', '.tab-nav li', function(){
 		$(".active").removeClass("active");

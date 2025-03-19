@@ -1,14 +1,14 @@
 <?php
-	/*
-	* @Author 		Themepoints
-	* Copyright: 	2016 Themepoints
-	* Version : 2.0.3
-	*/
-
 	if ( ! defined( 'ABSPATH' ) ) {
 	    exit;
 	}
 	// Exit if accessed directly
+
+	/*
+	* @Author 		Themepoints
+	* Copyright: 	2016 Themepoints
+	* Version : 2.4
+	*/
 
 	# Add Team Meta Box
 	function team_manager_free_custom_post_meta_box() {
@@ -22,19 +22,27 @@
 		);
 	    add_meta_box(
 	        'custom_greeting_metabox',
-	        'Member Social Profiles - New Features',
+	        'Member Social Profiles',
 	        'display_tptmfee_social_metasbox',
 	        'team_mf',
 	        'normal',
 	        'default'
 	    );
 		add_meta_box(
-			'custom_meta_box2', // $id
-			'Member Social Profiles', // $title
-			'team_manager_free_custom_inner_custom_boxess', // $callback
-			'team_mf', 
-			'normal'
+			'team_meta_idmulticolor_02',                            # Metabox
+			__( 'Multi Color Team', 'team-manager-free' ),          # Title
+			'multicolor_add_meta2',                             	# Call Back func
+			'team_mf',                             					# post type
+			'normal'                                       			# Text Content
 		);
+	    add_meta_box(
+	        'team_mf_team_sidebar_metabox', // Metabox ID
+	        __('Team Info Sorting', 'team-manager-free'), // Metabox Title
+	        'team_mf_team_sidebar_metabox_callback', // Callback function
+	        'team_mf_team', // Post type
+	        'side', // Position (sidebar)
+	        'low' // Priority
+	    );
 	}
 	add_action('add_meta_boxes', 'team_manager_free_custom_post_meta_box');
 
@@ -44,7 +52,7 @@
 	
 	function team_manager_free_custom_inner_custom_boxes( $post ) {
 
-		// Retrieve meta values with proper sanitization		
+		// Retrieve meta values with proper sanitization
 		$client_designation      = get_post_meta($post->ID, 'client_designation', true);
 		$company_address         = get_post_meta($post->ID, 'company_address', true);
 		$contact_number          = get_post_meta($post->ID, 'contact_number', true);
@@ -56,109 +64,33 @@
 		<div id="details_profiles_area">
 			<div class="details_profiles_cols">
 				<!-- Designation -->
-				<p><label for="post_title_designation"><strong><?php _e('Designation', 'team-manager-free'); ?></strong></label></p>
+				<p><label for="post_title_designation"><strong><?php _e('Designation:', 'team-manager-free'); ?></strong></label></p>
 				<input type="text" name="post_title_designation" placeholder="Designation" id="post_title_designation" value="<?php echo esc_attr( $client_designation ); ?>" />
 
 				<!-- Address  -->
-				<p><label for="client_address_input"><strong><?php _e('Address', 'team-manager-free'); ?></strong></label></p>
+				<p><label for="client_address_input"><strong><?php _e('Address/Location:', 'team-manager-free'); ?></strong></label></p>
 				<input type="text" name="client_address_input" placeholder="Winston Salem, NC" id="client_address_input" value="<?php echo esc_attr( $company_address ); ?>" />
 
 				<!-- Contact Number -->
-				<p><label for="contact_number_input"><strong><?php _e('Contact Number', 'team-manager-free'); ?></strong></label></p>
+				<p><label for="contact_number_input"><strong><?php _e('Contact Number:', 'team-manager-free'); ?></strong></label></p>
 				<input type="text" name="contact_number_input" placeholder="xxx-xxx-xxxx" id="contact_number_input" value="<?php echo esc_attr( $contact_number ); ?>" />
 			</div>
 			<div class="details_profiles_cols">
 				<!-- Contact Email -->
-				<p><label for="contact_email_input"><strong><?php _e('Email', 'team-manager-free'); ?></strong></label></p>
-				<input type="text" name="contact_email_input" placeholder="email@exapmle.com" id="contact_email_input" value="<?php echo esc_attr( $contact_email ); ?>" />
+				<p><label for="contact_email_input"><strong><?php _e('Email Address:', 'team-manager-free'); ?></strong></label></p>
+				<input type="text" name="contact_email_input" placeholder="email@example.com" id="contact_email_input" value="<?php echo esc_attr( $contact_email ); ?>" />
 				
 				<!-- Website -->
 				<p><label for="client_website_input"><strong><?php _e('Website:', 'team-manager-free'); ?></strong></label></p>
 
-				<input type="text" name="client_website_input" placeholder="exapmle.com" id="client_website_input" value="<?php echo esc_attr( $client_website ); ?>" />
+				<input type="text" name="client_website_input" placeholder="example.com" id="client_website_input" value="<?php echo esc_attr( $client_website ); ?>" />
 
 				<!-- Description -->
-				<p><label for="short_description_input"><strong><?php _e('Short Description (Max 140 characters)', 'team-manager-free');?></strong></label></p>
+				<p><label for="short_description_input"><strong><?php _e('Short Description (Max 140 characters):', 'team-manager-free');?></strong></label></p>
 				<textarea name="short_description_input" id="short_description_input" cols="30" rows="3" maxlength="140"><?php echo esc_textarea( $client_shortdescription ); ?></textarea>
 			</div>
 		</div>
 
-		<?php
-	}
-	
-	function team_manager_free_custom_inner_custom_boxess( $post ) { 
-
-		// Retrieve meta values with proper sanitization
-		$social_facebook   = get_post_meta($post->ID, 'social_facebook', true);
-		$social_twitter    = get_post_meta($post->ID, 'social_twitter', true);
-		$social_googleplus = get_post_meta($post->ID, 'social_googleplus', true);
-		$social_instagram  = get_post_meta($post->ID, 'social_instagram', true);
-		$social_pinterest  = get_post_meta($post->ID, 'social_pinterest', true);
-		$social_linkedin   = get_post_meta($post->ID, 'social_linkedin', true);
-		$social_dribbble   = get_post_meta($post->ID, 'social_dribbble', true);
-		$social_youtube    = get_post_meta($post->ID, 'social_youtube', true);
-		$social_skype      = get_post_meta($post->ID, 'social_skype', true);
-
-		?>
-		<div id="details_profiles_area">
-			<div class="team-backend-socialprofiles">
-
-				<div class="single-team-social-icons">
-					<!-- Facebook -->
-					<p><label for="facebook_social_input"><strong><?php _e('Facebook', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="facebook_social_input" placeholder="https://example.com/username" id="facebook_social_input" value="<?php echo esc_url( $social_facebook ); ?>" />
-				</div>
-
-				<div class="single-team-social-icons">
-					<!-- Twitter -->
-					<p><label for="twitter_social_input"><strong><?php _e('Twitter', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="twitter_social_input" placeholder="https://example.com/username" id="twitter_social_input" value="<?php echo esc_url( $social_twitter ); ?>" />
-				</div>
-
-				<div class="single-team-social-icons">
-					<!-- Google plus -->
-					<p><label for="googleplus_social_input"><strong><?php _e('Google Plus', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="googleplus_social_input" placeholder="https://example.com/username" id="googleplus_social_input" value="<?php echo esc_url( $social_googleplus ); ?>" />
-				</div>
-
-				<div class="single-team-social-icons">
-					<!-- Instagram -->
-					<p><label for="instagram_social_input"><strong><?php _e('Instagram', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="instagram_social_input" placeholder="https://example.com/username" id="instagram_social_input" value="<?php echo esc_url( $social_instagram ); ?>" />
-				</div>
-
-				<div class="single-team-social-icons">
-					<!-- Pinterest -->
-					<p><label for="pinterest_social_input"><strong><?php _e('Pinterest', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="pinterest_social_input" placeholder="https://example.com/username" id="pinterest_social_input" value="<?php echo esc_url( $social_pinterest ); ?>" />
-				</div>
-
-				<div class="single-team-social-icons">
-					<!-- LinkedIn -->
-					<p><label for="linkedIn_social_input"><strong><?php _e('LinkedIn', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="linkedIn_social_input" placeholder="https://example.com/username" id="linkedIn_social_input" value="<?php echo esc_url( $social_linkedin ); ?>" />
-				</div>
-
-				<div class="single-team-social-icons">
-					<!-- Dribbble -->
-					<p><label for="dribbble_social_input"><strong><?php _e('Dribbble', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="dribbble_social_input" placeholder="https://example.com/username" id="dribbble_social_input" value="<?php echo esc_url( $social_dribbble ); ?>" />
-				</div>
-
-				<div class="single-team-social-icons">
-					<!-- Youtube -->
-					<p><label for="youtube_social_input"><strong><?php _e('Youtube', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="youtube_social_input" placeholder="https://example.com/username" id="youtube_social_input" value="<?php echo esc_url( $social_youtube ); ?>" />
-				</div>
-
-				<div class="single-team-social-icons">
-					<!-- Youtube -->
-					<p><label for="skype_social_input"><strong><?php _e('Skype', 'team-manager-free');?></strong></label></p>
-					<input type="text" name="skype_social_input" placeholder="https://example.com/username" id="skype_social_input" value="<?php echo esc_url( $social_skype ); ?>" />
-				</div>
-
-			</div>
-		</div>
 		<?php
 	}
 
@@ -200,41 +132,6 @@
 			update_post_meta($post_id, 'client_shortdescription', sanitize_textarea_field( $_POST['short_description_input'] ) );
 		}
 
-		if(isset($_POST['facebook_social_input'])) {
-			update_post_meta($post_id, 'social_facebook', esc_url_raw( $_POST['facebook_social_input'] ) );
-		}
-
-		if(isset($_POST['twitter_social_input'])) {
-			update_post_meta($post_id, 'social_twitter', esc_url_raw( $_POST['twitter_social_input'] ) );
-		}
-
-		if(isset($_POST['googleplus_social_input'])) {
-			update_post_meta($post_id, 'social_googleplus', esc_url_raw( $_POST['googleplus_social_input'] ) );
-		}
-
-		if(isset($_POST['instagram_social_input'])) {
-			update_post_meta($post_id, 'social_instagram', esc_url_raw( $_POST['instagram_social_input'] ) );
-		}
-
-		if(isset($_POST['pinterest_social_input'])) {
-			update_post_meta($post_id, 'social_pinterest', esc_url_raw( $_POST['pinterest_social_input'] ) );
-		}
-
-		if(isset($_POST['linkedIn_social_input'])) {
-			update_post_meta($post_id, 'social_linkedin', esc_url_raw( $_POST['linkedIn_social_input'] ) );
-		}
-
-		if(isset($_POST['dribbble_social_input'])) {
-			update_post_meta($post_id, 'social_dribbble', esc_url_raw( $_POST['dribbble_social_input'] ) );
-		}
-
-		if(isset($_POST['youtube_social_input'])) {
-			update_post_meta($post_id, 'social_youtube', esc_url_raw( $_POST['youtube_social_input'] ) );
-		}
-
-		if(isset($_POST['skype_social_input'])) {
-			update_post_meta($post_id, 'social_skype', esc_url_raw( $_POST['skype_social_input'] ) );
-		}
 	}
 	add_action('save_post', 'team_manager_free_custom_inner_custom_boxes_save');
 	
@@ -242,11 +139,12 @@
 	function get_tp_tmfree_social_icons_list() {
 	    return array(
 			'Facebook'       => 'facebook',
-			'Twitter'        => 'twitter',
+			'X (Twitter)'    => 'twitter',
 			'Instagram'      => 'instagram',
-			'Linkedin'       => 'linkedIn',
+			'Linkedin'       => 'linkedin',
 			'Pinterest'      => 'Pinterest',
 			'Youtube'        => 'youTube',
+			'Youtube Play'   => 'youtube-play',
 			'Google'         => 'google',
 			'Github'         => 'gitHub',
 			'Tumblr'         => 'tumblr',
@@ -262,7 +160,6 @@
 			'Flickr'         => 'flickr',
 			'RSS'            => 'rss',
 			'Email'          => 'envelope',
-			'YouTube Play'   => 'youtube-play',
 			'Spotify'        => 'spotify',
 			'Apple'          => 'apple',
 			'Amazon'         => 'amazon',
@@ -289,7 +186,6 @@
 			'Website'        => 'globe',
 			'Link'           => 'link',
 			'Skype'          => 'skype',
-			'Tripadvisor'    => 'tripadvisor',
 			'Stumbleupon'    => 'stumbleupon',
 			'Weibo'          => 'weibo',
 			'Windows'        => 'windows',
@@ -299,6 +195,10 @@
 			'Google Plus'    => 'google-plus',
 			'Android'        => 'android',
 			'VK'             => 'vk',
+			'Threads'        => 'icon-tmf-threads-icon',
+			'Mastodon'       => 'icon-tmf-mastodon',
+			'Bluesky'        => 'icon-tmf-bluesky-icon',
+			'TikTok'         => 'icon-tmf-tiktok-icon',
 	        // Add more social icons as needed
 	    );
 	}
@@ -319,6 +219,7 @@
 		    .removescicons {
 				display: flex;
 				flex-wrap: wrap;
+				align-items: center;
 		        border: 1px solid #ccc;
 		        padding: 10px;
 		        margin-bottom: 10px;
@@ -615,3 +516,54 @@
 	    }
 	}
 	add_action( 'wp_ajax_tmffree_team_dismiss_review_notice', 'tmffree_team_dismiss_review_notice' );
+
+	function tmfshowcase_shortcode_section($post) {
+	    // Show only for 'team_mf_team' post type
+	    if ($post->post_type !== 'team_mf_team') {
+	        return;
+	    }
+
+	    // Generate the dynamic shortcode
+	    $shortcode = "[tmfshortcode id='" . $post->ID . "']";
+	    $php_code = '<?php echo do_shortcode("[tmfshortcode id=' . $post->ID . ']"); ?>';
+
+	    ?>
+	    <div style="padding: 15px 15px 25px 15px; border: 1px solid #ddd; background: #f9f9f9; margin-top: 15px;">
+		    <div style="display: flex; gap: 20px;">
+			    <div style="width: 50%;">
+			        <p>
+			            <strong><?php _e( 'Shortcode','team-manager-free' ); ?>:</strong>
+			            <span id="shortcode-notice" style="color: green; display: none; margin-left: 10px;"><?php _e( 'Shortcode copied!','team-manager-free' ); ?></span>
+			        </p>
+			        <p class="option-info"><?php _e('Click to copy the shortcode and paste it into a page or post to display Team Showcase.','team-manager-free' ); ?></p>
+			        <input type="text" id="shortcode-text" style="width:100%; cursor:pointer; box-shadow: none; border:none;outline:none;border-radius: 0" value="<?php echo esc_attr($shortcode); ?>" readonly onclick="copyToClipboard(this, 'shortcode-notice')">
+			    </div>
+			    <div style="width: 50%;">
+			        <p>
+			            <strong><?php _e( 'PHP Code for Theme Files','team-manager-free' ); ?>:</strong>
+			            <span id="php-notice" style="color: green; display: none; margin-left: 10px;"><?php _e( 'PHP code copied!','team-manager-free' ); ?></span>
+			        </p>
+			        <p class="option-info"><?php _e('Click to copy the PHP code and use it in your theme files to display Team Showcase.','team-manager-free' ); ?></p>
+			        <input type="text" id="php-code-text" style="width:100%; cursor:pointer; box-shadow: none; border:none;outline:none;border-radius: 0" value="<?php echo esc_attr($php_code); ?>" readonly onclick="copyToClipboard(this, 'php-notice')">
+			    </div>
+		    </div>
+	    </div>
+
+	    <script>
+	        function copyToClipboard(inputField, noticeId) {
+	            inputField.select();
+	            navigator.clipboard.writeText(inputField.value);
+
+	            // Show copied message beside the label
+	            var notice = document.getElementById(noticeId);
+	            notice.style.display = "inline";
+
+	            // Hide the message after 2 seconds
+	            setTimeout(function() {
+	                notice.style.display = "none";
+	            }, 2000);
+	        }
+	    </script>
+	    <?php
+	}
+	add_action('edit_form_after_title', 'tmfshowcase_shortcode_section');

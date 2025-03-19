@@ -29,10 +29,10 @@
 .teamshowcasefree-col-xs-5,
 .teamshowcasefree-col-xs-6 {
 	float: left;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 	min-height: 1px;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
 	position: relative;
 }
 .teamshowcasefree-col-lg-1 {

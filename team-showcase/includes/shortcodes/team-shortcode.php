@@ -12,35 +12,46 @@
 			$atts
 		);
 
-		global $post, $paged, $query;	
+		global $post, $paged, $query;
 		$post_id = $atts['id'];
 
 		$team_manager_free_category_select        = get_post_meta( $post_id, 'team_manager_free_category_select', true);
 		$team_manager_free_post_themes            = get_post_meta( $post_id, 'team_manager_free_post_themes', true);
 		$team_manager_free_theme_style            = get_post_meta( $post_id, 'team_manager_free_theme_style', true);
 		$team_manager_free_limits                 = get_post_meta( $post_id, 'team_manager_free_limits', true);
-		$team_manager_free_post_column            = get_post_meta( $post_id, 'team_manager_free_post_column', true);
+		// Set the limit (if empty, show all)
+		$limit                                    = ! empty( $team_manager_free_limits ) ? (int) $team_manager_free_limits : -1;
+		$team_manager_free_post_column            = get_post_meta( $post_id, 'team_manager_free_post_column', true) ?: '4';
+		$team_manager_free_laptop_columns         = get_post_meta( $post_id, 'team_manager_free_laptop_columns', true) ?: '3';
+		$team_manager_free_tablet_columns         = get_post_meta( $post_id, 'team_manager_free_tablet_columns', true) ?: '2';
+		$team_manager_free_mobile_columns         = get_post_meta( $post_id, 'team_manager_free_mobile_columns', true) ?: '1';
 		$team_manager_free_margin_bottom          = get_post_meta( $post_id, 'team_manager_free_margin_bottom', true);
 		$team_manager_free_padding_left           = get_post_meta( $post_id, 'team_manager_free_padding_left', true);
-		$team_manager_free_padding_right          = get_post_meta( $post_id, 'team_manager_free_padding_right', true);
-		$team_manager_free_imagesize              = get_post_meta( $post_id, 'team_manager_free_imagesize', true);
 		$team_manager_free_designation_font_size  = get_post_meta( $post_id, 'team_manager_free_designation_font_size', true);
 		$team_manager_free_biography_option       = get_post_meta( $post_id, 'team_manager_free_biography_option', true);
 		$team_manager_free_biography_font_size    = get_post_meta( $post_id, 'team_manager_free_biography_font_size', true);
+		$team_mf_short_desc_char_limit            = get_post_meta( $post_id, 'team_mf_short_desc_char_limit', true);
 		$team_manager_free_social_target          = get_post_meta( $post_id, 'team_manager_free_social_target', true);
-
+		$team_manager_social_nofollow             = get_post_meta( $post_id, 'team_manager_social_nofollow', true);
+		$rel_attr                                 = ($team_manager_social_nofollow === '1') ? 'rel="nofollow"' : '';
 		# Social Icons Settings
 		$team_manager_free_socialicons_hide       = get_post_meta( $post_id, 'team_manager_free_socialicons_hide', true);
+		$tmffree_social_style                     = get_post_meta( $post_id, 'tmffree_social_style', true);
+		$social_radius                            = ($tmffree_social_style == '1') ? '0px' : '50px';
+		$tmffree_social_color                 	  = get_post_meta( $post_id, 'tmffree_social_color', true);
+		$use_inline_style = ($tmffree_social_color !== '2'); // Only use inline styles if NOT custom color
 		$tmffree_social_icon_color                = get_post_meta( $post_id, 'tmffree_social_icon_color', true);
 		$tmffree_social_bg_color                  = get_post_meta( $post_id, 'tmffree_social_bg_color', true);
 		$tmffree_social_hover_color               = get_post_meta( $post_id, 'tmffree_social_hover_color', true);
+		$tmffree_social_hoverbg_color             = get_post_meta( $post_id, 'tmffree_social_hoverbg_color', true);
 		$tmffree_social_font_size                 = get_post_meta( $post_id, 'tmffree_social_font_size', true);
-			
+		
 		// Biography
 		$team_manager_free_biography_font_color   = get_post_meta( $post_id, 'team_manager_free_biography_font_color', true);
 		$team_manager_free_overlay_bg_color       = get_post_meta( $post_id, 'team_manager_free_overlay_bg_color', true);
 		$team_manager_free_text_alignment         = get_post_meta( $post_id, 'team_manager_free_text_alignment', true);
 		$team_manager_free_multicolor_hide        = get_post_meta( $post_id, 'team_manager_free_multicolor_hide', true);
+		$team_infoicons_hide                      = get_post_meta( $post_id, 'team_infoicons_hide', true);
 		
 		// Name
 		$team_manager_free_header_font_size       = get_post_meta( $post_id, 'team_manager_free_header_font_size', true);
@@ -79,6 +90,10 @@
 		$team_manager_free_website_font_size      = get_post_meta( $post_id, 'team_manager_free_website_font_size', true );
 		$team_manager_free_website_font_color     = get_post_meta( $post_id, 'team_manager_free_website_font_color', true );
 		$team_manager_free_website_hover_color    = get_post_meta( $post_id, 'team_manager_free_website_hover_color', true );
+
+		$team_manager_free_image_hide             = get_post_meta( $post_id, 'team_manager_free_image_hide', true );
+		$team_manager_free_image_zoom             = get_post_meta( $post_id, 'team_manager_free_image_zoom', true );
+		$team_manager_free_image_mode             = get_post_meta( $post_id, 'team_manager_free_image_mode', true );
 		
 		// Slider
 		$item_no                                  = get_post_meta( $post_id, 'item_no', true );
@@ -113,20 +128,20 @@
 		$filter_hover_color                       = get_post_meta( $post_id, 'filter_hover_color', true );
 		$filter_hover_tcolor                      = get_post_meta( $post_id, 'filter_hover_tcolor', true );
 		$filter_border_radius                     = get_post_meta( $post_id, 'filter_border_radius', true );
-
-		$team_popup_title_hide              	  = get_post_meta( $post_id, 'team_popup_title_hide', true);
+		$team_popup_title_hide                    = get_post_meta( $post_id, 'team_popup_title_hide', true);
 		$team_popup_designatins_hide              = get_post_meta( $post_id, 'team_popup_designatins_hide', true);
 		$team_popup_emails_hide                   = get_post_meta( $post_id, 'team_popup_emails_hide', true);
 		$team_popup_contacts_hide                 = get_post_meta( $post_id, 'team_popup_contacts_hide', true);
 		$team_popup_address_hide                  = get_post_meta( $post_id, 'team_popup_address_hide', true);
 		$team_popup_website_hide                  = get_post_meta( $post_id, 'team_popup_website_hide', true);
-		$team_popup_infoicons_hide                = get_post_meta( $post_id, 'team_popup_infoicons_hide', true);
-
+		$team_popup_infoicons_hide                = get_post_meta( $post_id, 'team_popup_infoicons_hide', true);		
 		$team_manager_free_popupbox_positions     = get_post_meta( $post_id, 'team_manager_free_popupbox_positions', true);
-		$team_manager_free_img_height             = get_post_meta( $post_id, 'team_manager_free_img_height', true);
 		$team_fbackground_color                   = get_post_meta( $post_id, 'team_fbackground_color', true);
 		$teamf_orderby                            = get_post_meta( $post_id, 'teamf_orderby', true);
 		$teamf_order                              = get_post_meta( $post_id, 'teamf_order', true);
+		$selected_size                            = get_post_meta($post_id, '_tmf_selected_image_size', true);
+		$custom_width                             = get_post_meta($post_id, '_tmf_custom_width', true);
+		$custom_height                            = get_post_meta($post_id, '_tmf_custom_height', true);
 
 	    if( is_array( $team_manager_free_category_select ) ){
 			$tmfree =  array();
@@ -138,8 +153,9 @@
 			$args = array(
 				'post_type' => 'team_mf',
 				'post_status' => 'publish',
-				'posts_per_page' => 10,
+				'posts_per_page' => $limit,
 				'orderby'	=> $teamf_orderby,
+				'order'	=> $teamf_order,
 			    'tax_query' => [
 			        'relation' => 'OR',
 			        [
@@ -158,8 +174,9 @@
 			$args = array(
 				'post_type' => 'team_mf',
 				'post_status' => 'publish',
-				'posts_per_page' => 10,
+				'posts_per_page' => $limit,
 				'orderby'	=> $teamf_orderby,
+				'order'	=> $teamf_order,
 			);
 	    }
 

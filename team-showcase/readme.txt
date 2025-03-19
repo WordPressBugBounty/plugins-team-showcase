@@ -3,8 +3,8 @@ Contributors: themepoints
 Donate link: https://themepoints.com/teamshowcase/
 Tags:  members profiles, team showcase, our team, team, team members, our team, showcase, staff grid, team, team builder, Team Member, Team Member Showcase, team member showcasing, team members, team plugin wordpress, team showcase, teams, wp, wp team, team free, team profile, team carousel
 Requires at least: 4.0
-Tested up to: 6.6.1
-Stable tag: 2.3
+Tested up to: 6.7.2
+Stable tag: 2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ Team Showcase plugin allows you to display team member post or page. you can eas
 <ul>
 	<li><a href="https://themepoints.com/product/team-showcase-pro/">Upgrade to Pro</a></li>
 	<li><a href="https://themepoints.com/teamshowcase/">Live Preview</a></li>
-	<li><a href="https://wordpress.org/support/plugin/team-showcase">Quick Support</a></li>
+	<li><a href="https://themepoints.com/teamshowcase/docs/team-showcase/overview/">Documentation</a></li>
 </ul>
 
 
@@ -157,6 +157,16 @@ https://wordpress.org/plugins/simple-custom-post-order/
 
 
 == Changelog ==
+
+= 2.4 =
+* Fix Escaping Issue.
+* Added New Social Icon.
+* Added Column Option for different responsive devices.
+* Added More Order By Options.
+* Added New Social Icon.
+* Update Twitter icon to X.
+* Update Options Page UI.
+* Update Fontawesome latest version.
 
 = 2.3 =
 * Fix Escaping Issue.
