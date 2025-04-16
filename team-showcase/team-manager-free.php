@@ -3,7 +3,7 @@
 	Plugin Name: Team Showcase
 	Plugin URI: https://themepoints.com/teamshowcase/
 	Description: Team Showcase is a WordPress plugin that allows you to easily create and manage teams. You can display single teams as multiple responsive columns, you can also showcase all teams in various styles.
-	Version: 2.4
+	Version: 2.5
 	Author: Themepoints
 	Author URI: https://themepoints.com
 	License: GPLv2
@@ -20,7 +20,7 @@
 	// Define plugin version
 	define( 'TEAM_MANAGER_PLUGIN_NAME', 'Team Showcase' );
 	define( 'TEAM_MANAGER_PLUGIN_SLUG', 'team-manager-free' );
-	define( 'TEAM_MANAGER_FREE_VERSION', '2.4' );
+	define( 'TEAM_MANAGER_FREE_VERSION', '2.5' );
 
 	// Define paths for the plugin
 	define('TEAM_MANAGER_FREE_PLUGIN_PATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );

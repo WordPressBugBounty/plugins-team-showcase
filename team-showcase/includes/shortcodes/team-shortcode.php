@@ -139,9 +139,9 @@
 		$team_fbackground_color                   = get_post_meta( $post_id, 'team_fbackground_color', true);
 		$teamf_orderby                            = get_post_meta( $post_id, 'teamf_orderby', true);
 		$teamf_order                              = get_post_meta( $post_id, 'teamf_order', true);
-		$selected_size                            = get_post_meta($post_id, '_tmf_selected_image_size', true);
-		$custom_width                             = get_post_meta($post_id, '_tmf_custom_width', true);
-		$custom_height                            = get_post_meta($post_id, '_tmf_custom_height', true);
+		$selected_size                            = get_post_meta( $post_id, '_tmf_selected_image_size', true);
+		$custom_width                             = get_post_meta( $post_id, '_tmf_custom_width', true);
+		$custom_height                            = get_post_meta( $post_id, '_tmf_custom_height', true);
 
 	    if( is_array( $team_manager_free_category_select ) ){
 			$tmfree =  array();

@@ -3,8 +3,8 @@ Contributors: themepoints
 Donate link: https://themepoints.com/teamshowcase/
 Tags:  members profiles, team showcase, our team, team, team members, our team, showcase, staff grid, team, team builder, Team Member, Team Member Showcase, team member showcasing, team members, team plugin wordpress, team showcase, teams, wp, wp team, team free, team profile, team carousel
 Requires at least: 4.0
-Tested up to: 6.7.2
-Stable tag: 2.4
+Tested up to: 6.8
+Stable tag: 2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,6 +157,10 @@ https://wordpress.org/plugins/simple-custom-post-order/
 
 
 == Changelog ==
+
+= 2.5 =
+* Check Latest Version Compatibility Issue.
+* Update Options page.
 
 = 2.4 =
 * Fix Escaping Issue.
