@@ -2272,254 +2272,294 @@
 	        return;
 	    }
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_category_select' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_category_select', $_POST['team_manager_free_category_select'] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST['team_manager_free_category_select'] ) ) {
+		    if ( is_array( $_POST['team_manager_free_category_select'] ) ) {
+		        // Sanitize each value in the array
+		        $sanitized_cats = array_map( 'sanitize_text_field', $_POST['team_manager_free_category_select'] );
+		    } else {
+		        // Sanitize the single value if not an array
+		        $sanitized_cats = sanitize_text_field( $_POST['team_manager_free_category_select'] );
+		    }
+		    update_post_meta( $post_id, 'team_manager_free_category_select', $sanitized_cats );
 		} else {
-            update_post_meta( $post_id, 'team_manager_free_category_select', 'unchecked');
-        }
+		    update_post_meta( $post_id, 'team_manager_free_category_select', 'unchecked' );
+		}
 
-		// Sanitize and save 'team_manager_free_post_themes' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_post_themes' ] ) ) {
 			$team_manager_free_post_themes = sanitize_text_field( $_POST['team_manager_free_post_themes'] );
 			update_post_meta( $post_id, 'team_manager_free_post_themes', $team_manager_free_post_themes );
 		}
 
-		// Sanitize and save 'team_manager_free_theme_style' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_theme_style' ] ) ) {
 			$team_manager_free_theme_style = sanitize_text_field( $_POST['team_manager_free_theme_style'] );
 			update_post_meta( $post_id, 'team_manager_free_theme_style', $team_manager_free_theme_style );
 		}
 
-		// Sanitize and save 'team_manager_free_limits' field (assuming it's an integer)
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_limits' ] ) ) {
 			$team_manager_free_limits = intval( $_POST['team_manager_free_limits'] );
 			update_post_meta( $post_id, 'team_manager_free_limits', $team_manager_free_limits );
 		}
 
-		// Sanitize and save 'teamf_orderby' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'teamf_orderby' ] ) ) {
 			$teamf_orderby = sanitize_text_field( $_POST['teamf_orderby'] );
 			update_post_meta( $post_id, 'teamf_orderby', $teamf_orderby );
 		}
 
-		// Sanitize and save 'teamf_order' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'teamf_order' ] ) ) {
 			$teamf_order = sanitize_text_field( $_POST['teamf_order'] );
 			update_post_meta( $post_id, 'teamf_order', $teamf_order );
 		}
 
-		// Sanitize and save 'team_manager_free_post_column' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_post_column' ] ) ) {
 			$team_manager_free_post_column = sanitize_text_field( $_POST['team_manager_free_post_column'] );
 			update_post_meta( $post_id, 'team_manager_free_post_column', $team_manager_free_post_column );
 		}
 
-		// Sanitize and save 'team_manager_free_laptop_columns' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_laptop_columns' ] ) ) {
 			$team_manager_free_laptop_columns = sanitize_text_field( $_POST['team_manager_free_laptop_columns'] );
 			update_post_meta( $post_id, 'team_manager_free_laptop_columns', $team_manager_free_laptop_columns );
 		}
 
-		// Sanitize and save 'team_manager_free_tablet_columns' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_tablet_columns' ] ) ) {
 			$team_manager_free_tablet_columns = sanitize_text_field( $_POST['team_manager_free_tablet_columns'] );
 			update_post_meta( $post_id, 'team_manager_free_tablet_columns', $team_manager_free_tablet_columns );
 		}
 
-		// Sanitize and save 'team_manager_free_mobile_columns' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_mobile_columns' ] ) ) {
 			$team_manager_free_mobile_columns = sanitize_text_field( $_POST['team_manager_free_mobile_columns'] );
 			update_post_meta( $post_id, 'team_manager_free_mobile_columns', $team_manager_free_mobile_columns );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_margin_bottom' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_margin_bottom', $_POST[ 'team_manager_free_margin_bottom' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_margin_bottom' ] ) ) {
+			$team_manager_free_margin_bottom = sanitize_text_field( $_POST['team_manager_free_margin_bottom'] );
+			update_post_meta( $post_id, 'team_manager_free_margin_bottom', $team_manager_free_margin_bottom );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_padding_left'])) {
-			update_post_meta($post_id, 'team_manager_free_padding_left', $_POST['team_manager_free_padding_left']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_padding_left' ] ) ) {
+			$team_manager_free_padding_left = sanitize_text_field( $_POST['team_manager_free_padding_left'] );
+			update_post_meta( $post_id, 'team_manager_free_padding_left', $team_manager_free_padding_left );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_margin_lfr' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_margin_lfr', $_POST[ 'team_manager_free_margin_lfr' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_margin_lfr' ] ) ) {
+			$team_manager_free_margin_lfr = sanitize_text_field( $_POST['team_manager_free_margin_lfr'] );
+			update_post_meta( $post_id, 'team_manager_free_margin_lfr', $team_manager_free_margin_lfr );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_text_alignment' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_text_alignment', $_POST[ 'team_manager_free_text_alignment' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_text_alignment' ] ) ) {
+			$team_manager_free_text_alignment = sanitize_text_field( $_POST['team_manager_free_text_alignment'] );
+			update_post_meta( $post_id, 'team_manager_free_text_alignment', $team_manager_free_text_alignment );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_multicolor_hide' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_multicolor_hide', $_POST[ 'team_manager_free_multicolor_hide' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_multicolor_hide' ] ) ) {
+			$team_manager_free_multicolor_hide = sanitize_text_field( $_POST['team_manager_free_multicolor_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_multicolor_hide', $team_manager_free_multicolor_hide );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_biography_option' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_biography_option', $_POST[ 'team_manager_free_biography_option' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_biography_option' ] ) ) {
+			$team_manager_free_biography_option = sanitize_text_field( $_POST['team_manager_free_biography_option'] );
+			update_post_meta( $post_id, 'team_manager_free_biography_option', $team_manager_free_biography_option );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_header_font_size' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_header_font_size', $_POST[ 'team_manager_free_header_font_size' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_header_font_size' ] ) ) {
+			$team_manager_free_header_font_size = sanitize_text_field( $_POST['team_manager_free_header_font_size'] );
+			update_post_meta( $post_id, 'team_manager_free_header_font_size', $team_manager_free_header_font_size );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_name_font_weight'])) {
-			update_post_meta($post_id, 'team_manager_name_font_weight', $_POST['team_manager_name_font_weight']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_name_font_weight' ] ) ) {
+			$team_manager_name_font_weight = sanitize_text_field( $_POST['team_manager_name_font_weight'] );
+			update_post_meta( $post_id, 'team_manager_name_font_weight', $team_manager_name_font_weight );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_name_font_style'])) {
-			update_post_meta($post_id, 'team_manager_name_font_style', $_POST['team_manager_name_font_style']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_name_font_style' ] ) ) {
+			$team_manager_name_font_style = sanitize_text_field( $_POST['team_manager_name_font_style'] );
+			update_post_meta( $post_id, 'team_manager_name_font_style', $team_manager_name_font_style );
 		}
 
-		// Sanitize and save 'team_manager_free_image_hide' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_image_hide' ] ) ) {
 			$team_manager_free_image_hide = sanitize_text_field( $_POST['team_manager_free_image_hide'] );
 			update_post_meta( $post_id, 'team_manager_free_image_hide', $team_manager_free_image_hide );
 		}
 
-		// Sanitize and save 'tmf_selected_image_size' field
-	    if ( isset( $_POST['tmf_selected_image_size'] ) ) {
-	        update_post_meta( $post_id, '_tmf_selected_image_size', sanitize_text_field( $_POST['tmf_selected_image_size'] ) );
-	    }
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'tmf_selected_image_size' ] ) ) {
+			$tmf_selected_image_size = sanitize_text_field( $_POST['tmf_selected_image_size'] );
+			update_post_meta( $post_id, 'tmf_selected_image_size', $tmf_selected_image_size );
+		}
 
-		// Sanitize and save 'tmf_custom_width' field
+		// Checks for input and sanitizes/saves if needed
 	    if ( isset( $_POST['tmf_custom_width'] ) && isset( $_POST['tmf_custom_height'] ) ) {
 	        update_post_meta( $post_id, '_tmf_custom_width', intval( $_POST['tmf_custom_width'] ) );
 	        update_post_meta( $post_id, '_tmf_custom_height', intval( $_POST['tmf_custom_height'] ) );
 	    }
 
-		// Sanitize and save 'team_manager_free_image_zoom' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_image_zoom' ] ) ) {
 			$team_manager_free_image_zoom = sanitize_text_field( $_POST['team_manager_free_image_zoom'] );
 			update_post_meta( $post_id, 'team_manager_free_image_zoom', $team_manager_free_image_zoom );
 		}
 
-		// Sanitize and save 'team_manager_free_image_mode' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_free_image_mode' ] ) ) {
 			$team_manager_free_image_mode = sanitize_text_field( $_POST['team_manager_free_image_mode'] );
 			update_post_meta( $post_id, 'team_manager_free_image_mode', $team_manager_free_image_mode );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_designation_hide' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_designation_hide', $_POST[ 'team_manager_free_designation_hide' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_designation_hide' ] ) ) {
+			$team_manager_free_designation_hide = sanitize_text_field( $_POST['team_manager_free_designation_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_designation_hide', $team_manager_free_designation_hide );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_designation_font_size' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_designation_font_size', $_POST[ 'team_manager_free_designation_font_size' ] );
-		}	
-
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_header_font_color' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_header_font_color', $_POST[ 'team_manager_free_header_font_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_designation_font_size' ] ) ) {
+			$team_manager_free_designation_font_size = sanitize_text_field( $_POST['team_manager_free_designation_font_size'] );
+			update_post_meta( $post_id, 'team_manager_free_designation_font_size', $team_manager_free_designation_font_size );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_name_hover_font_color' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_name_hover_font_color', $_POST[ 'team_manager_free_name_hover_font_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_header_font_color' ] ) ) {
+			$team_manager_free_header_font_color = sanitize_hex_color( $_POST['team_manager_free_header_font_color'] );
+			update_post_meta( $post_id, 'team_manager_free_header_font_color', $team_manager_free_header_font_color );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_name_font_case' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_name_font_case', $_POST[ 'team_manager_name_font_case' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_name_hover_font_color' ] ) ) {
+			$team_manager_free_name_hover_font_color = sanitize_hex_color( $_POST['team_manager_free_name_hover_font_color'] );
+			update_post_meta( $post_id, 'team_manager_free_name_hover_font_color', $team_manager_free_name_hover_font_color );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_designation_font_color' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_designation_font_color', $_POST[ 'team_manager_free_designation_font_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_name_font_case' ] ) ) {
+			$team_manager_name_font_case = sanitize_text_field( $_POST['team_manager_name_font_case'] );
+			update_post_meta( $post_id, 'team_manager_name_font_case', $team_manager_name_font_case );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_desig_font_case' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_desig_font_case', $_POST[ 'team_manager_desig_font_case' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_designation_font_color' ] ) ) {
+			$team_manager_free_designation_font_color = sanitize_hex_color( $_POST['team_manager_free_designation_font_color'] );
+			update_post_meta( $post_id, 'team_manager_free_designation_font_color', $team_manager_free_designation_font_color );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_desig_font_style' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_desig_font_style', $_POST[ 'team_manager_desig_font_style' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_desig_font_case' ] ) ) {
+			$team_manager_desig_font_case = sanitize_text_field( $_POST['team_manager_desig_font_case'] );
+			update_post_meta( $post_id, 'team_manager_desig_font_case', $team_manager_desig_font_case );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_emails_hide'])) {
-			update_post_meta($post_id, 'team_manager_free_emails_hide', $_POST['team_manager_free_emails_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_desig_font_style' ] ) ) {
+			$team_manager_desig_font_style = sanitize_text_field( $_POST['team_manager_desig_font_style'] );
+			update_post_meta( $post_id, 'team_manager_desig_font_style', $team_manager_desig_font_style );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_emails_font_color'])) {
-			update_post_meta($post_id, 'team_manager_free_emails_font_color', $_POST['team_manager_free_emails_font_color']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_emails_hide' ] ) ) {
+			$team_manager_free_emails_hide = sanitize_text_field( $_POST['team_manager_free_emails_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_emails_hide', $team_manager_free_emails_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_emails_hover_color'])) {
-			update_post_meta($post_id, 'team_manager_free_emails_hover_color', $_POST['team_manager_free_emails_hover_color']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_emails_font_color' ] ) ) {
+			$team_manager_free_emails_font_color = sanitize_text_field( $_POST['team_manager_free_emails_font_color'] );
+			update_post_meta( $post_id, 'team_manager_free_emails_font_color', $team_manager_free_emails_font_color );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_emails_font_size'])) {
-			update_post_meta($post_id, 'team_manager_free_emails_font_size', $_POST['team_manager_free_emails_font_size']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_emails_hover_color' ] ) ) {
+			$team_manager_free_emails_hover_color = sanitize_hex_color( $_POST['team_manager_free_emails_hover_color'] );
+			update_post_meta( $post_id, 'team_manager_free_emails_hover_color', $team_manager_free_emails_hover_color );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_numbers_hide'])) {
-			update_post_meta($post_id, 'team_manager_free_numbers_hide', $_POST['team_manager_free_numbers_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_emails_font_size' ] ) ) {
+			$team_manager_free_emails_font_size = sanitize_text_field( $_POST['team_manager_free_emails_font_size'] );
+			update_post_meta( $post_id, 'team_manager_free_emails_font_size', $team_manager_free_emails_font_size );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_numbers_font_size'])) {
-			update_post_meta($post_id, 'team_manager_free_numbers_font_size', $_POST['team_manager_free_numbers_font_size']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_numbers_hide' ] ) ) {
+			$team_manager_free_numbers_hide = sanitize_text_field( $_POST['team_manager_free_numbers_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_numbers_hide', $team_manager_free_numbers_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_numbers_font_color'])) {
-			update_post_meta($post_id, 'team_manager_free_numbers_font_color', $_POST['team_manager_free_numbers_font_color']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_numbers_font_size' ] ) ) {
+			$team_manager_free_numbers_font_size = sanitize_text_field( $_POST['team_manager_free_numbers_font_size'] );
+			update_post_meta( $post_id, 'team_manager_free_numbers_font_size', $team_manager_free_numbers_font_size );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_numbers_hover_color'])) {
-			update_post_meta($post_id, 'team_manager_free_numbers_hover_color', $_POST['team_manager_free_numbers_hover_color']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_numbers_hover_color' ] ) ) {
+			$team_manager_free_numbers_hover_color = sanitize_hex_color( $_POST['team_manager_free_numbers_hover_color'] );
+			update_post_meta( $post_id, 'team_manager_free_numbers_hover_color', $team_manager_free_numbers_hover_color );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_address_hide'])) {
-			update_post_meta($post_id, 'team_manager_free_address_hide', $_POST['team_manager_free_address_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_numbers_font_color' ] ) ) {
+			$team_manager_free_numbers_font_color = sanitize_hex_color( $_POST['team_manager_free_numbers_font_color'] );
+			update_post_meta( $post_id, 'team_manager_free_numbers_font_color', $team_manager_free_numbers_font_color );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_addresss_font_color'])) {
-			update_post_meta($post_id, 'team_manager_free_addresss_font_color', $_POST['team_manager_free_addresss_font_color']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_address_hide' ] ) ) {
+			$team_manager_free_address_hide = sanitize_text_field( $_POST['team_manager_free_address_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_address_hide', $team_manager_free_address_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_addresss_font_size'])) {
-			update_post_meta($post_id, 'team_manager_free_addresss_font_size', $_POST['team_manager_free_addresss_font_size']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_addresss_font_color' ] ) ) {
+			$team_manager_free_addresss_font_color = sanitize_hex_color( $_POST['team_manager_free_addresss_font_color'] );
+			update_post_meta( $post_id, 'team_manager_free_addresss_font_color', $team_manager_free_addresss_font_color );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_website_hide'])) {
-			update_post_meta($post_id, 'team_manager_free_website_hide', $_POST['team_manager_free_website_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_addresss_font_size' ] ) ) {
+			$team_manager_free_addresss_font_size = sanitize_text_field( $_POST['team_manager_free_addresss_font_size'] );
+			update_post_meta( $post_id, 'team_manager_free_addresss_font_size', $team_manager_free_addresss_font_size );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_website_font_size'])) {
-			update_post_meta($post_id, 'team_manager_free_website_font_size', $_POST['team_manager_free_website_font_size']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_website_hide' ] ) ) {
+			$team_manager_free_website_hide = sanitize_text_field( $_POST['team_manager_free_website_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_website_hide', $team_manager_free_website_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_website_font_color'])) {
-			update_post_meta($post_id, 'team_manager_free_website_font_color', $_POST['team_manager_free_website_font_color']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_website_font_size' ] ) ) {
+			$team_manager_free_website_font_size = sanitize_text_field( $_POST['team_manager_free_website_font_size'] );
+			update_post_meta( $post_id, 'team_manager_free_website_font_size', $team_manager_free_website_font_size );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_website_hover_color'])) {
-			update_post_meta($post_id, 'team_manager_free_website_hover_color', $_POST['team_manager_free_website_hover_color']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_website_hover_color' ] ) ) {
+			$team_manager_free_website_hover_color = sanitize_hex_color( $_POST['team_manager_free_website_hover_color'] );
+			update_post_meta( $post_id, 'team_manager_free_website_hover_color', $team_manager_free_website_hover_color );
+		}
+
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_website_font_color' ] ) ) {
+			$team_manager_free_website_font_color = sanitize_hex_color( $_POST['team_manager_free_website_font_color'] );
+			update_post_meta( $post_id, 'team_manager_free_website_font_color', $team_manager_free_website_font_color );
 		}
 
 		// Sanitize and save 'team_mf_short_desc_char_limit' field
@@ -2528,15 +2568,17 @@
 			update_post_meta( $post_id, 'team_mf_short_desc_char_limit', $team_mf_short_desc_char_limit );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_biography_font_size' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_biography_font_size', $_POST[ 'team_manager_free_biography_font_size' ] );
+		// Sanitize and save 'team_mf_short_desc_char_limit' field
+		if ( isset( $_POST[ 'team_manager_free_biography_font_size' ] ) ) {
+			$team_manager_free_biography_font_size = sanitize_text_field( $_POST['team_manager_free_biography_font_size'] );
+			update_post_meta( $post_id, 'team_manager_free_biography_font_size', $team_manager_free_biography_font_size );
 		}
-	    
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['autoplay'] ) && ( $_POST['autoplay'] != '' ) ) {
-	        update_post_meta( $post_id, 'autoplay', esc_html( $_POST['autoplay'] ) );
-	    }
+
+		#Checks for input and sanitizes/saves if needed 
+		if ( isset( $_POST[ 'autoplay' ] ) ) {
+			$autoplay = sanitize_text_field( $_POST['autoplay'] );
+			update_post_meta( $post_id, 'autoplay', $autoplay );
+		}
 	    
 	 	#Checks for input and sanitizes/saves if needed    
 	    if ( ! empty( $_POST['autoplay_speed'] ) ) {
@@ -2553,77 +2595,83 @@
 	    	}
 	    }
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['stop_hover'] ) && ( $_POST['stop_hover'] != '' ) ) {
-	        update_post_meta( $post_id, 'stop_hover', esc_html( $_POST['stop_hover'] ) );
-	    }
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST['stop_hover'] ) && !empty( $_POST['stop_hover'] ) ) {
+		    $stop_hover = sanitize_text_field( $_POST['stop_hover'] );
+		    update_post_meta( $post_id, 'stop_hover', $stop_hover );
+		}
 
-		// Sanitize and save 'item_no' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'item_no' ] ) ) {
 			$item_no = sanitize_text_field( $_POST['item_no'] );
 			update_post_meta( $post_id, 'item_no', $item_no );
 		}
 
-		// Sanitize and save 'itemsdesktop' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'itemsdesktop' ] ) ) {
 			$itemsdesktop = sanitize_text_field( $_POST['itemsdesktop'] );
 			update_post_meta( $post_id, 'itemsdesktop', $itemsdesktop );
 		}
 
-		// Sanitize and save 'itemsdesktopsmall' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'itemsdesktopsmall' ] ) ) {
 			$itemsdesktopsmall = sanitize_text_field( $_POST['itemsdesktopsmall'] );
 			update_post_meta( $post_id, 'itemsdesktopsmall', $itemsdesktopsmall );
 		}
 
-		// Sanitize and save 'itemsmobile' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'itemsmobile' ] ) ) {
 			$itemsmobile = sanitize_text_field( $_POST['itemsmobile'] );
 			update_post_meta( $post_id, 'itemsmobile', $itemsmobile );
 		}
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['autoplaytimeout'] ) && ( $_POST['autoplaytimeout'] != '' ) ) {
-	        update_post_meta( $post_id, 'autoplaytimeout', esc_html( $_POST['autoplaytimeout'] ) );
-	    }
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST['autoplaytimeout'] ) && !empty( $_POST['autoplaytimeout'] ) ) {
+		    $autoplaytimeout = sanitize_text_field( $_POST['autoplaytimeout'] );
+		    update_post_meta( $post_id, 'autoplaytimeout', $autoplaytimeout );
+		}
 
-		#Checks for input and sanitizes/saves if needed    
+		// Checks for input and sanitizes/saves if needed  
 		if ( isset( $_POST['loop'] ) && !empty( $_POST['loop'] ) ) {
 		    $loop = sanitize_text_field( $_POST['loop'] );
 		    update_post_meta( $post_id, 'loop', $loop );
 		}
 
-		// Sanitize and save 'lazyload' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'lazyload' ] ) ) {
 			$lazyload = sanitize_text_field( $_POST['lazyload'] );
 			update_post_meta( $post_id, 'lazyload', $lazyload );
 		}
 
-		// Sanitize and save 'autoheight' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'autoheight' ] ) ) {
 			$autoheight = sanitize_text_field( $_POST['autoheight'] );
 			update_post_meta( $post_id, 'autoheight', $autoheight );
 		}
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['nav_text_color'] ) && ( $_POST['nav_text_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'nav_text_color', esc_html( $_POST['nav_text_color'] ) );
-	    }
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'nav_text_color' ] ) ) {
+			$nav_text_color = sanitize_hex_color( $_POST['nav_text_color'] );
+			update_post_meta( $post_id, 'nav_text_color', $nav_text_color );
+		}
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['nav_hover_bg_color'] ) && ( $_POST['nav_hover_bg_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'nav_hover_bg_color', esc_html( $_POST['nav_hover_bg_color'] ) );
-	    }
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'nav_hover_bg_color' ] ) ) {
+			$nav_hover_bg_color = sanitize_hex_color( $_POST['nav_hover_bg_color'] );
+			update_post_meta( $post_id, 'nav_hover_bg_color', $nav_hover_bg_color );
+		}
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['nav_hover_text_color'] ) && ( $_POST['nav_hover_text_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'nav_hover_text_color', esc_html( $_POST['nav_hover_text_color'] ) );
-	    }
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'nav_hover_text_color' ] ) ) {
+			$nav_hover_text_color = sanitize_hex_color( $_POST['nav_hover_text_color'] );
+			update_post_meta( $post_id, 'nav_hover_text_color', $nav_hover_text_color );
+		}
 
-	    #Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['pagination_bg_color'] ) && ( $_POST['pagination_bg_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'pagination_bg_color', esc_html( $_POST['pagination_bg_color'] ) );
-	    }
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'pagination_bg_color' ] ) ) {
+			$pagination_bg_color = sanitize_hex_color( $_POST['pagination_bg_color'] );
+			update_post_meta( $post_id, 'pagination_bg_color', $pagination_bg_color );
+		}
 
 		#Checks for input and sanitizes/saves if needed    
 		if ( isset( $_POST['tmffree_pagination_style'] ) && !empty( $_POST['tmffree_pagination_style'] ) ) {
@@ -2631,10 +2679,11 @@
 		    update_post_meta( $post_id, 'tmffree_pagination_style', $tmffree_pagination_style );
 		}
 
-	    #Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['pagination_active_color'] ) && ( $_POST['pagination_active_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'pagination_active_color', esc_html( $_POST['pagination_active_color'] ) );
-	    }
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'pagination_active_color' ] ) ) {
+			$pagination_active_color = sanitize_hex_color( $_POST['pagination_active_color'] );
+			update_post_meta( $post_id, 'pagination_active_color', $pagination_active_color );
+		}
 
 		#Checks for input and sanitizes/saves if needed    
 		if ( isset( $_POST['filter_align'] ) && !empty( $_POST['filter_align'] ) ) {
@@ -2654,115 +2703,136 @@
 			update_post_meta( $post_id, 'team_manager_free_show_all', $team_manager_free_show_all );
 		}
 
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['filter_bg_color'] ) && ( $_POST['filter_bg_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'filter_bg_color', esc_html( $_POST['filter_bg_color'] ) );
-	    }
-
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['filter_border_color'] ) && ( $_POST['filter_border_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'filter_border_color', esc_html( $_POST['filter_border_color'] ) );
-	    }
-
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['filter_mfont_color'] ) && ( $_POST['filter_mfont_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'filter_mfont_color', esc_html( $_POST['filter_mfont_color'] ) );
-	    }
-
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['filter_active_color'] ) && ( $_POST['filter_active_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'filter_active_color', esc_html( $_POST['filter_active_color'] ) );
-	    }
-
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['filter_hover_color'] ) && ( $_POST['filter_hover_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'filter_hover_color', esc_html( $_POST['filter_hover_color'] ) );
-	    }
-
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['filter_active_font'] ) && ( $_POST['filter_active_font'] != '' ) ) {
-	        update_post_meta( $post_id, 'filter_active_font', esc_html( $_POST['filter_active_font'] ) );
-	    }
-
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['nav_bg_color'] ) && ( $_POST['nav_bg_color'] != '' ) ) {
-	        update_post_meta( $post_id, 'nav_bg_color', esc_html( $_POST['nav_bg_color'] ) );
-	    }
-
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['filter_hover_tcolor'] ) && ( $_POST['filter_hover_tcolor'] != '' ) ) {
-	        update_post_meta( $post_id, 'filter_hover_tcolor', esc_html( $_POST['filter_hover_tcolor'] ) );
-	    }
-
-	 	#Checks for input and sanitizes/saves if needed    
-	    if ( isset( $_POST['filter_border_radius'] ) ) {
-	    	update_post_meta( $post_id, 'filter_border_radius', $_POST['filter_border_radius'] );
-	    }
-
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_overlay_bg_color' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_overlay_bg_color', $_POST[ 'team_manager_free_overlay_bg_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'filter_bg_color' ] ) ) {
+			$filter_bg_color = sanitize_hex_color( $_POST['filter_bg_color'] );
+			update_post_meta( $post_id, 'filter_bg_color', $filter_bg_color );
+		}
+		
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'filter_border_color' ] ) ) {
+			$filter_border_color = sanitize_hex_color( $_POST['filter_border_color'] );
+			update_post_meta( $post_id, 'filter_border_color', $filter_border_color );
+		}
+		
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'filter_mfont_color' ] ) ) {
+			$filter_mfont_color = sanitize_hex_color( $_POST['filter_mfont_color'] );
+			update_post_meta( $post_id, 'filter_mfont_color', $filter_mfont_color );
+		}
+		
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'filter_active_color' ] ) ) {
+			$filter_active_color = sanitize_hex_color( $_POST['filter_active_color'] );
+			update_post_meta( $post_id, 'filter_active_color', $filter_active_color );
+		}
+		
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'filter_hover_color' ] ) ) {
+			$filter_hover_color = sanitize_hex_color( $_POST['filter_hover_color'] );
+			update_post_meta( $post_id, 'filter_hover_color', $filter_hover_color );
+		}
+		
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'filter_active_font' ] ) ) {
+			$filter_active_font = sanitize_hex_color( $_POST['filter_active_font'] );
+			update_post_meta( $post_id, 'filter_active_font', $filter_active_font );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_biography_font_color' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_biography_font_color', $_POST[ 'team_manager_free_biography_font_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'nav_bg_color' ] ) ) {
+			$nav_bg_color = sanitize_hex_color( $_POST['nav_bg_color'] );
+			update_post_meta( $post_id, 'nav_bg_color', $nav_bg_color );
 		}
 
-		// Sanitize and save 'team_infoicons_hide' field
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'filter_hover_tcolor' ] ) ) {
+			$filter_hover_tcolor = sanitize_hex_color( $_POST['filter_hover_tcolor'] );
+			update_post_meta( $post_id, 'filter_hover_tcolor', $filter_hover_tcolor );
+		}
+
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'filter_border_radius' ] ) ) {
+			$filter_border_radius = sanitize_text_field( $_POST['filter_border_radius'] );
+			update_post_meta( $post_id, 'filter_border_radius', $filter_border_radius );
+		}
+
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_overlay_bg_color' ] ) ) {
+			$team_manager_free_overlay_bg_color = sanitize_hex_color( $_POST['team_manager_free_overlay_bg_color'] );
+			update_post_meta( $post_id, 'team_manager_free_overlay_bg_color', $team_manager_free_overlay_bg_color );
+		}
+
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_biography_font_color' ] ) ) {
+			$team_manager_free_biography_font_color = sanitize_hex_color( $_POST['team_manager_free_biography_font_color'] );
+			update_post_meta( $post_id, 'team_manager_free_biography_font_color', $team_manager_free_biography_font_color );
+		}
+
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_infoicons_hide' ] ) ) {
 			$team_infoicons_hide = sanitize_text_field( $_POST['team_infoicons_hide'] );
 			update_post_meta( $post_id, 'team_infoicons_hide', $team_infoicons_hide );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_fbackground_color' ] ) ) {
-			update_post_meta( $post_id, 'team_fbackground_color', $_POST[ 'team_fbackground_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_fbackground_color' ] ) ) {
+			$team_fbackground_color = sanitize_hex_color( $_POST['team_fbackground_color'] );
+			update_post_meta( $post_id, 'team_fbackground_color', $team_fbackground_color );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_popupbox_hide'])) {
-			update_post_meta($post_id, 'team_manager_free_popupbox_hide', $_POST['team_manager_free_popupbox_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_popupbox_hide' ] ) ) {
+			$team_manager_free_popupbox_hide = sanitize_text_field( $_POST['team_manager_free_popupbox_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_popupbox_hide', $team_manager_free_popupbox_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_manager_free_popupbox_positions'])) {
-			update_post_meta($post_id, 'team_manager_free_popupbox_positions', $_POST['team_manager_free_popupbox_positions']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_popupbox_positions' ] ) ) {
+			$team_manager_free_popupbox_positions = sanitize_text_field( $_POST['team_manager_free_popupbox_positions'] );
+			update_post_meta( $post_id, 'team_manager_free_popupbox_positions', $team_manager_free_popupbox_positions );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_popup_title_hide'])) {
-			update_post_meta($post_id, 'team_popup_title_hide', $_POST['team_popup_title_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_popup_title_hide' ] ) ) {
+			$team_popup_title_hide = sanitize_text_field( $_POST['team_popup_title_hide'] );
+			update_post_meta( $post_id, 'team_popup_title_hide', $team_popup_title_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_popup_designatins_hide'])) {
-			update_post_meta($post_id, 'team_popup_designatins_hide', $_POST['team_popup_designatins_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_popup_designatins_hide' ] ) ) {
+			$team_popup_designatins_hide = sanitize_text_field( $_POST['team_popup_designatins_hide'] );
+			update_post_meta( $post_id, 'team_popup_designatins_hide', $team_popup_designatins_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_popup_emails_hide'])) {
-			update_post_meta($post_id, 'team_popup_emails_hide', $_POST['team_popup_emails_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_popup_emails_hide' ] ) ) {
+			$team_popup_emails_hide = sanitize_text_field( $_POST['team_popup_emails_hide'] );
+			update_post_meta( $post_id, 'team_popup_emails_hide', $team_popup_emails_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_popup_contacts_hide'])) {
-			update_post_meta($post_id, 'team_popup_contacts_hide', $_POST['team_popup_contacts_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_popup_contacts_hide' ] ) ) {
+			$team_popup_contacts_hide = sanitize_text_field( $_POST['team_popup_contacts_hide'] );
+			update_post_meta( $post_id, 'team_popup_contacts_hide', $team_popup_contacts_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_popup_address_hide'])) {
-			update_post_meta($post_id, 'team_popup_address_hide', $_POST['team_popup_address_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_popup_address_hide' ] ) ) {
+			$team_popup_address_hide = sanitize_text_field( $_POST['team_popup_address_hide'] );
+			update_post_meta( $post_id, 'team_popup_address_hide', $team_popup_address_hide );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_socialicons_hide' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_socialicons_hide', $_POST[ 'team_manager_free_socialicons_hide' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_socialicons_hide' ] ) ) {
+			$team_manager_free_socialicons_hide = sanitize_text_field( $_POST['team_manager_free_socialicons_hide'] );
+			update_post_meta( $post_id, 'team_manager_free_socialicons_hide', $team_manager_free_socialicons_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['tmffree_social_style'])) {
-			update_post_meta($post_id, 'tmffree_social_style', $_POST['tmffree_social_style']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'tmffree_social_style' ] ) ) {
+			$tmffree_social_style = sanitize_text_field( $_POST['tmffree_social_style'] );
+			update_post_meta( $post_id, 'tmffree_social_style', $tmffree_social_style );
 		}
 
 		// Sanitize and save 'tmffree_social_color' field
@@ -2771,74 +2841,83 @@
 			update_post_meta( $post_id, 'tmffree_social_color', $tmffree_social_color );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'tmffree_social_font_size' ] ) ) {
-			update_post_meta( $post_id, 'tmffree_social_font_size', $_POST[ 'tmffree_social_font_size' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'tmffree_social_font_size' ] ) ) {
+			$tmffree_social_font_size = sanitize_text_field( $_POST['tmffree_social_font_size'] );
+			update_post_meta( $post_id, 'tmffree_social_font_size', $tmffree_social_font_size );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'tmffree_social_icon_color' ] ) ) {
-			update_post_meta( $post_id, 'tmffree_social_icon_color', $_POST[ 'tmffree_social_icon_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'tmffree_social_icon_color' ] ) ) {
+			$tmffree_social_icon_color = sanitize_hex_color( $_POST['tmffree_social_icon_color'] );
+			update_post_meta( $post_id, 'tmffree_social_icon_color', $tmffree_social_icon_color );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'tmffree_social_hover_color' ] ) ) {
-			update_post_meta( $post_id, 'tmffree_social_hover_color', $_POST[ 'tmffree_social_hover_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'tmffree_social_hover_color' ] ) ) {
+			$tmffree_social_hover_color = sanitize_hex_color( $_POST['tmffree_social_hover_color'] );
+			update_post_meta( $post_id, 'tmffree_social_hover_color', $tmffree_social_hover_color );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'tmffree_social_hoverbg_color' ] ) ) {
-			update_post_meta( $post_id, 'tmffree_social_hoverbg_color', $_POST[ 'tmffree_social_hoverbg_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'tmffree_social_hoverbg_color' ] ) ) {
+			$tmffree_social_hoverbg_color = sanitize_hex_color( $_POST['tmffree_social_hoverbg_color'] );
+			update_post_meta( $post_id, 'tmffree_social_hoverbg_color', $tmffree_social_hoverbg_color );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'tmffree_social_bg_color' ] ) ) {
-			update_post_meta( $post_id, 'tmffree_social_bg_color', $_POST[ 'tmffree_social_bg_color' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'tmffree_social_bg_color' ] ) ) {
+			$tmffree_social_bg_color = sanitize_hex_color( $_POST['tmffree_social_bg_color'] );
+			update_post_meta( $post_id, 'tmffree_social_bg_color', $tmffree_social_bg_color );
 		}
 
-		#Checks for input and saves if needed
-		if( isset( $_POST[ 'team_manager_free_social_target' ] ) ) {
-			update_post_meta( $post_id, 'team_manager_free_social_target', $_POST[ 'team_manager_free_social_target' ] );
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_free_social_target' ] ) ) {
+			$team_manager_free_social_target = sanitize_text_field( $_POST['team_manager_free_social_target'] );
+			update_post_meta( $post_id, 'team_manager_free_social_target', $team_manager_free_social_target );
 		}
 
 	    $team_manager_social_nofollow = isset($_POST['team_manager_social_nofollow']) ? '1' : '0';
 	    update_post_meta($post_id, 'team_manager_social_nofollow', $team_manager_social_nofollow);
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_popup_website_hide'])) {
-			update_post_meta($post_id, 'team_popup_website_hide', $_POST['team_popup_website_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_popup_website_hide' ] ) ) {
+			$team_popup_website_hide = sanitize_text_field( $_POST['team_popup_website_hide'] );
+			update_post_meta( $post_id, 'team_popup_website_hide', $team_popup_website_hide );
 		}
 
-		#Checks for input and saves if needed
-		if(isset($_POST['team_popup_infoicons_hide'])) {
-			update_post_meta($post_id, 'team_popup_infoicons_hide', $_POST['team_popup_infoicons_hide']);
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_popup_infoicons_hide' ] ) ) {
+			$team_popup_infoicons_hide = sanitize_text_field( $_POST['team_popup_infoicons_hide'] );
+			update_post_meta( $post_id, 'team_popup_infoicons_hide', $team_popup_infoicons_hide );
 		}
 
 		# Multicolor Meta Box
 
-		// Sanitize and save 'team_manager_mbgcolor_color' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_mbgcolor_color' ] ) ) {
 			$team_manager_mbgcolor_color = sanitize_hex_color( $_POST['team_manager_mbgcolor_color'] );
 			update_post_meta( $post_id, 'team_manager_mbgcolor_color', $team_manager_mbgcolor_color );
 		}
 
-		// Sanitize and save 'team_manager_mborder_color' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_mborder_color' ] ) ) {
 			$team_manager_mborder_color = sanitize_hex_color( $_POST['team_manager_mborder_color'] );
 			update_post_meta( $post_id, 'team_manager_mborder_color', $team_manager_mborder_color );
 		}
 
-		// Sanitize and save 'team_manager_mbcontent_color' field
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_mbcontent_color' ] ) ) {
 			$team_manager_mbcontent_color = sanitize_hex_color( $_POST['team_manager_mbcontent_color'] );
 			update_post_meta( $post_id, 'team_manager_mbcontent_color', $team_manager_mbcontent_color );
 		}
 
+		// Checks for input and sanitizes/saves if needed
 		if( isset( $_POST[ 'sort_array' ] ) ) {
 			update_post_meta( $post_id, 'sort_array', array_map( 'sanitize_text_field', $_POST[ 'sort_array' ] ) );
 		}
 
-		#Value check and saves if needed
+		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'nav_value' ] ) ) {
 		    $nav_value = sanitize_text_field( $_POST['nav_value'] ); // Sanitize nav_value input
 		    update_post_meta( $post_id, 'nav_value', $nav_value );
