@@ -32,7 +32,6 @@
 	        </div>
 	    </div>
 	</div>
-
 	<div class="doc-support-content">
 		<ul class="items-area">
 			<li class="list-item">

@@ -2,7 +2,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	Themepoints
-	* Version : 2.4
+	* Version : 2.7
 	*/
 
 	if ( ! defined( 'ABSPATH' ) ) {
@@ -423,9 +423,9 @@
 	}
 
 	function multicolor_add_meta2( $post, $args ) {
-		$team_manager_mbgcolor_color              		= get_post_meta($post->ID, 'team_manager_mbgcolor_color', true);
-		$team_manager_mborder_color              		= get_post_meta($post->ID, 'team_manager_mborder_color', true);
-		$team_manager_mbcontent_color              		= get_post_meta($post->ID, 'team_manager_mbcontent_color', true);
+		$team_manager_mbgcolor_color  = get_post_meta($post->ID, 'team_manager_mbgcolor_color', true);
+		$team_manager_mborder_color   = get_post_meta($post->ID, 'team_manager_mborder_color', true);
+		$team_manager_mbcontent_color = get_post_meta($post->ID, 'team_manager_mbcontent_color', true);
 		?>
 
 		<div class="wrap">
@@ -640,7 +640,7 @@
 						<table class="form-table">
 							<tr valign="top">
 								<th scope="row">
-									<label for="team_manager_free_category_select"><?php _e('Select Categories', 'team-manager-free');?></label>
+									<label for="team_manager_free_category_select"><?php _e('Select Categories', 'team-manager-free'); ?></label>
 									<span class="team_manager_hint toss"><?php echo __('The category names will only be visible when members are published within any categories.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
@@ -2101,12 +2101,12 @@
 			<li style="<?php if($nav_value == 6){echo "display: block;";} else{ echo "display: none;"; }?>" class="box6 tab-box <?php if($nav_value == 6){echo "active";}?>">
 				<div class="wrap">
 					<div class="option-box">
-						<p class="option-title"><?php _e('Social Icon Settings','team-manager-free'); ?> <a href="https://themepoints.com/product/team-showcase-pro/" target="_blank"><?php _e('Upgrade To Pro!', 'team-manager-free');?></a></p>
+						<p class="option-title"><?php _e('Social Icon Settings','team-manager-free'); ?> <a href="https://themepoints.com/product/team-showcase-pro/" target="_blank"><?php _e('Upgrade To Pro!', 'team-manager-free'); ?></a></p>
 
 						<table class="form-table">
 							<tr valign="top">
 								<th scope="row">
-									<label for="team_manager_free_socialicons_hide"><?php _e('Show/Hide Social', 'team-manager-free');?></label>
+									<label for="team_manager_free_socialicons_hide"><?php _e('Show/Hide Social', 'team-manager-free'); ?></label>
 									<span class="team_manager_hint toss"><?php echo __('Show/Hide Social Icons.', 'team-manager-free'); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
@@ -2163,7 +2163,7 @@
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="tmffree_social_font_size"><?php _e('Icon Font Size', 'team-manager-free');?></label>
+									<label for="tmffree_social_font_size"><?php _e('Icon Font Size', 'team-manager-free'); ?></label>
 									<span class="team_manager_hint toss"><?php echo __( 'Social Icon Font Size.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
@@ -2174,7 +2174,7 @@
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="tmffree_social_icon_color"><?php _e('Icon Color', 'team-manager-free');?></label>
+									<label for="tmffree_social_icon_color"><?php _e('Icon Color', 'team-manager-free'); ?></label>
 									<span class="team_manager_hint toss"><?php echo __( 'Set Social Icon Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
@@ -2184,7 +2184,7 @@
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="tmffree_social_bg_color"><?php _e('Icon Background Color', 'team-manager-free');?></label>
+									<label for="tmffree_social_bg_color"><?php _e('Icon Background Color', 'team-manager-free'); ?></label>
 									<span class="team_manager_hint toss"><?php echo __( 'Set Social Icon Background Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">
@@ -2194,7 +2194,7 @@
 
 							<tr valign="top">
 								<th scope="row">
-									<label for="tmffree_social_hover_color"><?php _e('Icon Hover Color', 'team-manager-free');?></label>
+									<label for="tmffree_social_hover_color"><?php _e('Icon Hover Color', 'team-manager-free'); ?></label>
 									<span class="team_manager_hint toss"><?php echo __( 'Set Social Icon Hover Color.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;">

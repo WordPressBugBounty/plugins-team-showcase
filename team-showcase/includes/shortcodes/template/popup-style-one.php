@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             			</div>
             			<div class="left-box-client-information">
 						<h3 class="team-manager-popup-designation">
-							<?php echo esc_html( $team_manager_free_client_designation );?>
+							<?php echo esc_html( $team_manager_free_client_designation ); ?>
 						</h3>
             				<?php include __DIR__ . '/client-popup-info.php'; ?>
             			</div>

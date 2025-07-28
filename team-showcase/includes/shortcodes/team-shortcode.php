@@ -38,8 +38,8 @@
 		$team_manager_free_socialicons_hide       = get_post_meta( $post_id, 'team_manager_free_socialicons_hide', true);
 		$tmffree_social_style                     = get_post_meta( $post_id, 'tmffree_social_style', true);
 		$social_radius                            = ($tmffree_social_style == '1') ? '0px' : '50px';
-		$tmffree_social_color                 	  = get_post_meta( $post_id, 'tmffree_social_color', true);
-		$use_inline_style = ($tmffree_social_color !== '2'); // Only use inline styles if NOT custom color
+		$tmffree_social_color                     = get_post_meta( $post_id, 'tmffree_social_color', true);
+		$use_inline_style                         = ($tmffree_social_color !== '2'); // Only use inline styles if NOT custom color
 		$tmffree_social_icon_color                = get_post_meta( $post_id, 'tmffree_social_icon_color', true);
 		$tmffree_social_bg_color                  = get_post_meta( $post_id, 'tmffree_social_bg_color', true);
 		$tmffree_social_hover_color               = get_post_meta( $post_id, 'tmffree_social_hover_color', true);
@@ -90,7 +90,7 @@
 		$team_manager_free_website_font_size      = get_post_meta( $post_id, 'team_manager_free_website_font_size', true );
 		$team_manager_free_website_font_color     = get_post_meta( $post_id, 'team_manager_free_website_font_color', true );
 		$team_manager_free_website_hover_color    = get_post_meta( $post_id, 'team_manager_free_website_hover_color', true );
-
+		
 		$team_manager_free_image_hide             = get_post_meta( $post_id, 'team_manager_free_image_hide', true );
 		$team_manager_free_image_zoom             = get_post_meta( $post_id, 'team_manager_free_image_zoom', true );
 		$team_manager_free_image_mode             = get_post_meta( $post_id, 'team_manager_free_image_mode', true );
@@ -108,7 +108,7 @@
 		$itemsdesktop                             = get_post_meta( $post_id, 'itemsdesktop', true );
 		$itemsdesktopsmall                        = get_post_meta( $post_id, 'itemsdesktopsmall', true );
 		$itemsmobile                              = get_post_meta( $post_id, 'itemsmobile', true );
-		$nav_text_color                           = get_post_meta( $post_id, 'nav_text_color', true );	
+		$nav_text_color                           = get_post_meta( $post_id, 'nav_text_color', true );
 		$nav_bg_color                             = get_post_meta( $post_id, 'nav_bg_color', true );
 		$nav_hover_text_color                     = get_post_meta( $post_id, 'nav_hover_text_color', true );
 		$nav_hover_bg_color                       = get_post_meta( $post_id, 'nav_hover_bg_color', true );
@@ -134,7 +134,7 @@
 		$team_popup_contacts_hide                 = get_post_meta( $post_id, 'team_popup_contacts_hide', true);
 		$team_popup_address_hide                  = get_post_meta( $post_id, 'team_popup_address_hide', true);
 		$team_popup_website_hide                  = get_post_meta( $post_id, 'team_popup_website_hide', true);
-		$team_popup_infoicons_hide                = get_post_meta( $post_id, 'team_popup_infoicons_hide', true);		
+		$team_popup_infoicons_hide                = get_post_meta( $post_id, 'team_popup_infoicons_hide', true);
 		$team_manager_free_popupbox_positions     = get_post_meta( $post_id, 'team_manager_free_popupbox_positions', true);
 		$team_fbackground_color                   = get_post_meta( $post_id, 'team_fbackground_color', true);
 		$teamf_orderby                            = get_post_meta( $post_id, 'teamf_orderby', true);
@@ -151,11 +151,11 @@
 			}
 
 			$args = array(
-				'post_type' => 'team_mf',
-				'post_status' => 'publish',
+				'post_type'      => 'team_mf',
+				'post_status'    => 'publish',
 				'posts_per_page' => $limit,
-				'orderby'	=> $teamf_orderby,
-				'order'	=> $teamf_order,
+				'orderby'        => $teamf_orderby,
+				'order'          => $teamf_order,
 			    'tax_query' => [
 			        'relation' => 'OR',
 			        [
@@ -172,11 +172,11 @@
 			);
 	    }else{
 			$args = array(
-				'post_type' => 'team_mf',
-				'post_status' => 'publish',
+				'post_type'      => 'team_mf',
+				'post_status'    => 'publish',
 				'posts_per_page' => $limit,
-				'orderby'	=> $teamf_orderby,
-				'order'	=> $teamf_order,
+				'orderby'        => $teamf_orderby,
+				'order'          => $teamf_order,
 			);
 	    }
 

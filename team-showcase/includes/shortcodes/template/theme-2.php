@@ -2,7 +2,7 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 	    exit;
 	}
-	?>
+?>
 
 	<style type="text/css">
 		<?php ob_start(); // Start output buffering ?>

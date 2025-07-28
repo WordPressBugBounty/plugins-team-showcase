@@ -3,7 +3,7 @@
 	    exit;
 	}
 ?>
-	
+
 	<style type="text/css">
 		<?php ob_start(); // Start output buffering ?>
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> {

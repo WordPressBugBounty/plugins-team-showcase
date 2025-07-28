@@ -26,14 +26,14 @@
 	<?php if( !empty( $team_manager_free_client_address )) { ?>
 		<li class="tp-tmffree-popup-address">
 			<i class="fa fa-map-marker"></i>
-			<?php echo esc_attr( $team_manager_free_client_address );?>
+			<?php echo esc_attr( $team_manager_free_client_address ); ?>
 		</li>
 	<?php } ?>
 	
 	<?php if( !empty( $team_manager_free_client_website )) { ?>
 		<li class="tp-tmffree-popup-website">
 			<i class="fa fa-globe"></i>
-			<a href="<?php echo esc_url( $team_manager_free_client_website );?>"><?php echo esc_html( $team_manager_free_client_website );?></a>
+			<a href="<?php echo esc_url( $team_manager_free_client_website );?>"><?php echo esc_html( $team_manager_free_client_website ); ?></a>
 		</li>
 	<?php } ?>
 </ul>

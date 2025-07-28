@@ -14,7 +14,7 @@
                                     <div class="client-info-box">
                                           <h2 class="left-box-title"><?php the_title(); ?></h2>
                                           <h3 class="team-manager-popup-designation">
-                                                <?php echo esc_html( $team_manager_free_client_designation );?>
+                                                <?php echo esc_html( $team_manager_free_client_designation ); ?>
                                           </h3>
                                     </div>
                               </div>
