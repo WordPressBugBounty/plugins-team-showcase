@@ -71,7 +71,6 @@
 	            transform: scale(1.10);
 	        }
 	    <?php endif; ?>
-
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items:hover .team-manager-free-items-over-laye {
 			height: 100%; /* Expand the height of the overlay on hover */
 			transform: translateY(0); /* Move the overlay into view */

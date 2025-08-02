@@ -7,7 +7,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	2016 Themepoints
-	* Version : 2.7
+	* Version : 2.8
 	*/
 
 	# Add Team Meta Box

@@ -45,7 +45,6 @@
 	            transform: scale(1.10);
 	        }
 	    <?php endif; ?>
-	    
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social{
 			margin:0px;
 			padding: 10px 20px;

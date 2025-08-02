@@ -157,7 +157,6 @@
 			padding-right: <?php echo $team_manager_free_padding_left;?>px !important;
 			position: relative;
 		}
-
 		<?php
 	    // Get the buffered content
 	    $styles = ob_get_clean();

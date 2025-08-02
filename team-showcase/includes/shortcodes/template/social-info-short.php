@@ -23,11 +23,15 @@
 	            }
 
 	            ?>
-	            <li>
-	                <a target="<?php echo esc_attr($team_manager_free_social_target); ?>" href="<?php echo esc_url($scsingleicons['sciconsurl']); ?>" <?php echo $rel_attr; ?>>
+
+	            <li class="tpf-icon"> <!-- Important wrapper class -->
+	                <a target="<?php echo esc_attr($team_manager_free_social_target); ?>"
+	                   href="<?php echo esc_url($scsingleicons['sciconsurl']); ?>"
+	                   <?php echo $rel_attr; ?>>
 	                    <i class="<?php echo $icon_class; ?>"></i>
 	                </a>
 	            </li>
+
 				<?php
 		    } 
 		}

@@ -20,6 +20,7 @@
 		$team_manager_free_theme_style            = get_post_meta( $post_id, 'team_manager_free_theme_style', true);
 		$team_manager_free_limits                 = get_post_meta( $post_id, 'team_manager_free_limits', true);
 		// Set the limit (if empty, show all)
+		
 		$limit                                    = ! empty( $team_manager_free_limits ) ? (int) $team_manager_free_limits : -1;
 		$team_manager_free_post_column            = get_post_meta( $post_id, 'team_manager_free_post_column', true) ?: '4';
 		$team_manager_free_laptop_columns         = get_post_meta( $post_id, 'team_manager_free_laptop_columns', true) ?: '3';
@@ -35,6 +36,7 @@
 		$team_manager_social_nofollow             = get_post_meta( $post_id, 'team_manager_social_nofollow', true);
 		$rel_attr                                 = ($team_manager_social_nofollow === '1') ? 'rel="nofollow"' : '';
 		# Social Icons Settings
+		
 		$team_manager_free_socialicons_hide       = get_post_meta( $post_id, 'team_manager_free_socialicons_hide', true);
 		$tmffree_social_style                     = get_post_meta( $post_id, 'tmffree_social_style', true);
 		$social_radius                            = ($tmffree_social_style == '1') ? '0px' : '50px';

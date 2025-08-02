@@ -36,7 +36,6 @@
 	            transform: scale(1.10);
 	        }
 	    <?php endif; ?>
-
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-thumb a {
 			border: medium none;
 			border-radius: 0;

@@ -2,7 +2,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	Themepoints
-	* Version : 2.7
+	* Version : 2.8
 	*/
 
 	if ( ! defined( 'ABSPATH' ) ) {
