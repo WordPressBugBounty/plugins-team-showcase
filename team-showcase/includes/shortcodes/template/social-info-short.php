@@ -4,7 +4,6 @@
 	}
 ?>
 
-
 <?php
 	// Check if social profiles exist
 	if (!empty($tpteamfree_social_iconbox_repeat)) {

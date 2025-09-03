@@ -134,7 +134,6 @@
 
 	}
 	add_action('save_post', 'team_manager_free_custom_inner_custom_boxes_save');
-	
 
 	function get_tp_tmfree_social_icons_list() {
 	    return array(

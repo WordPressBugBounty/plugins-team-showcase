@@ -234,3 +234,4 @@
 			<?php endwhile; wp_reset_postdata(); ?>
 		</div>
 	</div>
+	

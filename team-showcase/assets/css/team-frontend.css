@@ -1,11 +1,11 @@
 .white-popup {
-  position: relative;
-  background: #FFF;
-  padding: 30px;
-  width: auto;
-  max-width: 1140px;
-  margin: 20px auto;
-  border-radius: 5px;
+    position: relative;
+    background: #FFF;
+    padding: 30px;
+    width: auto;
+    max-width: 1140px;
+    margin: 20px auto;
+    border-radius: 5px;
 }
 .team-manager-container .team-manager-row .tsrow-col-md-4 {
     width: 30%;
@@ -91,15 +91,15 @@ ul.tp-tmffree-popup-info li a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-	text-decoration: none;
+    text-decoration: none;
     box-shadow: none;
     outline: none;
     background:#f8f8f8;
-	color: #da3e65;
+    color: #da3e65;
 }
 .left-box-social-items li a:hover{
-	text-decoration:none;
-	color:#333;
+    text-decoration:none;
+    color:#333;
 }
 .white-popup.style-one .left-box-social-items{
     justify-content: left;

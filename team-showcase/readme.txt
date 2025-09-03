@@ -4,7 +4,7 @@ Donate link: https://themepoints.com/teamshowcase/
 Tags: team, team members, staff, team grid, team showcase, employee directory, team slider, team carousel, team member display, responsive team layout
 Requires at least: 4.0
 Tested up to: 6.8.2
-Stable tag: 2.8
+Stable tag: 2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,6 +157,11 @@ https://wordpress.org/plugins/simple-custom-post-order/
 
 
 == Changelog ==
+
+= 2.9 =
+* Fix Escaping Issue.
+* Added New Options.
+* Update Options Page UI.
 
 = 2.8 =
 * Fix Icon Conflict Issue.

@@ -42,9 +42,9 @@
   margin-right: 5px;
 }
 .tupsetings ul.tab-nav li span {
-    font-size: 15px;
-    line-height: 20px;
-    padding-right: 5px;
+  font-size: 15px;
+  line-height: 20px;
+  padding-right: 5px;
 }
 .tupsetings ul.box {
   clear: both;
@@ -63,23 +63,23 @@
   margin: 25px 0;
 }
 .tupsetings .option-box table.form-table ul li {
-    display: inline-block;
-    overflow: hidden;
-    padding: 8px 10px;
-    background: #ddd;
-    margin-right: 5px;
-    line-height: 15px;
-    margin-bottom: 5px;
+  display: inline-block;
+  overflow: hidden;
+  padding: 8px 10px;
+  background: #ddd;
+  margin-right: 5px;
+  line-height: 15px;
+  margin-bottom: 5px;
 }
 .tupsetings .option-box table.form-table ul li input[type="checkbox"]::before {
-    background: #000;
-    box-shadow: none;
-    border-radius: 0;
+  background: #000;
+  box-shadow: none;
+  border-radius: 0;
 }
 .tupsetings .option-box table.form-table ul li label {
-    font-size: 15px;
-    line-height: 15px;
-    text-transform: capitalize;
+  font-size: 15px;
+  line-height: 15px;
+  text-transform: capitalize;
 }
 .tup-form-table th {
   vertical-align: top;
@@ -203,7 +203,6 @@
   opacity: 0.6;
   transition: all 0.6s ease-in-out 0s;
 }
-
 /*  Team manager free admin support */
 div.wrap h2.team-manager-admin-support {
   padding-bottom: 16px;
@@ -231,7 +230,6 @@ div.wrap .team-manager-admin-area{
   color: #fff;
   font-size: 15px;
 }
-
 /* Social Icons CSS */
 .social_single_items .fa.fa-facebook {
   background: #3b5998 none repeat scroll 0 0;
@@ -305,10 +303,10 @@ div.wrap .team-manager-admin-area{
   background-color: #fff;
 }
 .tab-content {
-    display: none;
+  display: none;
 }
 #tab-1 {
- display: block;   
+  display: block;   
 }
 .tabs-menu li a:focus {
   box-shadow: none;
@@ -403,82 +401,82 @@ div.wrap .team-manager-admin-area{
 /* Medium Layout: 1280px. */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .single-team-social-icons {
-      width: 50%;
+    width: 50%;
   }
   .single-team-social-icons input#twitter_social_input, input#googleplus_social_input, input#facebook_social_input, input#instagram_social_input, input#pinterest_social_input, input#linkedIn_social_input, input#dribbble_social_input, input#youtube_social_input, input#skype_social_input{
-      width: 95%;
+    width: 95%;
   }
   .details_profiles_cols input#post_title_designation, input#client_address_input, input#contact_number_input, input#contact_email_input, input#client_website_input, textarea#short_description_input {
-      width: 90%;
+    width: 90%;
   }
 }
 
 /* Tablet Layout: 768px. */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .single-team-social-icons {
-      width: 50%;
+    width: 50%;
   }
   .single-team-social-icons input#twitter_social_input, input#googleplus_social_input, input#facebook_social_input, input#instagram_social_input, input#pinterest_social_input, input#linkedIn_social_input, input#dribbble_social_input, input#youtube_social_input, input#skype_social_input{
-      width: 95%;
+    width: 95%;
   }
 }
 
 /* Mobile Layout: 320px. */
 @media only screen and (max-width: 767px) {
   .single-team-social-icons {
-      width: 50%;
+    width: 50%;
   }
   .single-team-social-icons input#twitter_social_input, input#googleplus_social_input, input#facebook_social_input, input#instagram_social_input, input#pinterest_social_input, input#linkedIn_social_input, input#dribbble_social_input, input#youtube_social_input, input#skype_social_input{
-      width: 95%;
+    width: 95%;
   }
 }
 
 /* Wide Mobile Layout: 480px. */
 @media only screen and (min-width: 481px) and (max-width: 767px) {
   .single-team-social-icons {
-      width: 50%;
+    width: 50%;
   }
   .single-team-social-icons input#twitter_social_input, input#googleplus_social_input, input#facebook_social_input, input#instagram_social_input, input#pinterest_social_input, input#linkedIn_social_input, input#dribbble_social_input, input#youtube_social_input, input#skype_social_input{
-      width: 95%;
+    width: 95%;
   }
 }
 
 /* Small Mobile Layout: 480px. */
 @media only screen and (min-width: 240px) and (max-width: 480px) {
   .single-team-social-icons {
-      width: 100%;
+    width: 100%;
   }
   .single-team-social-icons input#twitter_social_input, input#googleplus_social_input, input#facebook_social_input, input#instagram_social_input, input#pinterest_social_input, input#linkedIn_social_input, input#dribbble_social_input, input#youtube_social_input, input#skype_social_input{
-      width: 95%;
+    width: 95%;
   }
   .details_profiles_cols {
-      width: 100%;
+    width: 100%;
   }
   .details_profiles_cols input#post_title_designation, input#client_address_input, input#contact_number_input, input#contact_email_input, input#client_website_input, textarea#short_description_input {
-      width: 95%;
+    width: 95%;
   }
 }
 
 /*big from small mobile, small from wide mobile*/
 @media only screen and (min-width: 380px) and (max-width: 480px) {
   .single-team-social-icons {
-      width: 100%;
+    width: 100%;
   }
   .single-team-social-icons input#twitter_social_input, input#googleplus_social_input, input#facebook_social_input, input#instagram_social_input, input#pinterest_social_input, input#linkedIn_social_input, input#dribbble_social_input, input#youtube_social_input, input#skype_social_input{
-      width: 95%;
+    width: 95%;
   }
   .details_profiles_cols {
-      width: 100%;
+    width: 100%;
   }
   .details_profiles_cols input#post_title_designation, input#client_address_input, input#contact_number_input, input#contact_email_input, input#client_website_input, textarea#short_description_input {
-      width: 95%;
+    width: 95%;
   }
 }
 
 label#team_manager_section_title {
-    font-weight: 700;
-    color: red;
-    font-size: 15px;
+  font-weight: 700;
+  color: red;
+  font-size: 15px;
 }
 .switch-field {
   display: flex;
@@ -506,14 +504,14 @@ label#team_manager_section_title {
   transition: all 0.1s ease-in-out;
 }
 .switch-field label span.mark {
-    position: absolute;
-    top: -2px;
-    background: red;
-    color: #fff;
-    padding: 2px;
-    left: -1px;
-    font-size: 10px;
-    border-radius: 0px;
+  position: absolute;
+  top: -2px;
+  background: red;
+  color: #fff;
+  padding: 2px;
+  left: -1px;
+  font-size: 10px;
+  border-radius: 0px;
 }
 .switch-field label:hover {
   cursor: pointer;
@@ -562,36 +560,33 @@ label#team_manager_section_title {
   border-radius: 0 4px 4px 0;
 }
 span.team_manager_hint.toss {
-    display: block;
-    font-size: 14px;
-    margin-top: 15px;
-    overflow: hidden;
-    color: #999;
-    font-weight: 400;
+  display: block;
+  font-size: 14px;
+  margin-top: 15px;
+  overflow: hidden;
+  color: #999;
+  font-weight: 400;
 }
-
 .pic-device-columns {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 .tp-device-label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .tp-device-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-    font-weight: 600;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-weight: 600;
 }
 .tp-device-header .dashicons {
-    font-size: 20px;
-    margin-right: 5px;
-    color: #0073aa;
+  font-size: 20px;
+  margin-right: 5px;
+  color: #0073aa;
 }
-
-
 .tmffree-icon-option {
   display: inline-block;
   cursor: pointer;
@@ -623,7 +618,6 @@ span.team_manager_hint.toss {
 .tmffree-icon-option input:checked + i.fa {
   fill: #0073aa;
 }
-
 span.prohints {
   position: relative;
 }
@@ -638,7 +632,6 @@ span.prohints {
   color: #fff;
   font-size: 10px;
 }
-
 .tmffree-pagination-option {
   display: inline-block;
   cursor: pointer;
@@ -662,8 +655,6 @@ span.prohints {
   border-color: #0073aa; /* Border color on selection */
   background-color: #e0f7ff; /* Light blue background */
 }
-
-
 .tmffree-social-color-option {
   display: inline-block;
   cursor: pointer;

@@ -3,7 +3,7 @@
 	Plugin Name: Team Showcase
 	Plugin URI: https://themepoints.com/teamshowcase/
 	Description: Team Showcase is a WordPress plugin that allows you to easily create and manage teams. You can display single teams as multiple responsive columns, you can also showcase all teams in various styles.
-	Version: 2.8
+	Version: 2.9
 	Author: Themepoints
 	Author URI: https://themepoints.com
 	License: GPLv2
@@ -19,7 +19,7 @@
 	// Define plugin version
 	define( 'TEAM_MANAGER_PLUGIN_NAME', 'Team Showcase' );
 	define( 'TEAM_MANAGER_PLUGIN_SLUG', 'team-manager-free' );
-	define( 'TEAM_MANAGER_FREE_VERSION', '2.8' );
+	define( 'TEAM_MANAGER_FREE_VERSION', '2.9' );
 
 	// Define paths for the plugin
 	define('TEAM_MANAGER_FREE_PLUGIN_PATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
@@ -76,13 +76,13 @@
 		}
 	}
 	add_action('admin_enqueue_scripts', 'team_manager_free_admin_scripts');
-	
+
 	function team_manager_free_buy_action_links( $links ) {
 		$links[] = '<a target="_blank" href="https://themepoints.com/product/team-showcase-pro/" style="color: green; font-weight: bold;" target="_blank">Upgrade Pro!</a>';
 		return $links;
 	}
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'team_manager_free_buy_action_links' );
-	
+
 	// Team Post Type File
 	require_once( plugin_dir_path(__FILE__) . 'admin/team-manager-free-post-type.php');
 
@@ -101,7 +101,7 @@
 	        // If so, set the installation time
 	        update_option('tmffree_team_activation_time', time() );
 	    }
-	    
+
 		require_once plugin_dir_path( __FILE__ ) . 'includes/team-manager-free-activator.php';
 		Team_Manager_Free_Activator::activate();
 	}

@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
+
 <div id="team-popup-area-<?php echo esc_attr( $random_team_id ); ?>" class="mfp-hide white-popup style-two">
       <div class="team-manager-container">
             <div class="team-manager-row">

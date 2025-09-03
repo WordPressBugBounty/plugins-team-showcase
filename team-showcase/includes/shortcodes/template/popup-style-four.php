@@ -19,7 +19,6 @@
                                     </div>
                               </div>
                         </div>
-
                         <div class="team-manager-popup-right-area">
                               
                               <?php echo wpautop( get_the_content() ); ?>

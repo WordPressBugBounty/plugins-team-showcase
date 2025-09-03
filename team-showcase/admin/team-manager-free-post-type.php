@@ -2,7 +2,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	Themepoints
-	* Version : 2.8
+	* Version : 2.9
 	*/
 
 	if ( ! defined( 'ABSPATH' ) ) {
@@ -196,7 +196,6 @@
 
 	# Columns Declaration Function
 	function team_manager_free_columns($team_manager_free_columns){
-
 		$order='asc';
 		if($_GET['order']=='asc') {
 			$order='desc';
@@ -215,7 +214,6 @@
 
 	# Team Value Function
 	function team_manager_free_columns_display($team_manager_free_columns, $post_id){
-
 		global $post;
 		$width = (int) 80;
 		$height = (int) 80;
@@ -289,7 +287,6 @@
 	} // end metabox boxes
 
 	add_action('add_meta_boxes', 'team_manager_free_add_metabox');
-
 
 	function team_mf_team_sidebar_metabox_callback($post) {
 	    // Get saved data
@@ -495,7 +492,7 @@
 		$team_manager_social_nofollow             = get_post_meta( $post->ID, 'team_manager_social_nofollow', true);
 		$team_manager_free_text_alignment         = get_post_meta( $post->ID, 'team_manager_free_text_alignment', true );
 		$team_manager_free_multicolor_hide        = get_post_meta( $post->ID, 'team_manager_free_multicolor_hide', true );
-		$team_manager_free_emails_hide            = get_post_meta( $post->ID, 'team_manager_free_emails_hide', true ) ?: '0';	
+		$team_manager_free_emails_hide            = get_post_meta( $post->ID, 'team_manager_free_emails_hide', true ) ?: '0';
 		$team_manager_free_emails_font_color      = get_post_meta( $post->ID, 'team_manager_free_emails_font_color', true );
 		$team_manager_free_emails_hover_color     = get_post_meta( $post->ID, 'team_manager_free_emails_hover_color', true );
 		$team_manager_free_emails_font_size       = get_post_meta( $post->ID, 'team_manager_free_emails_font_size', true );
@@ -1575,7 +1572,7 @@
 							<tr valign="top">
 								<th scope="row">
 									<label for="autoplay_speed"><?php _e( 'Slide Delay', 'team-manager-free' ); ?></label>
-									<span class="team_manager_hint toss"><?php echo __( 'Select a value for sliding speed.', 'team-manager-free' ); ?></span>							
+									<span class="team_manager_hint toss"><?php echo __( 'Select a value for sliding speed.', 'team-manager-free' ); ?></span>
 								</th>
 								<td style="vertical-align: middle;" class="auto_play">
 									<input type="range" step="100" min="100" max="5000" value="<?php  if ( $autoplay_speed !='' ) { echo $autoplay_speed; } else{ echo '700'; } ?>" class="slider" id="myRange"><br>
@@ -1595,7 +1592,7 @@
 										<label for="stop_hover_true"><?php _e( 'Yes', 'team-manager-free' ); ?></label>
 										<input type="radio" id="stop_hover_false" name="stop_hover" value="false" <?php if ( $stop_hover == 'false' ) echo 'checked'; ?>/>
 										<label for="stop_hover_false" class="stop_hover_false"><?php _e( 'No', 'team-manager-free' ); ?></label>
-									</div>	
+									</div>
 								</td>
 							</tr>
 							<!-- End Stop Hover -->
@@ -1744,7 +1741,7 @@
 								</td>
 							</tr>
 							<!-- End Navigation -->
-							
+
 							<tr valign="top">
 								<th scope="row">
 									<label for="navigation_align"><?php _e( 'Navigation Align', 'team-manager-free' ); ?></label>
@@ -2074,7 +2071,7 @@
 								</td>
 							</tr>
 							<!-- End hide Website info popup page -->
-							
+
 							<tr valign="top">
 								<th scope="row">
 									<label for="team_popup_infoicons_hide"><?php _e( 'Show/Hide Icon', 'team-manager-free' ); ?></label>
@@ -2579,7 +2576,7 @@
 			$autoplay = sanitize_text_field( $_POST['autoplay'] );
 			update_post_meta( $post_id, 'autoplay', $autoplay );
 		}
-	    
+
 	 	#Checks for input and sanitizes/saves if needed    
 	    if ( ! empty( $_POST['autoplay_speed'] ) ) {
 	    	if (strlen( $_POST['autoplay_speed'] ) > 4 ) {
@@ -2708,31 +2705,31 @@
 			$filter_bg_color = sanitize_hex_color( $_POST['filter_bg_color'] );
 			update_post_meta( $post_id, 'filter_bg_color', $filter_bg_color );
 		}
-		
+
 		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'filter_border_color' ] ) ) {
 			$filter_border_color = sanitize_hex_color( $_POST['filter_border_color'] );
 			update_post_meta( $post_id, 'filter_border_color', $filter_border_color );
 		}
-		
+
 		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'filter_mfont_color' ] ) ) {
 			$filter_mfont_color = sanitize_hex_color( $_POST['filter_mfont_color'] );
 			update_post_meta( $post_id, 'filter_mfont_color', $filter_mfont_color );
 		}
-		
+
 		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'filter_active_color' ] ) ) {
 			$filter_active_color = sanitize_hex_color( $_POST['filter_active_color'] );
 			update_post_meta( $post_id, 'filter_active_color', $filter_active_color );
 		}
-		
+
 		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'filter_hover_color' ] ) ) {
 			$filter_hover_color = sanitize_hex_color( $_POST['filter_hover_color'] );
 			update_post_meta( $post_id, 'filter_hover_color', $filter_hover_color );
 		}
-		
+
 		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'filter_active_font' ] ) ) {
 			$filter_active_font = sanitize_hex_color( $_POST['filter_active_font'] );
