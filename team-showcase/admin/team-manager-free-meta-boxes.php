@@ -7,7 +7,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	2016 Themepoints
-	* Version : 2.8
+	* Version : 3.0.0
 	*/
 
 	# Add Team Meta Box
@@ -59,6 +59,9 @@
 		$contact_email           = get_post_meta($post->ID, 'contact_email', true);
 		$client_website          = get_post_meta($post->ID, 'client_website', true);
 		$client_shortdescription = get_post_meta($post->ID, 'client_shortdescription', true);
+
+		// Add nonce field for security
+		wp_nonce_field( 'team_manager_free_custom_meta_save', 'team_manager_free_custom_meta_nonce' );
 		?>
 
 		<div id="details_profiles_area">
@@ -96,6 +99,12 @@
 
 	# Save Options Meta Box Function
 	function team_manager_free_custom_inner_custom_boxes_save($post_id){
+
+		// Verify nonce
+		if ( ! isset( $_POST['team_manager_free_custom_meta_nonce'] ) || 
+		     ! wp_verify_nonce( $_POST['team_manager_free_custom_meta_nonce'], 'team_manager_free_custom_meta_save' ) ) {
+			return;
+		}
 
 	    // Check if autosave
 	    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {

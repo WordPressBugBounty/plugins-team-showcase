@@ -29,7 +29,7 @@
 		    padding: 0;
 			color: <?php echo esc_attr( $team_manager_free_header_font_color); ?>;
 			font-size: <?php echo esc_attr( $team_manager_free_header_font_size); ?>px;
-			font-style: <?php echo $team_manager_name_font_style;?>;
+			font-style: <?php echo esc_attr( $team_manager_name_font_style); ?>;
 			text-transform: <?php echo esc_attr( $team_manager_name_font_case); ?>;
 			box-shadow: none;
 			outline: medium none;
@@ -42,8 +42,8 @@
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-profiles .team-manager-free-items-designation {
 			color:<?php echo esc_attr( $team_manager_free_designation_font_color); ?>;
 			font-size:<?php echo esc_attr( $team_manager_free_designation_font_size); ?>px;
-			font-style: <?php echo $team_manager_desig_font_style;?>;
-			text-transform: <?php echo $team_manager_desig_font_case;?>;
+			font-style: <?php echo esc_attr( $team_manager_desig_font_style); ?>;
+			text-transform: <?php echo esc_attr( $team_manager_desig_font_case); ?>;
 		}
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-profiles {
 		    padding: 15px;
@@ -67,7 +67,7 @@
 		}
 	    /* Zoom In */
 	    <?php if ($team_manager_free_image_zoom == '2') : ?>
-	        .team-manager-free-main-area-<?php echo esc_attr($post_id); ?> .team-manager-free-items:hover .team-manager-free-items-pic img {
+	        .team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items:hover .team-manager-free-items-pic img {
 	            transform: scale(1.10);
 	        }
 	    <?php endif; ?>
@@ -158,10 +158,10 @@
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-5,
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-6 {
 			float: left;
-			margin-bottom: <?php echo $team_manager_free_margin_bottom;?>px !important;
+			margin-bottom: <?php echo esc_attr( $team_manager_free_margin_bottom ); ?>px !important;
 			min-height: 1px;
-			padding-left: <?php echo $team_manager_free_padding_left;?>px !important;
-			padding-right: <?php echo $team_manager_free_padding_left;?>px !important;
+			padding-left: <?php echo esc_attr( $team_manager_free_padding_left ); ?>px !important;
+			padding-right: <?php echo esc_attr( $team_manager_free_padding_left ); ?>px !important;
 			position: relative;
 		}
 
@@ -187,8 +187,7 @@
 				$team_manager_free_client_number           = get_post_meta(get_the_ID(), 'contact_number', true);
 				$team_manager_free_client_address          = get_post_meta(get_the_ID(), 'company_address', true);
 				$team_manager_free_client_website          = get_post_meta(get_the_ID(), 'client_website', true);
-				
-				$tpteamfree_social_iconbox_repeat          = get_post_meta( get_the_ID(), 'tpteamfree_social_iconbox_repeat', true);
+				$tpteamfree_social_iconbox_repeat          = get_post_meta(get_the_ID(), 'tpteamfree_social_iconbox_repeat', true);
 				$random_team_id                            = rand();
 				?>
 

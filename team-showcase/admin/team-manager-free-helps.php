@@ -2,6 +2,12 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 	    exit;
 	}
+
+	/*
+	* @Author 		Themepoints
+	* Copyright: 	2016 Themepoints
+	* Version : 3.0.0
+	*/
 ?>
 
 <div class="wraper doc-suport">

@@ -2,7 +2,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	Themepoints
-	* Version : 2.9
+	* Version : 3.0.0
 	*/
 
 	if ( ! defined( 'ABSPATH' ) ) {
@@ -2888,8 +2888,6 @@
 			$team_popup_infoicons_hide = sanitize_text_field( $_POST['team_popup_infoicons_hide'] );
 			update_post_meta( $post_id, 'team_popup_infoicons_hide', $team_popup_infoicons_hide );
 		}
-
-		# Multicolor Meta Box
 
 		// Checks for input and sanitizes/saves if needed
 		if ( isset( $_POST[ 'team_manager_mbgcolor_color' ] ) ) {

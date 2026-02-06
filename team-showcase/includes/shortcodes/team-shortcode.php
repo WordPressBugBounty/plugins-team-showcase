@@ -92,7 +92,6 @@
 		$team_manager_free_website_font_size      = get_post_meta( $post_id, 'team_manager_free_website_font_size', true );
 		$team_manager_free_website_font_color     = get_post_meta( $post_id, 'team_manager_free_website_font_color', true );
 		$team_manager_free_website_hover_color    = get_post_meta( $post_id, 'team_manager_free_website_hover_color', true );
-		
 		$team_manager_free_image_hide             = get_post_meta( $post_id, 'team_manager_free_image_hide', true );
 		$team_manager_free_image_zoom             = get_post_meta( $post_id, 'team_manager_free_image_zoom', true );
 		$team_manager_free_image_mode             = get_post_meta( $post_id, 'team_manager_free_image_mode', true );
@@ -184,29 +183,21 @@
 
 	  	$tmf_query = new WP_Query( $args );
 
-		ob_start();
-		switch ( $team_manager_free_post_themes ) {
-		    case 'theme1':
 
-		    	include __DIR__ . '/template/theme-1.php';
+		$allowed_themes = array(
+		    'theme1' => 'theme-1.php',
+		    'theme2' => 'theme-2.php',
+		    'theme3' => 'theme-3.php',
+		    'theme4' => 'theme-4.php',
+		);
 
-		        break;
-		    case 'theme2':
-
-		    	include __DIR__ . '/template/theme-2.php';
-
-		        break;
-		    case 'theme3':
-
-				include __DIR__ . '/template/theme-3.php';
-			
-		        break; 
-		    case 'theme4':
-
-				include __DIR__ . '/template/theme-4.php';
-
-		    break;
+		if ( ! isset( $allowed_themes[ $team_manager_free_post_themes ] ) ) {
+		    $team_manager_free_post_themes = 'theme1';
 		}
+
+		ob_start();
+		include __DIR__ . '/template/' . $allowed_themes[ $team_manager_free_post_themes ];
 		return ob_get_clean();
+
 	}
 	add_shortcode( 'tmfshortcode', 'team_manager_free_register_shortcode' );

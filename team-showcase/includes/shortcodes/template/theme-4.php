@@ -64,8 +64,8 @@
 			display:block;
 			color: <?php echo esc_attr( $team_manager_free_designation_font_color); ?>;
 			font-size: <?php echo esc_attr( $team_manager_free_designation_font_size); ?>px;
-			font-style: <?php echo $team_manager_desig_font_style;?>;
-			text-transform: <?php echo $team_manager_desig_font_case;?>;
+			font-style: <?php echo esc_attr( $team_manager_desig_font_style); ?>;
+			text-transform: <?php echo esc_attr( $team_manager_desig_font_case); ?>;
 			margin-bottom: 10px;
 		}
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social{
@@ -127,10 +127,10 @@
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-5,
 		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-6 {
 			float: left;
-			margin-bottom: <?php echo $team_manager_free_margin_bottom;?>px !important;
+			margin-bottom: <?php echo esc_attr( $team_manager_free_margin_bottom); ?>px !important;
 			min-height: 1px;
-			padding-left: <?php echo $team_manager_free_padding_left;?>px !important;
-			padding-right: <?php echo $team_manager_free_padding_left;?>px !important;
+			padding-left: <?php echo esc_attr( $team_manager_free_padding_left); ?>px !important;
+			padding-right: <?php echo esc_attr( $team_manager_free_padding_left); ?>px !important;
 			position: relative;
 		}
 		
@@ -164,8 +164,7 @@
 				$team_manager_free_social_dribbble         = get_post_meta(get_the_ID(), 'social_dribbble', true);
 				$team_manager_free_social_youtube          = get_post_meta(get_the_ID(), 'social_youtube', true);
 				$team_manager_free_social_skype            = get_post_meta(get_the_ID(), 'social_skype', true);
-				
-				$tpteamfree_social_iconbox_repeat          = get_post_meta( get_the_ID(), 'tpteamfree_social_iconbox_repeat', true);
+				$tpteamfree_social_iconbox_repeat          = get_post_meta(get_the_ID(), 'tpteamfree_social_iconbox_repeat', true);
 				$random_team_id                            = rand();
 				?>
 
