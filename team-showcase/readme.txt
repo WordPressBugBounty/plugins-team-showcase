@@ -1,133 +1,182 @@
-=== Team Showcase – Responsive Team Members Grid, Slider, and Carousel Plugin ===
+=== Team Showcase – Responsive Team Members Grid, Slider & Carousel Plugin ===
 Contributors: themepoints
 Donate link: https://themepoints.com/teamshowcase/
-Tags: team, team members, staff, team grid, team showcase, employee directory, team slider, team carousel, team member display, responsive team layout
+Tags: team showcase, team members, staff, employee, team grid, team slider, team carousel, team popup
 Requires at least: 4.0
 Tested up to: 6.9
 Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Full Featured Lightweight & Responsive Team Showcase Plugin For WordPress.
+Create beautiful, responsive team member sections with grid, slider, list, popup, and carousel layouts. Perfect for companies, agencies, startups, schools, and organizations.
 
 == Description ==
-Team Showcase plugin allows you to display team member post or page. you can easily create team list via custom post & re-order team member simply by drag & drop. Team showcase allows you to show your staff or employees on your website easy way.
+**Team Showcase** is a lightweight yet powerful WordPress plugin that helps you display your team members, staff, employees, board members, or speakers in a clean and professional way.
+
+Create stunning team sections using grid, slider, list, popup, and carousel layouts — no coding required.
+
+The plugin works with any WordPress theme and gives you full control over layout, style, and content.
 
 
-<ul>
-	<li><a href="https://themepoints.com/product/team-showcase-pro/">Upgrade to Pro</a></li>
-	<li><a href="https://themepoints.com/teamshowcase/">Live Preview</a></li>
-	<li><a href="https://themepoints.com/teamshowcase/docs/team-showcase/overview/">Documentation</a></li>
-</ul>
+### Useful Links
+- [Upgrade to Pro](https://themepoints.com/product/team-showcase-pro/)
+- [Live Preview](https://themepoints.com/teamshowcase/)
+- [Documentation](https://themepoints.com/teamshowcase/docs/team-showcase/overview/)
 
-
-<strong> Installation Tutorial & Demonstration </strong>
-
+### Installation Tutorial & Demonstration
 https://www.youtube.com/watch?v=S9mgBm14n0I
 
+### Why Choose Team Showcase?
+Most team plugins only show names and images.
+**Team Showcase goes further.**
 
-<strong>Available Features </strong>
+✔ 25+ professionally designed team layouts  
+✔ Grid, slider, list & filterable layouts  
+✔ Popup member profile with full details  
+✔ Easy shortcode & Gutenberg support  
+✔ Lightweight, fast & SEO-friendly  
+✔ Works with any WordPress theme  
 
-* Clean Design & Code.
-* Fully responsive Design.
-* Easy Shortcode System.
-* No Coding Required.
-* All Browser support.
-* 4 Different Themes (25+ themes in pro version).
-* Custom post type enable.
-* Support Custom Column.
-* Team Member Order (date, Menu Order, Random Order). 
-* Team Member Image Size (Custom Size or Default Size).
-* Team Member Column Margin Bottom Option.
-* Team Member Column Margin left Option.
-* Team Member Column Margin Right Option.
-* Team Member name font color Option.
-* Team Member name font Hover color Option.
-* Team Member name font size Option.
-* Team Member Name Text Transform Option.
-* Team Member Designation font color Option.
-* Team Member Designation font size Option.
-* Team Member Designation Text Transform Option.
-* Show/Hide Member Biography Option.
-* Team Member Biography font color.
-* Team Member Biography font size.
-* Team Member Biography text alignment.
-* Team Member Biography Overlay Color Option.
-* Social Media Target Link _self or _blank.
-* Team Member Background Color Option.
-* Unlimited Team List with custom style.
-* Support post/page or widget.
-* Easy Options Page.
-* Use via short-code.
-* And much more.
+Whether you need a simple team grid or an advanced interactive team section, Team Showcase gives you full control.
 
+## Key Features – Free Version
 
-<strong>Available fields</strong>
+✔ Create **unlimited team members**  
+✔ Responsive **grid, slider & list** layouts  
+✔ Select team members by **categories**  
+✔ Control ordering (ASC / DESC / Custom)  
+✔ Popup member details (basic layout)  
+✔ Easy shortcode support 
+✔ Clean, lightweight & fast  
+✔ SEO-friendly HTML markup  
+✔ Translation ready  
+✔ Works with any theme  
 
-* Member Full Name.
-* Member Designation.
-* Member Address Info.
-* Member Contact Number.
-* Member Email Address.
-* Member Website Address.
-* Member Short Description.
-* Member Full Description.
-* Member Group/Categories.
-* Member Picture Uploader.
+### Team Member Fields
 
-<strong>Available Social Icons</strong>
+- Member Name  
+- Designation  
+- Email 
+- Location 
+- Contact Number 
+- Website 
+- Short Description  
+- Team Member Image  
+- Social Media Profiles  
+- Categories 
+- Team Member Skills
 
-* Facebook
-* Twitter
-* Google Plus
-* Instagram
-* Pinterest
-* LinkedIn
-* Dribbble
-* Youtube
-* Skype
-* And Much More...
+## Advanced Team Member Popup
 
+Display detailed information in a modern popup:
 
-<strong>Fully Responsive</strong>
+✔ Full description  
+✔ Member Information
+✔ Social media links  
+✔ Smooth animations  
+✔ Member Skills 
 
-Team Showcase plugin gives you the opportunity to make your website’s content fully responsive. It looks great on all kinds of screen size like desktop, tablet or a mobile device.
+👉 Advanced popup layouts and animations are available in **[Pro version »](https://themepoints.com/product/team-showcase-pro/)**   
+
+## Flexible Layout Options
+
+Choose how your team appears:
+
+✔ Grid layout  
+✔ Slider / carousel layout  
+✔ List layout  
+✔ Responsive for desktop, tablet & mobile  
+✔ Custom column control  
+
+👉 More layouts, animations, and filters available in **[Pro »](https://themepoints.com/product/team-showcase-pro/)**
 
 
-<strong>Number of Columns</strong>
+## Team Showcase Pro – Unlock Full Power 🚀
 
-Every layout you can choose how many columns you want to display. The Columns will be responsive and adapt in different screen sizes.
+Upgrade to **Team Showcase Pro** to build premium, conversion-focused team sections.
 
-<strong>No Coding Required</strong>
+### Pro Features
 
-Team Showcase plugin comes with super easy options page. you can easily manage everything via options page, no need to required any coding skills.
+🔥 25+ premium team styles  
+🔥 Filterable team layouts  
+🔥 Advanced popup templates  
+🔥 Team member skills with progress bars  
+🔥 Additional slider controls & animations  
+🔥 Priority support  
 
-<strong>How to Reorder Team Member?</strong>
+👉 Ideal for agencies, businesses & professional websites
 
-By default, WordPress orders all post types by date published. You can either manually edit this date to make posts “newer” or “older,” or use a third party plugin to order team member by drag & drop.
 
-<strong>Simple Custom Post Order</strong>
+## Who Is This Plugin For?
 
-https://wordpress.org/plugins/simple-custom-post-order/
-<ul>
-	<li><a href="https://themepoints.com/teamshowcase/team-sortable">Configure Simple Custom Post Order</a></li>
-</ul>
+✔ Companies & startups  
+✔ Agencies & freelancers  
+✔ Schools & universities  
+✔ Corporate teams  
+✔ NGOs & organizations  
+✔ Event speakers & staff  
+✔ Board members & advisors  
 
+If your website needs to build trust with real people, **Team Showcase is for you**.
+
+## Easy to Use – No Coding Required
+
+1. Install & activate the plugin  
+2. Add team members  
+3. Choose a layout style  
+4. Insert shortcode  
+5. Done 🎉
+
+## Performance & Compatibility
+
+✔ Lightweight & optimized  
+✔ Mobile-friendly layouts  
+✔ Compatible with all modern themes  
+✔ Regular updates  
+✔ Follows WordPress coding standards  
+
+## Support & Documentation
+
+We actively maintain this plugin and listen to user feedback.
+
+- Documentation included  
+- Community support via WordPress.org  
+- **Priority support available in Pro**
+
+👉 Upgrade to [Pro](https://themepoints.com/product/team-showcase-pro/) for advanced features & faster support
 
 
 == Installation ==
 
-1. Install as regular WordPress plugin.
-2. Go your Plugins setting via WordPress Dashboard and activate it.
-3. After activating the plugin, you will see a new menu on the dashboard left side called Team Showcase. Click on it & create you team list easily & paste this shortcode anywhere your post/page or template to show the team list.<br />
-<br /><br />
-
-<strong>How to use Team Showcase page or post</strong><br />
-
-
-<br /><br />
+1. Upload the plugin files to `/wp-content/plugins/team-showcase/`  
+2. Activate the plugin through the “Plugins” screen in WordPress  
+3. Go to **Team Showcase** menu  
+4. Add your team members  
+5. Display using shortcode
 
 
+== Frequently Asked Questions ==
+
+= Does this plugin work with any WordPress theme? =
+Yes, Team Showcase works with **all WordPress themes**.
+
+= Is coding required? =
+No, everything works via UI and shortcodes.
+
+= Is the plugin mobile responsive? =
+Yes, all layouts are fully responsive.
+
+= Can I display team members in a slider or carousel? =
+Yes, grid, slider, list, and carousel layouts are supported.
+
+= Does the plugin support popup member details? =
+Yes, clicking a team member opens a popup with detailed information.
+
+= Can I use multiple team sections on one page? =
+Yes, You can create unlimited showcases.
+
+= Is there a Pro version available? =
+Yes, Team Showcase Pro includes premium styles, filter layouts, advanced popups, skills, and priority support.
 
 
 == Screenshots ==
@@ -147,13 +196,6 @@ https://wordpress.org/plugins/simple-custom-post-order/
 13. screenshot-13
 14. screenshot-14
 15. screenshot-15
-
-== Upgrade Notice ==
-
-
-== Frequently Asked Questions ==
-
-
 
 
 == Changelog ==
@@ -286,3 +328,9 @@ https://wordpress.org/plugins/simple-custom-post-order/
 
 = 1.0 =
 * Initial release
+
+
+== Upgrade Notice ==
+
+= Team Showcase Pro =
+Unlock premium layouts, advanced popups, filters, animations, and priority support.
