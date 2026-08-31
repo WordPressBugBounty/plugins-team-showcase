@@ -1,9 +1,7 @@
 <?php
-
       if ( ! defined( 'ABSPATH' ) ) {
             exit; // Exit if accessed directly.
       }
-
 ?>
 
 <div id="team-popup-area-<?php echo esc_attr( $random_team_id ); ?>" class="mfp-hide white-popup style-one">
@@ -29,6 +27,27 @@
             		<div class="team-manager-popup-right-area">
             			<h2 class="left-box-title"><?php the_title(); ?></h2>
             			<?php echo wpautop( get_the_content() ); ?>
+
+                              <?php if ( ! empty( $team_popup_skills_hide ) ) : ?>
+                                    <?php if ( ! empty( $skills ) ) : ?>
+                                          <div class="skill-bars">
+                                                <?php foreach ( $skills as $skill ) : ?>
+                                                      <div class="skill">
+                                                            <div class="skill-title">
+                                                                  <?php echo esc_html( $skill['name'] ); ?>
+                                                            </div>
+
+                                                            <div class="skill-bar wow slideInLeft"
+                                                               style="<?php echo esc_attr( 'width:' . intval( $skill['value'] ) . '%;' ); ?>">
+                                                              <span class="skill-count1">
+                                                                  <?php echo esc_html( intval( $skill['value'] ) ); ?>%
+                                                              </span>
+                                                            </div>
+                                                      </div>
+                                                <?php endforeach; ?>
+                                          </div>
+                                    <?php endif; ?>
+                              <?php endif; ?>
             		</div>
             	</div>
             </div>

@@ -6,7 +6,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	2016 Themepoints
-	* Version : 3.0.0
+	* Version : 3.0.1
 	*/
 ?>
 
@@ -159,7 +159,7 @@ ul.items-area {
 }
 .responsive-video {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     max-width: 100%;
@@ -211,10 +211,10 @@ ul.items-area {
 		padding:40px;
 	}
 	.doc-support-content {
-		column-count: 1; /* Change to a single column layout */
+		column-count: 1;
 	}
 	.doc-support-content .list-item {
-		width: 100%; /* Make each item take up 100% width */
+		width: 100%;
 	}
 	.responsive-video-area {
 	    min-width: 100%;

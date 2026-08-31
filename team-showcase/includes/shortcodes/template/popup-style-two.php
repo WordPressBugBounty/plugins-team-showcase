@@ -25,6 +25,27 @@ if ( ! defined( 'ABSPATH' ) ) {
                               
                               <?php echo wpautop( get_the_content() ); ?>
 
+                              <?php if ( ! empty( $team_popup_skills_hide ) ) : ?>
+                                    <?php if ( ! empty( $skills ) ) : ?>
+                                          <div class="skill-bars">
+                                                <?php foreach ( $skills as $skill ) : ?>
+                                                      <div class="skill">
+                                                            <div class="skill-title">
+                                                                  <?php echo esc_html( $skill['name'] ); ?>
+                                                            </div>
+
+                                                            <div class="skill-bar wow slideInLeft"
+                                                               style="<?php echo esc_attr( 'width:' . intval( $skill['value'] ) . '%;' ); ?>">
+                                                              <span class="skill-count1">
+                                                                  <?php echo esc_html( intval( $skill['value'] ) ); ?>%
+                                                              </span>
+                                                            </div>
+                                                      </div>
+                                                <?php endforeach; ?>
+                                          </div>
+                                    <?php endif; ?>
+                              <?php endif; ?>
+
                               <div class="left-box-client-information">
                                     <?php include __DIR__ . '/client-popup-info.php'; ?>
                               </div>

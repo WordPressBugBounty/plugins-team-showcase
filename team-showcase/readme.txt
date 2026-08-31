@@ -1,10 +1,10 @@
 === Team Showcase – Responsive Team Members Grid, Slider & Carousel Plugin ===
 Contributors: themepoints
 Donate link: https://themepoints.com/teamshowcase/
-Tags: team showcase, team members, staff, employee, team grid, team slider, team carousel, team popup
+Tags: team showcase, team members, staff, employee, staff directory, employee directory, team grid, team slider, team carousel, team popup
 Requires at least: 4.0
-Tested up to: 6.9
-Stable tag: 3.0.0
+Tested up to: 7.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,40 +30,40 @@ https://www.youtube.com/watch?v=S9mgBm14n0I
 Most team plugins only show names and images.
 **Team Showcase goes further.**
 
-✔ 25+ professionally designed team layouts  
-✔ Grid, slider, list & filterable layouts  
-✔ Popup member profile with full details  
-✔ Easy shortcode & Gutenberg support  
-✔ Lightweight, fast & SEO-friendly  
-✔ Works with any WordPress theme  
+✔ 25+ professionally designed team layouts
+✔ Grid, slider, list & filterable layouts
+✔ Popup member profile with full details
+✔ Easy shortcode & Gutenberg support
+✔ Lightweight, fast & SEO-friendly
+✔ Works with any WordPress theme
 
 Whether you need a simple team grid or an advanced interactive team section, Team Showcase gives you full control.
 
 ## Key Features – Free Version
 
-✔ Create **unlimited team members**  
-✔ Responsive **grid, slider & list** layouts  
-✔ Select team members by **categories**  
-✔ Control ordering (ASC / DESC / Custom)  
-✔ Popup member details (basic layout)  
-✔ Easy shortcode support 
-✔ Clean, lightweight & fast  
-✔ SEO-friendly HTML markup  
-✔ Translation ready  
-✔ Works with any theme  
+✔ Create **unlimited team members**
+✔ Responsive **grid, slider & list** layouts
+✔ Select team members by **categories**
+✔ Control ordering (ASC / DESC / Custom)
+✔ Popup member details (basic layout)
+✔ Easy shortcode support
+✔ Clean, lightweight & fast
+✔ SEO-friendly HTML markup
+✔ Translation ready
+✔ Works with any theme
 
 ### Team Member Fields
 
-- Member Name  
-- Designation  
-- Email 
-- Location 
-- Contact Number 
-- Website 
-- Short Description  
-- Team Member Image  
-- Social Media Profiles  
-- Categories 
+- Member Name
+- Designation
+- Email
+- Location
+- Contact Number
+- Website
+- Short Description
+- Team Member Image
+- Social Media Profiles
+- Categories
 - Team Member Skills
 
 ## Advanced Team Member Popup
@@ -76,7 +76,7 @@ Display detailed information in a modern popup:
 ✔ Smooth animations  
 ✔ Member Skills 
 
-👉 Advanced popup layouts and animations are available in **[Pro version »](https://themepoints.com/product/team-showcase-pro/)**   
+👉 Advanced popup layouts and animations are available in **[Pro version »](https://themepoints.com/product/team-showcase-pro/)**
 
 ## Flexible Layout Options
 
@@ -88,7 +88,7 @@ Choose how your team appears:
 ✔ Responsive for desktop, tablet & mobile  
 ✔ Custom column control  
 
-👉 More layouts, animations, and filters available in **[Pro »](https://themepoints.com/product/team-showcase-pro/)**
+👉 More layouts, animations, and filters available in **[Pro](https://themepoints.com/product/team-showcase-pro/)**
 
 
 ## Team Showcase Pro – Unlock Full Power 🚀
@@ -143,7 +143,7 @@ We actively maintain this plugin and listen to user feedback.
 - Community support via WordPress.org  
 - **Priority support available in Pro**
 
-👉 Upgrade to [Pro](https://themepoints.com/product/team-showcase-pro/) for advanced features & faster support
+👉 Upgrade to **[Pro](https://themepoints.com/product/team-showcase-pro/)** for advanced features & faster support
 
 
 == Installation ==
@@ -199,6 +199,16 @@ Yes, Team Showcase Pro includes premium styles, filter layouts, advanced popups,
 
 
 == Changelog ==
+
+= 3.0.1 =
+* Fix Security Issue.
+* Added New Options.
+* Update Options Page.
+* Add Filter Menu Dropdown Style.
+* Added Two Different Filter Menu Style.
+* Update Backend Categorie Select Options.
+* Added Admin Visual Style.
+* Add member count beside category option.
 
 = 3.0.0 =
 * Fix Security Issue.
@@ -328,7 +338,6 @@ Yes, Team Showcase Pro includes premium styles, filter layouts, advanced popups,
 
 = 1.0 =
 * Initial release
-
 
 == Upgrade Notice ==
 

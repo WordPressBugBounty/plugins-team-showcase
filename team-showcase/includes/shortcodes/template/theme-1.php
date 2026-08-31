@@ -91,79 +91,6 @@
 			transform: translateY(100%); /* Initially move the overlay out of view */
 			opacity: 0; /* Initially set opacity to 0 */
 		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items .team-manager-free-items-social {
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-			position: absolute;
-			bottom: 20px;
-			left: 20px;
-			right: 20px;
-			opacity: 0; /* Initially hide the social icons */
-			transition: opacity 0.3s ease; /* Add smooth transition for opacity */
-		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items:hover .team-manager-free-items-social {
-		  opacity: 1; /* Show the social icons */
-		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li {
-			display: inline-block;
-			margin:5px 0px 0px 0px;
-		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li a{
-		    display: flex;
-		    -webkit-box-align: center;
-		    -ms-flex-align: center;
-		    align-items: center;
-		    justify-content: center;
-			background: <?php echo esc_attr( $tmffree_social_bg_color); ?>;
-		    color: <?php echo esc_attr( $tmffree_social_icon_color); ?>;
-		    border-radius: <?php echo esc_attr( $social_radius ); ?>;
-			height: 30px;
-		    width: 30px;
-			transition: all 0.3s;
-		    text-decoration: none;
-		    outline: none;
-		    box-shadow: none;
-		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li:hover {
-		    transition: all 0.3s;
-		}
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .team-manager-free-items-social li a:hover {
-			color: <?php echo esc_attr( $tmffree_social_hover_color); ?>;
-			background: <?php echo esc_attr( $tmffree_social_hoverbg_color); ?>;
-		}
-
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-1,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-2,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-3,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-4,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-5,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-lg-6,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-1,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-2,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-3,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-4,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-5,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-md-6,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-1,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-2,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-3,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-4,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-5,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-sm-6,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-1,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-2,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-3,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-4,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-5,
-		.team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?> .teamshowcasefree-col-xs-6 {
-			float: left;
-			margin-bottom: <?php echo esc_attr( $team_manager_free_margin_bottom ); ?>px !important;
-			min-height: 1px;
-			padding-left: <?php echo esc_attr( $team_manager_free_padding_left ); ?>px !important;
-			padding-right: <?php echo esc_attr( $team_manager_free_padding_left ); ?>px !important;
-			position: relative;
-		}
 
 		<?php
 	    // Get the buffered content
@@ -175,76 +102,117 @@
 	    ?>
 	</style>
 
-	<div class="team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?>">
-		<div class="team-manager-free-container">
-			<?php
-			// Creating a new side loop
-			while ( $tmf_query->have_posts() ) : $tmf_query->the_post(); global $post;
+	<div class="tmf-wrapper <?php echo esc_attr( $team_manager_free_post_themes ); ?>" data-style="<?php echo esc_attr( $team_manager_free_post_themes ); ?>"
+     style="
+		--tmf-main-padding: <?php echo esc_attr($team_manager_free_margin_bottom); ?>px;
+		--tmf-main-padding-left: <?php echo esc_attr($team_manager_free_padding_left); ?>px;
+		--tmf-main-padding-right: <?php echo esc_attr($team_manager_free_padding_left); ?>px;
+        --tmf-filter-text: <?php echo esc_attr($filter_mfont_color); ?>;
+        --tmf-filter-bg: <?php echo esc_attr($filter_bg_color); ?>;
+        --tmf-filter-border: <?php echo esc_attr($filter_border_color); ?>;
+        --tmf-filter-radius: <?php echo esc_attr($filter_border_radius); ?>px;
+        --tmf-filter-activebg: <?php echo esc_attr($filter_active_color); ?>;
+        --tmf-filter-activecolor: <?php echo esc_attr($filter_active_font); ?>;
+        --tmf-filter-hover-bg: <?php echo esc_attr($filter_hover_color); ?>;
+        --tmf-filter-hover-text: <?php echo esc_attr($filter_hover_tcolor); ?>;
+        --tmf-filter-padding: <?php echo esc_attr($team_manager_free_padding_left); ?>px;
+        --tmf-filter-align: <?php echo esc_attr($filter_align); ?>;
+        --tmf-skill-font-size: <?php echo esc_attr($team_manager_free_skills_font_size); ?>px;
+        --tmf-skill-font-color: <?php echo esc_attr($team_manager_free_skills_font_color); ?>;
+        --tmf-skill-bg: <?php echo esc_attr($team_manager_free_skills_bg_color); ?>;
+        --tmf-skill-line: <?php echo esc_attr($team_manager_free_skills_line_color); ?>;
+        --tmf-skill-percent-color: <?php echo esc_attr($team_manager_free_percentage_color); ?>;
+        --tmf-social-h-color: <?php echo esc_attr($tmffree_social_hover_color); ?>;
+        --tmf-social-h-bg-color: <?php echo esc_attr($tmffree_social_hoverbg_color); ?>;
+        --tmf-social-icon-size: <?php echo esc_attr($tmffree_social_font_size); ?>px;
+        --tmf-social-icon-color: <?php echo esc_attr($tmffree_social_icon_color); ?>;
+        --tmf-social-icon-bg: <?php echo esc_attr($tmffree_social_bg_color); ?>;
+        --tmf-social-icon-radius: <?php echo esc_attr($social_radius); ?>;
+        --tmf-items-alignment: <?php echo esc_attr($team_manager_free_text_alignment); ?>;
+		--tmf-img-grayscale: <?php echo ($team_manager_free_image_mode == '1') ? '100%' : '0%'; ?>;
+		--tmf-img-hover-grayscale: <?php echo ($team_manager_free_image_mode == '2') ? '100%' : '0%'; ?>;
+		--tmf-img-zoom: <?php echo ($team_manager_free_image_zoom == '2') ? '1.10' : '1'; ?>;
+     ">
 
-				$team_manager_free_client_designation      = get_post_meta(get_the_ID(), 'client_designation', true);
-				$team_manager_free_client_shortdescription = get_post_meta(get_the_ID(), 'client_shortdescription', true);
-				$team_manager_free_client_email            = get_post_meta(get_the_ID(), 'contact_email', true);
-				$team_manager_free_client_number           = get_post_meta(get_the_ID(), 'contact_number', true);
-				$team_manager_free_client_address          = get_post_meta(get_the_ID(), 'company_address', true);
-				$team_manager_free_client_website          = get_post_meta(get_the_ID(), 'client_website', true);
-				$tpteamfree_social_iconbox_repeat          = get_post_meta(get_the_ID(), 'tpteamfree_social_iconbox_repeat', true);
-				$random_team_id                            = rand();
-				?>
+		<div class="team-manager-free-main-area team-manager-free-main-area-<?php echo esc_attr( $post_id ); ?>">
+			<div class="team-manager-free-container">
+				<?php
+				// Creating a new side loop
+				while ( $tmf_query->have_posts() ) : $tmf_query->the_post(); global $post;
 
-				<div class="teamshowcasefree-col-lg-<?php echo esc_attr( $team_manager_free_post_column ); ?> teamshowcasefree-col-md-<?php echo esc_attr( $team_manager_free_laptop_columns ); ?> teamshowcasefree-col-sm-<?php echo esc_attr( $team_manager_free_tablet_columns ); ?> teamshowcasefree-col-xs-<?php echo esc_attr( $team_manager_free_mobile_columns ); ?>">
-			        <div class="team-manager-free-items">
-				        <div class="team-manager-free-items-pic">
-				            <a href="#team-popup-area-<?php echo esc_attr( $random_team_id ); ?>" class="open-popup-link" data-effect="mfp-zoom-in">
-				             	<?php
-									if ($selected_size === 'custom' && !empty($custom_width) && !empty($custom_height)) {
-									    the_post_thumbnail($selected_size);
-									} else {
-									    the_post_thumbnail($selected_size);
+					$team_manager_free_client_designation      = get_post_meta(get_the_ID(), 'client_designation', true);
+					$team_manager_free_client_shortdescription = get_post_meta(get_the_ID(), 'client_shortdescription', true);
+					$team_manager_free_client_email            = get_post_meta(get_the_ID(), 'contact_email', true);
+					$team_manager_free_client_number           = get_post_meta(get_the_ID(), 'contact_number', true);
+					$team_manager_free_client_address          = get_post_meta(get_the_ID(), 'company_address', true);
+					$team_manager_free_client_website          = get_post_meta(get_the_ID(), 'client_website', true);
+					$tpteamfree_social_iconbox_repeat          = get_post_meta(get_the_ID(), 'tpteamfree_social_iconbox_repeat', true);
+					$skills                                    = get_post_meta(get_the_ID(), '_team_skills', true);
+					$random_team_id                            = rand();
+					?>
+
+					<div class="teamshowcasefree-col-lg-<?php echo esc_attr( $team_manager_free_post_column ); ?> teamshowcasefree-col-md-<?php echo esc_attr( $team_manager_free_laptop_columns ); ?> teamshowcasefree-col-sm-<?php echo esc_attr( $team_manager_free_tablet_columns ); ?> teamshowcasefree-col-xs-<?php echo esc_attr( $team_manager_free_mobile_columns ); ?>">
+				        <div class="team-manager-free-items">
+					        <div class="team-manager-free-items-pic">
+					            <a href="#team-popup-area-<?php echo esc_attr( $random_team_id ); ?>" class="open-popup-link" data-effect="mfp-zoom-in">
+					             	<?php
+										if ($selected_size === 'custom' && !empty($custom_width) && !empty($custom_height)) {
+										    the_post_thumbnail($selected_size);
+										} else {
+										    the_post_thumbnail($selected_size);
+										}
+					              	?>
+					            </a>
+					            <?php if ( !empty( $team_manager_free_client_shortdescription ) || !empty( $tpteamfree_social_iconbox_repeat ) ) { ?>
+					            	<div class="team-manager-free-items-over-laye">
+					            		<?php if( !empty( $team_manager_free_client_shortdescription ) ){ ?>
+					              			<p><?php echo esc_html( $team_manager_free_client_shortdescription ); ?></p>
+					              		<?php } ?>
+
+		                              	<?php include __DIR__ . '/skill-bars.php'; ?>
+
+								        <?php if (!empty($tpteamfree_social_iconbox_repeat) && $team_manager_free_socialicons_hide == 1) { ?>
+								            <div class="team-manager-social-area">
+									            <ul class="team-manager-free-items-social">
+									                <?php include __DIR__ . '/social-info-short.php'; ?>
+									            </ul>
+								            </div>
+								        <?php } ?>
+					            	</div>
+				            	<?php } ?>
+				          	</div>
+
+					        <div class="team-manager-free-items-profiles">
+					            <div class="team-manager-free-items-title">
+					            	<a href="#team-popup-area-<?php echo esc_attr( $random_team_id ); ?>" class="open-popup-link" data-effect="mfp-zoom-in">
+					            		<?php the_title(); ?>
+					            	</a>
+					            </div>
+
+					            <?php if ($team_manager_free_designation_hide == '1' && !empty($team_manager_free_client_designation)) { ?>
+					            	<div class="team-manager-free-items-designation"><?php echo esc_html( $team_manager_free_client_designation ); ?></div>
+					        	<?php } ?>
+
+								<?php
+									switch ($team_manager_free_popupbox_positions) {
+									    case '1':
+									    		include __DIR__ . '/popup-style-one.php';
+									        break;
+									    case '2':
+									        	include __DIR__ . '/popup-style-two.php';
+									        break;
+									    case '3':
+									        	include __DIR__ . '/popup-style-three.php';
+									        break;
+									    case '4':
+									        	include __DIR__ . '/popup-style-four.php';
+									        break;
 									}
-				              	?>
-				            </a>
-				            <?php if ( !empty( $team_manager_free_client_shortdescription ) || !empty( $tpteamfree_social_iconbox_repeat ) ) { ?>
-			            	<div class="team-manager-free-items-over-laye">
-			            		<?php if( !empty( $team_manager_free_client_shortdescription ) ){ ?>
-			              			<p><?php echo esc_html( $team_manager_free_client_shortdescription ); ?></p>
-			              		<?php } ?>
-				              	<ul class="team-manager-free-items-social">
-									<?php include __DIR__ . '/social-info-short.php'; ?>
-				              	</ul>
-			            	</div>
-			            	<?php } ?>
-			          	</div>
-				        <div class="team-manager-free-items-profiles">
-
-				            <div class="team-manager-free-items-title">
-				            	<a href="#team-popup-area-<?php echo esc_attr( $random_team_id ); ?>" class="open-popup-link" data-effect="mfp-zoom-in">
-				            		<?php the_title(); ?>
-				            	</a>
-				            </div>
-
-				            <?php if ($team_manager_free_designation_hide == '1' && !empty($team_manager_free_client_designation)) { ?>
-				            	<div class="team-manager-free-items-designation"><?php echo esc_html( $team_manager_free_client_designation ); ?></div>
-				        	<?php } ?>
-
-							<?php
-								switch ($team_manager_free_popupbox_positions) {
-								    case '1':
-								    		include __DIR__ . '/popup-style-one.php';
-								        break;
-								    case '2':
-								        	include __DIR__ . '/popup-style-two.php';
-								        break;
-								    case '3':
-								        	include __DIR__ . '/popup-style-three.php';
-								        break;
-								    case '4':
-								        	include __DIR__ . '/popup-style-four.php';
-								        break;
-								}
-							?>
+								?>
+					        </div>
 				        </div>
-			        </div>
-				</div>
-			<?php endwhile; wp_reset_postdata(); ?>
+					</div>
+				<?php endwhile; wp_reset_postdata(); ?>
+			</div>
 		</div>
 	</div>

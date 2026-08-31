@@ -13,6 +13,7 @@
 		);
 
 		global $post, $paged, $query;
+
 		$post_id = $atts['id'];
 
 		$team_manager_free_category_select        = get_post_meta( $post_id, 'team_manager_free_category_select', true);
@@ -20,7 +21,7 @@
 		$team_manager_free_theme_style            = get_post_meta( $post_id, 'team_manager_free_theme_style', true);
 		$team_manager_free_limits                 = get_post_meta( $post_id, 'team_manager_free_limits', true);
 		// Set the limit (if empty, show all)
-		
+
 		$limit                                    = ! empty( $team_manager_free_limits ) ? (int) $team_manager_free_limits : -1;
 		$team_manager_free_post_column            = get_post_meta( $post_id, 'team_manager_free_post_column', true) ?: '4';
 		$team_manager_free_laptop_columns         = get_post_meta( $post_id, 'team_manager_free_laptop_columns', true) ?: '3';
@@ -35,8 +36,8 @@
 		$team_manager_free_social_target          = get_post_meta( $post_id, 'team_manager_free_social_target', true);
 		$team_manager_social_nofollow             = get_post_meta( $post_id, 'team_manager_social_nofollow', true);
 		$rel_attr                                 = ($team_manager_social_nofollow === '1') ? 'rel="nofollow"' : '';
-		# Social Icons Settings
-		
+
+		// Social Icons Settings
 		$team_manager_free_socialicons_hide       = get_post_meta( $post_id, 'team_manager_free_socialicons_hide', true);
 		$tmffree_social_style                     = get_post_meta( $post_id, 'tmffree_social_style', true);
 		$social_radius                            = ($tmffree_social_style == '1') ? '0px' : '50px';
@@ -92,34 +93,52 @@
 		$team_manager_free_website_font_size      = get_post_meta( $post_id, 'team_manager_free_website_font_size', true );
 		$team_manager_free_website_font_color     = get_post_meta( $post_id, 'team_manager_free_website_font_color', true );
 		$team_manager_free_website_hover_color    = get_post_meta( $post_id, 'team_manager_free_website_hover_color', true );
+
+		// Skills
+		$team_manager_free_skills_hide            = get_post_meta( $post_id, 'team_manager_free_skills_hide', true );
+		$team_manager_free_skills_font_size       = get_post_meta( $post_id, 'team_manager_free_skills_font_size', true );
+		$team_manager_free_skills_font_color      = get_post_meta( $post_id, 'team_manager_free_skills_font_color', true );
+		$team_manager_free_percentage_color       = get_post_meta( $post_id, 'team_manager_free_percentage_color', true );
+		$team_manager_free_skills_bg_color        = get_post_meta( $post_id, 'team_manager_free_skills_bg_color', true );
+		$team_manager_free_skills_line_color      = get_post_meta( $post_id, 'team_manager_free_skills_line_color', true );
+		
+		// image
 		$team_manager_free_image_hide             = get_post_meta( $post_id, 'team_manager_free_image_hide', true );
 		$team_manager_free_image_zoom             = get_post_meta( $post_id, 'team_manager_free_image_zoom', true );
 		$team_manager_free_image_mode             = get_post_meta( $post_id, 'team_manager_free_image_mode', true );
 		
-		// Slider
+		// Slider settings
 		$item_no                                  = get_post_meta( $post_id, 'item_no', true );
-		$loop                                     = get_post_meta( $post_id, 'loop', true );
-		$margin                                   = get_post_meta( $post_id, 'margin', true );
-		$navigation                               = get_post_meta( $post_id, 'navigation', true );
-		$pagination                               = get_post_meta( $post_id, 'pagination', true );
-		$autoplay                                 = get_post_meta( $post_id, 'autoplay', true );
-		$autoplay_speed                           = get_post_meta( $post_id, 'autoplay_speed', true );
-		$stop_hover                               = get_post_meta( $post_id, 'stop_hover', true );
-		$autoplaytimeout                          = get_post_meta( $post_id, 'autoplaytimeout', true );
 		$itemsdesktop                             = get_post_meta( $post_id, 'itemsdesktop', true );
 		$itemsdesktopsmall                        = get_post_meta( $post_id, 'itemsdesktopsmall', true );
 		$itemsmobile                              = get_post_meta( $post_id, 'itemsmobile', true );
+		$autoplaytimeout                          = get_post_meta( $post_id, 'autoplaytimeout', true );
+		$loop                                     = get_post_meta( $post_id, 'loop', true );
+		$lazyload                                 = get_post_meta( $post_id, 'lazyload', true );
+		$autoheight                               = get_post_meta( $post_id, 'autoheight', true );
+		$margin                                   = get_post_meta( $post_id, 'margin', true );
+		$autoplay                                 = get_post_meta( $post_id, 'autoplay', true );
+		$autoplay_speed                           = get_post_meta( $post_id, 'autoplay_speed', true );
+		$stop_hover                               = get_post_meta( $post_id, 'stop_hover', true );
+
+		// navigation
+		$navigation                               = get_post_meta( $post_id, 'navigation', true );
+		$navigation_align                         = get_post_meta( $post_id, 'navigation_align', true );
+		$navigation_btn_style                     = get_post_meta( $post_id, 'navigation_btn_style', true );
 		$nav_text_color                           = get_post_meta( $post_id, 'nav_text_color', true );
 		$nav_bg_color                             = get_post_meta( $post_id, 'nav_bg_color', true );
 		$nav_hover_text_color                     = get_post_meta( $post_id, 'nav_hover_text_color', true );
 		$nav_hover_bg_color                       = get_post_meta( $post_id, 'nav_hover_bg_color', true );
-		$navigation_align                         = get_post_meta( $post_id, 'navigation_align', true );
-		$navigation_btn_style                     = get_post_meta( $post_id, 'navigation_btn_style', true );
+
+		// Pagination
+		$pagination                               = get_post_meta( $post_id, 'pagination', true );
+		$pagination_align                         = get_post_meta( $post_id, 'pagination_align', true );
+		$tmffree_pagination_style                 = get_post_meta( $post_id, 'tmffree_pagination_style', true );
 		$pagination_bg_color                      = get_post_meta( $post_id, 'pagination_bg_color', true );
 		$pagination_active_color                  = get_post_meta( $post_id, 'pagination_active_color', true );
-		$pagination_align                         = get_post_meta( $post_id, 'pagination_align', true );
-		
-		// Filter Menu
+
+		// Filter Menu settings
+		$tmffree_filtermenu_style                 = get_post_meta( $post_id, 'tmffree_filtermenu_style', true );
 		$filter_align                             = get_post_meta( $post_id, 'filter_align', true );
 		$filter_bg_color                          = get_post_meta( $post_id, 'filter_bg_color', true );
 		$filter_border_color                      = get_post_meta( $post_id, 'filter_border_color', true );
@@ -129,6 +148,19 @@
 		$filter_hover_color                       = get_post_meta( $post_id, 'filter_hover_color', true );
 		$filter_hover_tcolor                      = get_post_meta( $post_id, 'filter_hover_tcolor', true );
 		$filter_border_radius                     = get_post_meta( $post_id, 'filter_border_radius', true );
+		$team_manager_free_sortbtn                = get_post_meta( $post_id, 'team_manager_free_sortbtn', true );
+		$team_manager_free_pagination             = get_post_meta( $post_id, 'team_manager_free_pagination', true );
+		$tmf_pagination_type             		  = get_post_meta( $post_id, 'tmf_pagination_type', true );
+		$pagination_color                         = get_post_meta( $post_id, 'pagination_color', true );
+		$pagination_hover_color                   = get_post_meta( $post_id, 'pagination_hover_color', true );
+		$pagination_background                    = get_post_meta( $post_id, 'pagination_background', true );
+		$pagination_background_hover              = get_post_meta( $post_id, 'pagination_background_hover', true );
+		$pagination_border_color                  = get_post_meta( $post_id, 'pagination_border_color', true );
+		$pagination_border_hover_color            = get_post_meta( $post_id, 'pagination_border_hover_color', true );
+		$pagination_activep_color                 = get_post_meta( $post_id, 'pagination_activep_color', true );
+		$pagination_active_bg                     = get_post_meta( $post_id, 'pagination_active_bg', true );
+		$pagination_active_border                 = get_post_meta( $post_id, 'pagination_active_border', true );
+		$tmf_pagination_alignment                 = get_post_meta( $post_id, 'tmf_pagination_alignment', true );
 		$team_popup_title_hide                    = get_post_meta( $post_id, 'team_popup_title_hide', true);
 		$team_popup_designatins_hide              = get_post_meta( $post_id, 'team_popup_designatins_hide', true);
 		$team_popup_emails_hide                   = get_post_meta( $post_id, 'team_popup_emails_hide', true);
@@ -136,6 +168,12 @@
 		$team_popup_address_hide                  = get_post_meta( $post_id, 'team_popup_address_hide', true);
 		$team_popup_website_hide                  = get_post_meta( $post_id, 'team_popup_website_hide', true);
 		$team_popup_infoicons_hide                = get_post_meta( $post_id, 'team_popup_infoicons_hide', true);
+		$team_popup_skills_hide                   = get_post_meta( $post_id, 'team_popup_skills_hide', true);
+		$details_type 						      = get_post_meta( $post_id,'team_manager_free_details_page_type',true);
+		$layout 								  = get_post_meta( $post_id,'team_manager_free_single_layout',true);
+
+		# Popup Box Settings
+		$team_manager_free_popupbox_hide          = get_post_meta( $post_id, 'team_manager_free_popupbox_hide', true);
 		$team_manager_free_popupbox_positions     = get_post_meta( $post_id, 'team_manager_free_popupbox_positions', true);
 		$team_fbackground_color                   = get_post_meta( $post_id, 'team_fbackground_color', true);
 		$teamf_orderby                            = get_post_meta( $post_id, 'teamf_orderby', true);
@@ -163,6 +201,7 @@
 			            'taxonomy' => 'team_mfcategory',
 			            'field' => 'id',
 			            'terms' => $tmfree,
+			            'include_children' => false, // 👈 This controls subcategories
 			        ],
 			        // [
 			        //     'taxonomy' => 'team_mfcategory',
@@ -182,7 +221,6 @@
 	    }
 
 	  	$tmf_query = new WP_Query( $args );
-
 
 		$allowed_themes = array(
 		    'theme1' => 'theme-1.php',

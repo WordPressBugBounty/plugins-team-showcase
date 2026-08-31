@@ -7,7 +7,7 @@
 	/*
 	* @Author 		Themepoints
 	* Copyright: 	2016 Themepoints
-	* Version : 3.0.0
+	* Version : 3.0.1
 	*/
 
 	# Add Team Meta Box
@@ -24,6 +24,14 @@
 	        'custom_greeting_metabox',
 	        'Member Social Profiles',
 	        'display_tptmfee_social_metasbox',
+	        'team_mf',
+	        'normal',
+	        'default'
+	    );
+	    add_meta_box(
+	        'team_skills_meta',
+	        'Team Member Skills',
+	        'team_skills_meta_box_callback',
 	        'team_mf',
 	        'normal',
 	        'default'
@@ -85,7 +93,6 @@
 				
 				<!-- Website -->
 				<p><label for="client_website_input"><strong><?php _e('Website:', 'team-manager-free'); ?></strong></label></p>
-
 				<input type="text" name="client_website_input" placeholder="example.com" id="client_website_input" value="<?php echo esc_attr( $client_website ); ?>" />
 
 				<!-- Description -->
@@ -140,7 +147,6 @@
 		if(isset($_POST['short_description_input'])) {
 			update_post_meta($post_id, 'client_shortdescription', sanitize_textarea_field( $_POST['short_description_input'] ) );
 		}
-
 	}
 	add_action('save_post', 'team_manager_free_custom_inner_custom_boxes_save');
 
@@ -219,59 +225,7 @@
 		$totlacionsarray 					= get_tp_tmfree_social_icons_list();
 		wp_nonce_field( 'tpteamfree_socialmetabox_nonces', 'tpteamfree_socialmetabox_nonces' );
 		?>
-
-		<style>
-		    #repeatable_socialicons {
-		        margin-top: 20px;
-		    }
-		    .removescicons {
-				display: flex;
-				flex-wrap: wrap;
-				align-items: center;
-		        border: 1px solid #ccc;
-		        padding: 10px;
-		        margin-bottom: 10px;
-		        background-color: transparent;
-		    }
-		    .sciconsdrag {
-		        display: inline-block;
-		        margin-right: 10px;
-		        cursor: move;
-		    }
-		    .socialicons_field,
-		    .socialicons_select_field {
-		        display: inline-block;
-		        margin-right: 10px;
-		    }
-			.socialicons_field input,
-			.socialicons_select_field select {
-			    border-radius: 0;
-			    border: 1px solid #ccc;
-			}
-		    .icondeletemove {
-		        /*display: inline-block;*/
-		    }
-			.icondeletemove a.button.removeiconcolumns {
-			    background: #ddd;
-			    border-radius: 0;
-			    border: none;
-			}
-		    .removeiconcolumns {
-		        color: #d9534f;
-		        text-decoration: none;
-		        cursor: pointer;
-		    }
-		    .addsocialbtn {
-		        margin-top: 10px;
-		    }
-		    .removeiconcolumns span {
-		        font-size: 20px;
-		        line-height: 30px;
-		        color: red;
-		        outline:none;
-		    }
-		</style>
-
+		
 		<div id="repeatable_socialicons">
 			<div class="allicolist">
 				<?php
@@ -314,26 +268,6 @@
 
 		<div class="addsocialbtn"><a id="addsocialicons" class="button" href="#">Add Social Profile</a></div>
 
-		<script>
-			jQuery(document).ready(function($){
-				$('#addsocialicons').on('click', function() {
-					var row = $('.emptyicons.screen-reader-text').clone(true);
-					row.removeClass('emptyicons screen-reader-text');
-					row.insertBefore('#repeatable_socialicons .allicolist>.removescicons:last');
-					return false;
-				});
-				$('.removeiconcolumns').on('click', function() {
-					$(this).parents('.removescicons').remove();
-					return false;
-				});
-			 	$('#repeatable_socialicons .allicolist').sortable({
-					opacity: 0.6,
-					revert: true,
-					cursor: 'move',
-					handle: '.sorticonlists'
-				}); 
-			});
-		</script>
 		<?php
 	}
 
@@ -355,13 +289,10 @@
 	    // Sanitize and validate POST data
 	    $sciconsurls = isset($_POST['sciconsurl']) ? $_POST['sciconsurl'] : array();
 	    $selectsicon = isset($_POST['select']) ? $_POST['select'] : array();
-
 	    $sciconsurls = array_map('esc_url_raw', $sciconsurls); // Sanitize URLs
 	    $selectsicon = array_map('sanitize_text_field', $selectsicon); // Sanitize select options
-
 	    $sciconrepeat = get_post_meta($post_id, 'tpteamfree_social_iconbox_repeat', true);
 	    $sciconsarray = array();
-
 	    $totlacionsarray = get_tp_tmfree_social_icons_list();
 
 	    $sccount = count($sciconsurls);
@@ -386,6 +317,156 @@
 	    }
 	}
 	add_action('save_post', 'tp_tmffree_social_icons_metasaves');
+
+	// Save Metabox
+	function team_skills_meta_box_callback($post) {
+		
+	    wp_nonce_field('tp_team_skills_save', 'tp_team_skills_nonce');
+
+	    $skills = get_post_meta($post->ID, '_team_skills', true);
+	    if (!is_array($skills)) $skills = [];
+
+	    echo '<div id="team-skills-wrapper" class="sortable">';
+	    foreach ($skills as $i => $skill) {
+	        echo '<div class="team-skill-row">';
+	        echo '<span class="dashicons dashicons-move handle"></span>';
+	        echo '<input type="text" name="team_skills['.$i.'][name]" value="'.esc_attr($skill['name']).'" placeholder="Skill Name" />';
+	        echo '<input type="number" name="team_skills['.$i.'][value]" value="'.esc_attr($skill['value']).'" placeholder="Value (0-100)" min="0" max="100" />';
+	        echo '<button class="remove-skill button">Remove</button>';
+	        echo '</div>';
+	    }
+	    echo '</div>';
+	    echo '<button id="add-skill" class="button">Add Skill</button>';
+	}
+
+	// Save Metabox
+	function tp_save_team_skills($post_id) {
+
+	    if (
+	        ! isset($_POST['tp_team_skills_nonce']) ||
+	        ! wp_verify_nonce($_POST['tp_team_skills_nonce'], 'tp_team_skills_save')
+	    ) {
+	        return;
+	    }
+
+	    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+	        return;
+	    }
+
+	    if (!current_user_can('edit_post', $post_id)) {
+	        return;
+	    }
+
+	    // Save skills
+	    if (isset($_POST['team_skills']) && is_array($_POST['team_skills'])) {
+	        $skills = [];
+
+	        foreach ($_POST['team_skills'] as $skill) {
+	            // Only save non-empty skills
+	            if (!empty($skill['name']) && isset($skill['value'])) {
+	                $skills[] = [
+	                    'name'  => sanitize_text_field($skill['name']),
+	                    'value' => intval($skill['value']),
+	                ];
+	            }
+	        }
+
+	        // Update post meta
+	        update_post_meta($post_id, '_team_skills', $skills);
+
+	    } else {
+	        // Delete meta if no skills are provided
+	        delete_post_meta($post_id, '_team_skills');
+	    }
+	}
+	add_action('save_post', 'tp_save_team_skills');
+
+	function multicolor_add_meta2( $post, $args ) {
+
+		wp_nonce_field('tp_team_multicolor_save', 'tp_team_multicolor_nonce');
+		$team_manager_mbgcolor_color  = get_post_meta($post->ID, 'team_manager_mbgcolor_color', true);
+		$team_manager_mborder_color   = get_post_meta($post->ID, 'team_manager_mborder_color', true);
+		$team_manager_mbcontent_color = get_post_meta($post->ID, 'team_manager_mbcontent_color', true);
+		?>
+
+		<div class="wrap">
+			<table class="form-table">
+				<div class=""><?php echo __( 'Display different colors for each team member,', 'team-manager-free' ); ?><a href="https://themepoints.com/product/team-showcase-pro/" target="_blank"><?php _e('Upgrade To Pro!', 'team-manager-free');?></a></div>
+				<tr valign="top">
+					<th scope="row">
+						<label for="team_manager_mbgcolor_color"><?php echo __( 'Background Color', 'team-manager-free' ); ?></label>
+						<span class="team_manager_hint toss"><?php echo __( 'Set the background color of an individual team member item.', 'team-manager-free' ); ?></span>
+					</th>
+					<td style="vertical-align:middle;">
+						<input size='10' name='team_manager_mbgcolor_color' class='team_manager_mbgcolor_color' type='text' id="team_manager_mbgcolor_color" value="<?php if($team_manager_mbgcolor_color !=''){echo $team_manager_mbgcolor_color;} else{ echo "#f6f7f8";} ?>" /> <br />
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="team_manager_mborder_color"><?php echo __( 'Title Color', 'team-manager-free' ); ?></label>
+						<span class="team_manager_hint toss"><?php echo __('Set the title color of an individual team member item..', 'team-manager-free' ); ?></span>
+					</th>
+					<td style="vertical-align:middle;">
+						<input size='10' name='team_manager_mborder_color' class='team_manager_mborder_color' type='text' id="team_manager_mborder_color" value="<?php if($team_manager_mborder_color !=''){echo $team_manager_mborder_color;} else{ echo "#007acc";} ?>" /> <br />
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="team_manager_mbcontent_color"><?php echo __( 'Content Color', 'team-manager-free' ); ?></label>
+						<span class="team_manager_hint toss"><?php echo __( 'Set the content color of an individual team member item.', 'team-manager-free' ); ?></span>
+					</th>
+					<td style="vertical-align:middle;">
+						<input size='10' name='team_manager_mbcontent_color' class='team_manager_mbcontent_color' type='text' id="team_manager_mbcontent_color" value="<?php if($team_manager_mbcontent_color !=''){echo $team_manager_mbcontent_color;} else{ echo "#333333";} ?>" /> <br />
+					</td>
+				</tr>
+			</table>
+			<script type="text/javascript">
+				jQuery(document).ready(function($){
+					$('#team_manager_mbgcolor_color, #team_manager_mborder_color, #team_manager_mbcontent_color').wpColorPicker();
+				});
+			</script>
+		</div>
+		<?php
+	}
+
+	// Save Metabox
+	function tp_save_multicolor_data($post_id) {
+
+	    if (
+	        ! isset($_POST['tp_team_multicolor_nonce']) ||
+	        ! wp_verify_nonce($_POST['tp_team_multicolor_nonce'], 'tp_team_multicolor_save')
+	    ) {
+	        return;
+	    }
+
+	    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+	        return;
+	    }
+
+	    if (!current_user_can('edit_post', $post_id)) {
+	        return;
+	    }
+
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_mbgcolor_color' ] ) ) {
+			$team_manager_mbgcolor_color = sanitize_hex_color( $_POST['team_manager_mbgcolor_color'] );
+			update_post_meta( $post_id, 'team_manager_mbgcolor_color', $team_manager_mbgcolor_color );
+		}
+
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_mborder_color' ] ) ) {
+			$team_manager_mborder_color = sanitize_hex_color( $_POST['team_manager_mborder_color'] );
+			update_post_meta( $post_id, 'team_manager_mborder_color', $team_manager_mborder_color );
+		}
+
+		// Checks for input and sanitizes/saves if needed
+		if ( isset( $_POST[ 'team_manager_mbcontent_color' ] ) ) {
+			$team_manager_mbcontent_color = sanitize_hex_color( $_POST['team_manager_mbcontent_color'] );
+			update_post_meta( $post_id, 'team_manager_mbcontent_color', $team_manager_mbcontent_color );
+		}
+
+	}
+	add_action('save_post', 'tp_save_multicolor_data');
 
 	function tmffree_team_review_notice_message() {
 	    // Show only to Admins

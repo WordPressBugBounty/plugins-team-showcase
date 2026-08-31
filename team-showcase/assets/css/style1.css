@@ -4,36 +4,36 @@
  * Version - @V2.9
  */
 
-.teamshowcasefree-col-lg-1,
-.teamshowcasefree-col-lg-2,
-.teamshowcasefree-col-lg-3,
-.teamshowcasefree-col-lg-4,
-.teamshowcasefree-col-lg-5,
-.teamshowcasefree-col-lg-6,
-.teamshowcasefree-col-md-1,
-.teamshowcasefree-col-md-2,
-.teamshowcasefree-col-md-3,
-.teamshowcasefree-col-md-4,
-.teamshowcasefree-col-md-5,
-.teamshowcasefree-col-md-6,
-.teamshowcasefree-col-sm-1,
-.teamshowcasefree-col-sm-2,
-.teamshowcasefree-col-sm-3,
-.teamshowcasefree-col-sm-4,
-.teamshowcasefree-col-sm-5,
-.teamshowcasefree-col-sm-6,
-.teamshowcasefree-col-xs-1,
-.teamshowcasefree-col-xs-2,
-.teamshowcasefree-col-xs-3,
-.teamshowcasefree-col-xs-4,
-.teamshowcasefree-col-xs-5,
-.teamshowcasefree-col-xs-6 {
-	float: left;
-	margin-bottom: 30px;
-	min-height: 1px;
-	padding-left: 15px;
-	padding-right: 15px;
-	position: relative;
+.tmf-wrapper .teamshowcasefree-col-lg-1,
+.tmf-wrapper .teamshowcasefree-col-lg-2,
+.tmf-wrapper .teamshowcasefree-col-lg-3,
+.tmf-wrapper .teamshowcasefree-col-lg-4,
+.tmf-wrapper .teamshowcasefree-col-lg-5,
+.tmf-wrapper .teamshowcasefree-col-lg-6,
+.tmf-wrapper .teamshowcasefree-col-md-1,
+.tmf-wrapper .teamshowcasefree-col-md-2,
+.tmf-wrapper .teamshowcasefree-col-md-3,
+.tmf-wrapper .teamshowcasefree-col-md-4,
+.tmf-wrapper .teamshowcasefree-col-md-5,
+.tmf-wrapper .teamshowcasefree-col-md-6,
+.tmf-wrapper .teamshowcasefree-col-sm-1,
+.tmf-wrapper .teamshowcasefree-col-sm-2,
+.tmf-wrapper .teamshowcasefree-col-sm-3,
+.tmf-wrapper .teamshowcasefree-col-sm-4,
+.tmf-wrapper .teamshowcasefree-col-sm-5,
+.tmf-wrapper .teamshowcasefree-col-sm-6,
+.tmf-wrapper .teamshowcasefree-col-xs-1,
+.tmf-wrapper .teamshowcasefree-col-xs-2,
+.tmf-wrapper .teamshowcasefree-col-xs-3,
+.tmf-wrapper .teamshowcasefree-col-xs-4,
+.tmf-wrapper .teamshowcasefree-col-xs-5,
+.tmf-wrapper .teamshowcasefree-col-xs-6 {
+    float: left;
+    margin-bottom: var(--tmf-main-padding, 30px);
+    min-height: 1px;
+    padding-left: var(--tmf-main-padding-left, 15px);
+    padding-right: var(--tmf-main-padding-right, 15px);
+    position: relative;
 }
 .teamshowcasefree-col-lg-1 {
 	width: 100%;
@@ -118,4 +118,53 @@
 	.teamshowcasefree-col-xs-6 {
 		width: 16.66666666666667%;
 	}
+}
+
+
+/*=========================*/
+
+/*skills-bar CSS*/
+
+.tmf-wrapper .skill-bars{
+    display: block;
+    overflow: hidden;
+    line-height: 15px;
+}
+.tmf-wrapper .skill-bars .skill {
+    margin-bottom: 5px;
+    position: relative;
+    text-align: left;
+}
+.tmf-wrapper .skill-bars .skill .skill-title {
+    font-size: var(--tmf-skill-font-size, 14px);
+    color: var(--tmf-skill-font-color, #333);
+    margin-bottom: 5px;
+}
+.tmf-wrapper .skill-bars .skill:before{
+    width: 100%;
+    height: 8px;
+    content: "";
+    display: block;
+    position: absolute;
+    background: var(--tmf-skill-bg, #eee);
+    bottom: 0;
+}
+.tmf-wrapper .skill-bars .skill-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--tmf-skill-line, #007bff);
+    display: block;
+    position: relative;
+}
+.tmf-wrapper .skill-bars .skill-count1 {
+    right: 0;
+}
+.tmf-wrapper .skill-bars .skill-bar span {
+    position: absolute;
+    top: -20px;
+    padding: 0;
+    padding: 0;
+    font-weight: 500;
+    font-size: var(--tmf-skill-font-size, 14px);
+    color: var(--tmf-skill-percent-color, #000);
 }

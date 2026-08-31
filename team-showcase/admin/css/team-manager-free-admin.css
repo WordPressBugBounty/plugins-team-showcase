@@ -2,7 +2,6 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-
 .tupsetings {
   margin: 20px 0;
 }
@@ -382,14 +381,27 @@ div.wrap .team-manager-admin-area{
   float: left;
   width: 33%;
 }
-.single-team-social-icons input#twitter_social_input, input#googleplus_social_input, input#facebook_social_input, input#instagram_social_input, input#pinterest_social_input, input#linkedIn_social_input, input#dribbble_social_input, input#youtube_social_input, input#skype_social_input{
+.single-team-social-icons input#twitter_social_input,
+input#googleplus_social_input, 
+input#facebook_social_input, 
+input#instagram_social_input, 
+input#pinterest_social_input, 
+input#linkedIn_social_input, 
+input#dribbble_social_input, 
+input#youtube_social_input, 
+input#skype_social_input{
   width: 90%;
   box-shadow: none;
   outline: none;
   border-radius: 0;
   border: 1px solid #ddd;
 }
-.details_profiles_cols input#post_title_designation, input#client_address_input, input#contact_number_input, input#contact_email_input, input#client_website_input, textarea#short_description_input {
+.details_profiles_cols input#post_title_designation, 
+input#client_address_input, 
+input#contact_number_input, 
+input#contact_email_input, 
+input#client_website_input, 
+textarea#short_description_input {
   width: 90%;
   min-height: 40px;
   box-shadow: none;
@@ -548,6 +560,9 @@ label#team_manager_section_title {
 .switch-field input:checked + label.lazyload_false,
 .switch-field input:checked + label.info_icons_false,
 .switch-field input:checked + label.show_all_false,
+.switch-field input:checked + label.popup_skills_false,
+.switch-field input:checked + label.show_sort_false,
+.switch-field input:checked + label.pagination_all_false,
 .switch-field input:checked + label.image_false {
   background-color: red;
   color:#fff;
@@ -677,4 +692,275 @@ span.prohints {
 .tmffree-social-color-option input:checked + .tmffree-social-color-image {
   border-color: #0073aa; /* Border color on selection */
   background-color: #e0f7ff; /* Light blue background */
+}
+
+input#team_manager_free_margin_bottom, input#team_manager_free_padding_left {
+  border-top: 0;
+  border-bottom: 0;
+  border-radius: 0;
+}
+.tmf-layout-selector{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.tmf-layout-item{
+  position: relative;
+  cursor:pointer;
+  border:2px solid transparent;
+  border-radius:4px;
+  padding:4px;
+  text-align:center;
+  transition:all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.tmf-layout-item.selected::after{
+  content: "✔";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #28a745;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.tmf-layout-item img{
+  max-width:120px;
+  height:auto;
+  display:block;
+  margin-bottom:4px;
+}
+.tmf-layout-item.selected{
+  border-color:#0073aa;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+.tmffree-filtermenu-options img {
+    width: 160px;
+}
+/* Section Title */
+.tupsetings .tp-sa-section-title {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  background: #f1f1f1;
+  border-left: 4px solid #0073aa;
+}
+/* Optional description */
+.tupsetings .tp-sa-section-desc {
+  margin: 6px 0 0 0;
+  font-size: 12px;
+  color: #666;
+}
+.tmffree-pro-disabled {
+  position: relative;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.tmffree-pro-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #ff6a00;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+#team-skills-wrapper .team-skill-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 6px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: move;
+}
+#team-skills-wrapper .team-skill-row input[type="text"],
+#team-skills-wrapper .team-skill-row input[type="number"] {
+  margin-right: 8px;
+  padding: 2px 8px;
+  width: 150px;
+  border: 1px solid #ccc;
+  border-radius: 0;
+}
+#team-skills-wrapper .team-skill-row .handle {
+  margin-right: 8px;
+  cursor: move;
+}
+#team-skills-wrapper .team-skill-row .remove-skill {
+  background: #dc3232;
+  color: #fff;
+  border: none;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+#add-skill {
+  margin-top: 10px;
+}
+.tmf-category-tree{
+  max-width:450px;
+  min-height:200px;
+  max-height:200px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:8px;
+  border:1px solid #eee;
+  border-radius:4px;
+  position: relative;
+  background: #fafafa;
+}
+.tmf-tree-group{
+  margin-bottom: 10px;
+  position: relative;
+  margin-top: 10px;
+  border-bottom: 1px solid #eeeeee;
+}
+.tmf-tree-parent{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:500;
+  cursor:pointer;
+  margin-bottom: 10px;
+}
+.tmf-tree-children{
+  margin-left:20px;
+  padding-left:12px;
+  border-left:2px solid #eee;
+  display:none;
+}
+.tmf-tree-children label{
+  display:block;
+  margin-bottom:6px;
+}
+.tmf-tree-toggle{
+  cursor: pointer;
+  margin-left: auto;
+  transition: transform 0.2s ease;
+  display: inline-block;
+  font-size: 30px;
+  position: absolute;
+  top: -8px;
+  right: 0;
+  line-height: 1;
+}
+.tmf-tree-toggle:hover {
+  color: #0073aa;
+}
+.tmf-tree-toggle.open{
+  transform: rotate(90deg); /* arrow points down when open */
+}
+#repeatable_socialicons {
+  margin-top: 20px;
+}
+.removescicons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: transparent;
+}
+.sciconsdrag {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: move;
+}
+.socialicons_field,
+.socialicons_select_field {
+  display: inline-block;
+  margin-right: 10px;
+}
+.socialicons_field input,
+.socialicons_select_field select {
+  border-radius: 0;
+  border: 1px solid #ccc;
+}
+.icondeletemove {
+    /*display: inline-block;*/
+}
+.icondeletemove a.button.removeiconcolumns {
+  background: #ddd;
+  border-radius: 0;
+  border: none;
+}
+.removeiconcolumns {
+  color: #d9534f;
+  text-decoration: none;
+  cursor: pointer;
+}
+.addsocialbtn {
+  margin-top: 10px;
+}
+.removeiconcolumns span {
+  font-size: 20px;
+  line-height: 30px;
+  color: red;
+  outline:none;
+}
+.tshowcase-image-select {
+  display: flex;
+  gap: 15px;
+}
+.img-option {
+  position: relative;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 90px;
+  background: #fff;
+  transition: all 0.25s ease;
+}
+.img-option img {
+  width: 100%;
+  display: block;
+}
+.img-option span {
+  display: block;
+  text-align: center;
+  padding: 6px;
+  font-size: 13px;
+}
+/* Hide radio */
+.img-option input {
+  display: none;
+}
+/* Better highlight */
+.img-option input:checked ~ span {
+  color: #2271b1;
+  font-weight: 600;
+}
+.img-option:has(input:checked) {
+  border-color: #2271b1;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+.img-option:hover {
+  border-color: #2271b1;
+}
+.img-option:has(input:checked)::after {
+  content: "✔";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #28a745;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }

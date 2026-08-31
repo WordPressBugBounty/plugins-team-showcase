@@ -2,12 +2,10 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		exit; // Exit if accessed directly.
 	}
-?>
 
-<?php
 	// Check if social profiles exist
 	if (!empty($tpteamfree_social_iconbox_repeat)) {
-		if (is_array($tpteamfree_social_iconbox_repeat) || is_object($tpteamfree_social_iconbox_repeat)) { 
+		if (is_array($tpteamfree_social_iconbox_repeat) || is_object($tpteamfree_social_iconbox_repeat)) {
 		    foreach ($tpteamfree_social_iconbox_repeat as $scsingleicons) { 
 	            $icon_name = strtolower($scsingleicons['select']);
 	            
@@ -20,10 +18,9 @@
 	            } else {
 	                $icon_class = 'fa fa-' . esc_attr($icon_name);
 	            }
-
 	            ?>
 
-	            <li class="tpf-icon"> <!-- Important wrapper class -->
+	            <li class="tpf-icon">
 	                <a target="<?php echo esc_attr($team_manager_free_social_target); ?>"
 	                   href="<?php echo esc_url($scsingleicons['sciconsurl']); ?>"
 	                   <?php echo $rel_attr; ?>>

@@ -187,3 +187,243 @@ ul.tp-tmffree-popup-info li a:hover {
     content: "𝕏";
     font-size: 1.2em;
 }
+
+
+
+.skill-bars{
+    display: block;
+    overflow: hidden;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.skill-bars .skill {
+    margin-bottom: 10px;
+    position: relative;
+    text-align: left;
+}
+.skill-bars .skill .skill-title {
+    font-size: 15px;
+    color: #000000;
+    margin-bottom: 5px;
+}
+.skill-bars .skill:before{
+    width: 100%;
+    height: 8px;
+    content: "";
+    display: block;
+    position: absolute;
+    background: #dddddd;
+    bottom: 0;
+}
+.skill-bars .skill-bar {
+    width: 100%;
+    height: 8px;
+    background:#000000;
+    display: block;
+    position: relative;
+}
+.skill-bars .skill-count1 {
+    right: 0;
+}
+.skill-bars .skill-bar span {
+    position: absolute;
+    top: -26px;
+    padding: 0;
+    font-size: 15px;
+    padding: 0;
+    font-weight: 500;
+    color: #000000;
+}
+
+/*
+*=============================
+*Theme 1
+*=============================
+*/
+
+.tmf-wrapper.tmf-style-theme1 .team-manager-social-area,
+.tmf-wrapper.theme1 .team-manager-social-area{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    opacity: 0; /* Initially hide the social icons */
+    transition: opacity 0.3s ease; /* Add smooth transition for opacity */
+}
+.tmf-wrapper.tmf-style-theme1 .team-manager-free-items:hover .team-manager-social-area,
+.tmf-wrapper.theme1 .team-manager-free-items:hover .team-manager-social-area {
+    opacity: 1; /* Show the social icons */
+}
+
+
+/*
+*=============================
+*Theme 3
+*=============================
+*/
+
+.tmf-wrapper.tmf-style-theme3,
+.tmf-wrapper.theme3 {
+    text-align:center;
+    display: block;
+    overflow: hidden;
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-container,
+.tmf-wrapper.theme3 .team-manager-free-container{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items,
+.tmf-wrapper.theme3 .team-manager-free-items{
+    text-align:var(--tmf-items-alignment);
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items-thumbnail,
+.tmf-wrapper.theme3 .team-manager-free-items-thumbnail{
+    position:relative;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    display:inline-block;
+    overflow:hidden;
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items-thumbnail img,
+.tmf-wrapper.theme3 .team-manager-free-items-thumbnail img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    transition: transform .5s ease, filter .3s ease;
+    overflow: hidden;
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items-thumbnail img,
+.tmf-wrapper.theme3 .team-manager-free-items-thumbnail img{
+    transition: all 0.3s ease-in-out;
+    filter: grayscale(var(--tmf-img-grayscale,0%));
+    overflow: hidden;
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items-thumbnail,
+.tmf-wrapper.theme3 .team-manager-free-items-thumbnail{
+    will-change: transform;
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items:hover img,
+.tmf-wrapper.theme3 .team-manager-free-items:hover img{
+    filter: grayscale(var(--tmf-img-hover-grayscale,0%));
+    overflow: hidden;
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items:hover .team-manager-free-items-thumbnail img,
+.tmf-wrapper.theme3 .team-manager-free-items:hover .team-manager-free-items-thumbnail img{
+    transform: scale(var(--tmf-img-zoom,1));
+    overflow: hidden;
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-overlay,
+.tmf-wrapper.theme3 .team-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:var(--tmf-overlay-background);   /* overlay color */
+    opacity:0;        /* overlay opacity */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:scale(.6);
+    transition: all .4s ease;
+}
+
+/* Plus Icon */
+
+.tmf-wrapper.tmf-style-theme3 .team-plus,
+.tmf-wrapper.theme3 .team-plus{
+    color:#fff;
+    font-size:50px;
+    text-decoration:none;
+    transform:translateY(30px);
+    opacity:0;
+    transition: all .4s ease;
+}
+
+/* Hover Effects */
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items:hover .team-image img,
+.tmf-wrapper.theme3 .team-manager-free-items:hover .team-image img{
+    transform:scale(1.08);
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items:hover .team-overlay,
+.tmf-wrapper.theme3 .team-manager-free-items:hover .team-overlay{
+    opacity:.9;      /* overlay opacity control */
+    transform:scale(1);
+}
+
+.tmf-wrapper.tmf-style-theme3 .team-manager-free-items:hover .team-plus,
+.tmf-wrapper.theme3 .team-manager-free-items:hover .team-plus{
+    transform:translateY(0);
+    opacity:1;
+}
+
+
+/*
+*=============================
+* Social Media CSS
+*=============================
+*/
+
+.tmf-wrapper .team-manager-free-items-social{
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+.tmf-wrapper .team-manager-free-items-social li{
+    display: inline-block;
+    margin:5px 0px 0px 0px;
+}
+.tmf-wrapper .team-manager-free-items-social li i{
+    padding-right:0px;
+}
+.tmf-wrapper .team-manager-free-items-social li a {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    justify-content: center;
+    background: var(--tmf-social-icon-bg);
+    color: var(--tmf-social-icon-color);
+    font-size: var(--tmf-social-icon-size, 14px );
+    border-radius:var(--tmf-social-icon-radius);
+    text-align: center;
+    height: 30px;
+    width: 30px;
+    transition: all 0.3s ease 0s;
+    text-decoration: none;
+    outline: none;
+    box-shadow: none;
+}
+.tmf-wrapper .team-manager-free-items-social li:hover {
+    border-radius: 50px;
+    transition: all 0.3s;
+}
+.tmf-wrapper .team-manager-free-items-social li a:hover{
+    color:var(--tmf-social-h-color);
+    background:var(--tmf-social-h-bg-color);
+    border: medium none;
+    box-shadow: none;
+    outline: medium none;
+    text-decoration: none;
+}

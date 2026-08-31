@@ -3,7 +3,7 @@
 	Plugin Name: Team Showcase
 	Plugin URI: https://themepoints.com/teamshowcase/
 	Description: Team Showcase is a WordPress plugin that allows you to easily create and manage teams. You can display single teams as multiple responsive columns, you can also showcase all teams in various styles.
-	Version: 3.0.0
+	Version: 3.0.1
 	Author: Themepoints
 	Author URI: https://themepoints.com
 	License: GPLv2
@@ -19,7 +19,7 @@
 	// Define plugin version
 	define( 'TEAM_MANAGER_PLUGIN_NAME', 'Team Showcase' );
 	define( 'TEAM_MANAGER_PLUGIN_SLUG', 'team-manager-free' );
-	define( 'TEAM_MANAGER_FREE_VERSION', '3.0.0' );
+	define( 'TEAM_MANAGER_FREE_VERSION', '3.0.1' );
 
 	// Define paths for the plugin
 	define('TEAM_MANAGER_FREE_PLUGIN_PATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
@@ -59,6 +59,8 @@
 		if(($typenow == 'team_mf')){
 			wp_enqueue_style('team-manager-free-admin2-style', TEAM_MANAGER_FREE_PLUGIN_PATH.'admin/css/team-manager-free-admin.css');
 			wp_enqueue_style('wp-color-picker');
+			wp_enqueue_script( 'jquery-ui-sortable' );
+			wp_enqueue_script( 'team-manager-skills-scripts', plugins_url('/admin/js/team-manager-skills.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
 			wp_enqueue_script( 'team-manager-color-picker', plugins_url('/admin/js/color-picker.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 		}
 		// Load additional styles and scripts for specific post types
@@ -84,10 +86,13 @@
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'team_manager_free_buy_action_links' );
 
 	// Team Post Type File
-	require_once( plugin_dir_path(__FILE__) . 'admin/team-manager-free-post-type.php');
+	require_once( plugin_dir_path(__FILE__) . 'admin/team-manager-free-post-type.php' );
 
-	// Team Post Type Metabox File
+	// Register Meta Boxes
 	require_once( plugin_dir_path(__FILE__) . 'admin/team-manager-free-meta-boxes.php');
+
+	// Team Post Type Metabox Options
+	require_once( plugin_dir_path(__FILE__) . 'admin/team-manager-free-meta-options.php');
 
 	// Team Post Shortcode File
 	require_once( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/team-shortcode.php' );
@@ -103,11 +108,14 @@
 	    }
 
 		require_once plugin_dir_path( __FILE__ ) . 'includes/team-manager-free-activator.php';
+
 		Team_Manager_Free_Activator::activate();
 	}
 
 	function deactive_team_manager_free(){
+
 		require_once plugin_dir_path(__FILE__) . 'includes/team-manager-free-deactivator.php';
+
 		Team_Manager_Free_Deactivator::deactivate();
 	}
 	register_activation_hook(__FILE__, 'active_team_manager_free');
